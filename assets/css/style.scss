@@ -1,0 +1,75 @@
+@import url('~/static/font/fontiran/fontiran.css');
+
+@font-face {
+	font-family: Lalezar;
+	src: url('~/static/font/lalezar/Lalezar-Regular.otf');
+	src: url('~/static/font/lalezar/Lalezar-Regular.ttf') format('truetype');
+	font-weight: 300;
+}
+
+html {
+	scroll-behavior: smooth;
+	overflow-x: hidden;
+	line-height: 1.65;
+}
+
+body {
+	font-family: IRANSans, Arial, Helvetica, sans-serif;
+}
+
+/* v select start */
+.custom-vselect .vs__dropdown-toggle {
+	direction: rtl;
+	height: calc(60px);
+	background-color: transparent;
+	border: none;
+	@apply rounded-lg text-natural-dark font-bold;
+}
+
+.custom-vselect .vs__dropdown-toggle:focus-within {
+	@apply border-primary-dark;
+}
+
+.custom-vselect .vs__dropdown-toggle .vs__selected {
+	@apply px-5;
+}
+
+.custom-vselect .vs__dropdown-toggle input {
+	color: #484848;
+	@apply px-5 font-bold text-gray-700;
+}
+
+.custom-vselect .vs__dropdown-toggle input:focus {
+	color: #484848;
+	@apply text-natural-dark;
+}
+
+.custom-vselect .vs__dropdown-menu {
+	direction: rtl !important;
+	text-align: right !important;
+}
+
+.custom-vselect .vs__selected {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+
+.custom-vselect .vs__actions {
+	padding-left: 1rem !important;
+}
+
+.custom-vselect .vs__clear {
+	margin-right: 0 !important;
+	margin-left: 1rem !important;
+}
+
+/* v select end */
+
+.direction-ltr {
+	direction: ltr;
+}
+
+.direction-rtl {
+	direction: rtl;
+}
