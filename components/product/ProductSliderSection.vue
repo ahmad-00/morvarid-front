@@ -60,7 +60,8 @@ import { Component, Prop } from 'nuxt-property-decorator'
 import MainContainer from '~/components/home/MainContainer.vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
 import Vue from 'vue'
-import { Swiper, Navigation, Pagination } from 'swiper'
+
+const Swiper = process.browser ? require('swiper').Swiper : null
 
 import 'swiper/swiper.min.css'
 import { Image } from '~/config/types'

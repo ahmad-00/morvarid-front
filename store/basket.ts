@@ -23,7 +23,6 @@ export const mutations: MutationTree<BasketState> = {
 			category: v.category,
 			quantity: v.quantity,
 		}))
-		console.log(JSON.stringify(b))
 		// @ts-ignore
 		this.$cookies.set(
 			'basket',

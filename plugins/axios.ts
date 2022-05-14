@@ -5,7 +5,6 @@ const myPlugin: Plugin = function ({ app, store, $axios, redirect }, inject) {
 	store.commit('user/setRefreshToken', app.$cookies.get('refresh_token'))
 
 	$axios.onRequest((config) => {
-		console.log('onRequest')
 		const token = store.state.user.token
 		if (token) config.headers['Authorization'] = `Bearer ${token}`
 		return config
@@ -16,11 +15,9 @@ const myPlugin: Plugin = function ({ app, store, $axios, redirect }, inject) {
 	})
 
 	$axios.onResponse((response) => {
-		console.log('onResponse: ' + response?.status)
 		return response
 	})
 	$axios.onResponseError(async (error) => {
-		console.log('onResponse: ' + error.code + ' ' + error?.response?.status)
 		if (!error.response) {
 			return Promise.reject(error)
 		}
