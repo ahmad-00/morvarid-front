@@ -17,8 +17,9 @@
 				</nuxt-link>
 			</div>
 			<div
+				ref="swiper"
+				class="swiper w-full"
 				:class="{
-					[`product-list-swiper-${uid} swiper w-full`]: true,
 					hidden: !sliderInitialized,
 				}"
 			>
@@ -48,8 +49,6 @@ import { Product } from '~/config/types'
 import { Swiper } from 'swiper'
 import 'swiper/swiper.min.css'
 
-let uidCounter = 1
-
 @Component({
 	components: { ProductCard, MyIcon },
 })
@@ -58,11 +57,10 @@ export default class ProductList extends Vue {
 	@Prop() title!: string
 	@Prop() moreLink!: string
 
-	uid = uidCounter++
 	sliderInitialized = false
 
 	initSwiper() {
-		new Swiper(`.product-list-swiper-${this.uid}`, {
+		new Swiper(this.$refs.swiper as HTMLElement, {
 			loop: false,
 			pagination: {
 				el: '.swiper-pagination',

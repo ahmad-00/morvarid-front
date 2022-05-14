@@ -28,7 +28,8 @@
 			"@nuxtjs/axios",
 			"@types/node",
 			"./types/*",
-			"@types/moment-jalaali"
+			"@types/moment-jalaali",
+			"@types/uuid",
 		]
 	},
 	"exclude": [

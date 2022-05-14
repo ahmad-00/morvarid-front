@@ -116,13 +116,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
-
-let uidCounter = 1
+import { v4 as uuid } from "uuid";
 
 export default Vue.extend({
 	data() {
 		return {
-			id: `text-input-${uidCounter++}`,
+			id: `text-input-${uuid()}`,
 			show: false,
 			isDropdownOpen: false,
 		}

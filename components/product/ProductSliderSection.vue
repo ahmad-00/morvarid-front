@@ -13,8 +13,9 @@
 			</div>
 		</div>
 		<div
+			ref="swiper"
+			class="swiper w-full"
 			:class="{
-				[`product-slider-section-swiper-${uid} swiper w-full`]: true,
 				hidden: !sliderInitialized,
 			}"
 		>
@@ -65,8 +66,6 @@ import ImageSlider from '~/components/utils/ImageSlider.vue'
 import { Swiper } from 'swiper'
 import 'swiper/swiper.min.css'
 
-let uidCounter = 1
-
 @Component({
 	components: {
 		ImageSlider,
@@ -79,7 +78,6 @@ export default class ProductSliderSection extends Vue {
 
 	isSliderVisible = false
 	selectedIndex = 0
-	uid = uidCounter++
 	sliderInitialized = false
 
 	get selectedImage(): Image | null {
@@ -87,7 +85,7 @@ export default class ProductSliderSection extends Vue {
 	}
 
 	initSwiper() {
-		new Swiper(`.product-slider-section-swiper-${this.uid}`, {
+		new Swiper(this.$refs.swiper as HTMLElement, {
 			loop: false,
 			pagination: {
 				el: '.swiper-pagination',

@@ -64,8 +64,6 @@ const config: NuxtConfig = {
 
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [
-		// https://go.nuxtjs.dev/pwa
-		'@nuxtjs/pwa',
 		// https://go.nuxtjs.dev/axios
 		'@nuxtjs/axios',
 		'cookie-universal-nuxt',
@@ -93,15 +91,9 @@ const config: NuxtConfig = {
 			pathRewrite: {[`^${browserBaseUrl}`]: ''},
 		},
 	},
-	// PWA module configuration: https://go.nuxtjs.dev/pwa
-	pwa: {
-		manifest: {
-			lang: 'fa',
-		},
-	},
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
-		standalone: true
+		standalone: true,
 	},
 }
 
