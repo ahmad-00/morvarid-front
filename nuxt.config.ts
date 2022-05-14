@@ -60,7 +60,6 @@ const config: NuxtConfig = {
 		// https://go.nuxtjs.dev/tailwindcss
 		'@nuxtjs/tailwindcss',
 		'cookie-universal-nuxt',
-		'nuxt-svg-loader',
 	],
 
 	// Modules: https://go.nuxtjs.dev/config-modules
@@ -102,7 +101,6 @@ const config: NuxtConfig = {
 	},
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
-		standalone: true
 	},
 }
 
