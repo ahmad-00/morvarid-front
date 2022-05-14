@@ -64,10 +64,10 @@ const config: NuxtConfig = {
 
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [
-		// https://go.nuxtjs.dev/axios
-		'@nuxtjs/axios',
 		// https://go.nuxtjs.dev/pwa
 		'@nuxtjs/pwa',
+		// https://go.nuxtjs.dev/axios
+		'@nuxtjs/axios',
 		'cookie-universal-nuxt',
 		'nuxt-svg-loader',
 	],
@@ -101,6 +101,7 @@ const config: NuxtConfig = {
 	},
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
+		standalone: true
 	},
 }
 

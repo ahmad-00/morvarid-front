@@ -45,8 +45,8 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import MyIcon from '~/components/utils/MyIcon.vue'
 import ProductCard from '~/components/product/ProductCard.vue'
 import { Product } from '~/config/types'
-
-const Swiper = process.browser ? require('swiper').Swiper : null
+import { Swiper } from 'swiper'
+import 'swiper/swiper.min.css'
 
 let uidCounter = 1
 

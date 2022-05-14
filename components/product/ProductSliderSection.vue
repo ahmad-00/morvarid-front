@@ -60,12 +60,10 @@ import { Component, Prop } from 'nuxt-property-decorator'
 import MainContainer from '~/components/home/MainContainer.vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
 import Vue from 'vue'
-
-const Swiper = process.browser ? require('swiper').Swiper : null
-
-import 'swiper/swiper.min.css'
 import { Image } from '~/config/types'
 import ImageSlider from '~/components/utils/ImageSlider.vue'
+import { Swiper } from 'swiper'
+import 'swiper/swiper.min.css'
 
 let uidCounter = 1
 
