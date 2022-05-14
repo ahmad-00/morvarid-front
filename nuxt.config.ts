@@ -7,6 +7,8 @@ env.BASE_URL =
 	env.BASE_URL || process.env.BASE_URL || 'https://cgdev.ir/sms-panel-api/'
 env.ENABLE_PROXY =
 	Number(env.ENABLE_PROXY) || Number(process.env.ENABLE_PROXY) || 0
+env.CATEGORY_SAFFRON_ID = env.CATEGORY_SAFFRON_ID || process.env.CATEGORY_SAFFRON_ID
+env.CATEGORY_CARDAMON_ID = env.CATEGORY_CARDAMON_ID || process.env.CATEGORY_CARDAMON_ID
 
 const dev = process.env.NODE_ENV !== 'production'
 const enableProxy = env.ENABLE_PROXY
