@@ -1,11 +1,12 @@
 <template>
 	<div
-		class="flex items-center bg-primary bg-opacity-5 rounded-full py-6 px-9"
+		class="flex items-center bg-primary bg-opacity-5 rounded-full py-6 px-9 overflow-hidden"
+		v-dragscroll.x
 	>
 		<template v-for="(s, i) in steps">
 			<span
 				:key="'a-' + i"
-				class="flex items-center text-primary"
+				class="flex items-center text-primary flex-shrink-0"
 				:class="{
 					'opacity-30': i + 1 >= step,
 					'opacity-100': i + 1 < step,
@@ -17,7 +18,10 @@
 			<span
 				v-if="steps.length !== i + 1"
 				:key="'b-' + i"
-				class="h-1 flex-grow mx-6 bg-natural-dark rounded-full"
+				class="h-1 flex-grow mx-6 bg-natural-dark rounded-full flex-shrink-0"
+				:style="{
+					minWidth: '20px'
+				}"
 				:class="{
 					'opacity-10': i + 1 >= step,
 					'opacity-40': i + 1 < step,

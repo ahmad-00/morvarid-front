@@ -13,10 +13,10 @@
 				backgroundSize: 'cover'
 			}"
 		>
-			<div class="flex flex-col bg-black bg-opacity-50 p-16">
+			<div class="flex flex-col bg-black bg-opacity-50 p-12">
 					<MyIcon
 						name="arrow-left"
-						class="w-16 h-16 text-white -me-4 -mt-4 self-end cursor-pointer hover:text-primary duration-300"
+						class="w-12 h-12 text-white -me-4 -mt-4 self-end cursor-pointer hover:text-primary duration-300"
 						@click="goBack"
 					/>
 
@@ -32,7 +32,7 @@
 					</span>
 				</div>
 				<span
-					class="text-white font-medium mt-6 text-4xl"
+					class="text-white font-medium mt-6 text-3xl"
 				>
 					{{ article.title || '~' }}
 				</span>
@@ -47,9 +47,9 @@
 			}"
 		>
 			<div
-				class="flex items-center justify-center py-36 px-6 bg-black bg-opacity-50"
+				class="flex items-center justify-center py-28 px-6 bg-black bg-opacity-50"
 			>
-				<span class="text-white font-bold text-5xl">
+				<span class="text-white font-bold text-4xl">
 					{{
 						category
 							? $strings.n_category(category.title)
@@ -90,8 +90,8 @@
 <script lang="ts">
 import { Component, Prop } from 'nuxt-property-decorator'
 import Vue from 'vue'
-import { Article, ShopCategory } from '~/config/types'
-import { getCategoryColor } from '~/components/article/ArticleCard.vue'
+import { Article, BlogCategory } from "~/config/types";
+import { getCategoryColor as _getCategoryColor } from '~/components/article/ArticleCard.vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
 
 @Component({
@@ -104,16 +104,16 @@ export default class BlogHeader extends Vue {
 		return this.$route.params.category_id || null
 	}
 
-	get categories(): ShopCategory[] {
+	get categories(): BlogCategory[] {
 		return this.$store.state.category.articleCategories || []
 	}
 
-	get category(): ShopCategory | null {
+	get category(): BlogCategory | null {
 		return this.categories.find((c) => c.id == this.categoryId) || null
 	}
 
 	getCategoryColor(id: string) {
-		return getCategoryColor(id)
+		return _getCategoryColor(id)
 	}
 
 	goBack() {

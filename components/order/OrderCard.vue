@@ -6,13 +6,29 @@
 	>
 		<div class="flex flex-col p-5">
 			<div class="flex items-center mb-5">
-				<MyIcon name="tick" class="w-6 h-6 text-green-500 me-3" />
-				<span class="font-bold text-natural-dark text-sm flex-grow">
-					{{ $strings.payment() }}
-				</span>
-				<MyIcon v-if="!detailed" name="arrow-left" class="w-5 h-5 text-natural-dark" />
+				<div
+					class="flex items-center rounded-md bg-opacity-10 p-0.5"
+					:class="{ [status.bgClass]: true }"
+				>
+					<MyIcon
+						name="bag"
+						class="w-5 h-5 text-white me-1.5 rounded-md p-0.5"
+						:class="{ [status.bgClass]: true }"
+					/>
+					<span
+						class="text-xs me-1 text-natural-semidark"
+					>
+						{{ status.name || '~' }}
+					</span>
+				</div>
+				<div class="flex-grow" />
+				<MyIcon
+					v-if="!detailed"
+					name="arrow-left"
+					class="w-5 h-5 text-natural-dark"
+				/>
 			</div>
-			<div class="flex items-center">
+			<div class="flex items-center flex-wrap">
 				<span class="text-sm text-natural-mute font-medium">
 					{{ createdString }}
 				</span>
@@ -38,7 +54,7 @@
 			</div>
 		</div>
 		<div v-if="detailed" class="h-px mx-5 bg-gray-100" />
-		<div v-if="detailed" class="grid grid-cols-2 gap-5 p-5">
+		<div v-if="detailed" class="grid grid-cols-1 sm:grid-cols-2 gap-5 p-5">
 			<div class="flex items-center">
 				<span class="text-xs text-natural-mute me-1.5">
 					{{ $strings.province() }}
@@ -55,7 +71,7 @@
 					{{ data.address.city || '~' }}
 				</span>
 			</div>
-			<div class="flex items-center col-span-2">
+			<div class="flex items-center">
 				<span class="text-xs text-natural-mute me-1.5">
 					{{ $strings.postal_code() }}
 				</span>
@@ -63,7 +79,7 @@
 					{{ data.address.postal_code || '~' }}
 				</span>
 			</div>
-			<div class="flex items-center col-span-2">
+			<div class="flex items-center">
 				<span class="text-xs text-natural-mute me-1.5">
 					{{ $strings.address() }}
 				</span>
@@ -85,7 +101,7 @@
 				/>
 			</div>
 		</div>
-		<div v-if="detailed" class="grid grid-cols-3 gap-5 p-5">
+		<div v-if="detailed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5">
 			<ProductCard
 				v-for="(product, i) in products"
 				:key="i"
@@ -111,6 +127,17 @@ moment.loadPersian()
 export default class OrderCard extends Vue {
 	@Prop({}) data?: Order
 	@Prop({}) detailed?: boolean
+
+	get orderStatuses(): any[] {
+		return this.$store.state.type.orderStatuses || []
+	}
+
+	get status(): any {
+		return (
+			this.orderStatuses.find((v) => v.value === this.data?.status) ||
+			this.orderStatuses[0]
+		)
+	}
 
 	get products(): Product[] {
 		return (

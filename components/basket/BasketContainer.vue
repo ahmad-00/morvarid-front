@@ -8,7 +8,7 @@
 			<div class="w-full max-w-screen-xl flex items-center">
 				<span
 					v-if="step !== buttonTitles.length"
-					class="text-lg py-4 px-10 rounded-xl border border-primary-dark ripple-bg-white text-natural-dark cursor-pointer"
+					class="text-base py-4 px-8 rounded-xl border border-primary-dark ripple-bg-white text-natural-dark cursor-pointer"
 					@click="$emit('back')"
 				>
 					{{ $strings.back() }}
@@ -16,7 +16,7 @@
 				<span class="flex-grow" />
 				<span
 					v-if="step !== buttonTitles.length"
-					class="text-lg font-bold py-4 px-10 rounded-xl ripple-bg-primary-dark text-white cursor-pointer"
+					class="text-base font-bold py-4 px-8 rounded-xl ripple-bg-primary-dark text-white cursor-pointer"
 					@click="$emit('submit')"
 				>
 					{{ buttonTitles[step - 1] }}

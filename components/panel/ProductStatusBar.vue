@@ -1,10 +1,10 @@
 <template>
 	<div
-		class="w-full bg-white rounded-xl py-4 px-4 grid grid-cols-5 gap-4"
+		class="w-full bg-white rounded-xl py-4 px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4"
 		:style="{ boxShadow: '0px 0px 19px -19px #F2F2F2' }"
 	>
 		<div
-			v-for="(item, index) in topFourItems"
+			v-for="(item, index) in orderStatuses"
 			:key="index"
 			class="bg-opacity-10 rounded-2xl flex items-center"
 			:class="[item.bgClass]"
@@ -17,7 +17,7 @@
 			</span>
 			<div class="flex flex-col items-center justify-center flex-grow">
 				<span class="text-natural-dark -mb-px text-sm font-light">
-					{{ item.title }}
+					{{ item.name }}
 				</span>
 				<span class="text-natural-dark text-3xl font-bold -mb-2">
 					{{ items[index] }}
@@ -29,35 +29,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import MyIcon from "~/components/utils/MyIcon.vue";
+import MyIcon from '~/components/utils/MyIcon.vue'
 
 export default Vue.extend({
 	components: { MyIcon },
 	data() {
-		return {
-			topFourItems: [
-				{
-					bgClass: 'bg-yellow-500',
-					title: this.$strings.unpaid(),
-				},
-				{
-					bgClass: 'bg-red-500',
-					title: this.$strings.expired(),
-				},
-				{
-					bgClass: 'bg-purple-500',
-					title: this.$strings.paid(),
-				},
-				{
-					bgClass: 'bg-green-500',
-					title: this.$strings.processing(),
-				},
-				{
-					bgClass: 'bg-blue-500',
-					title: this.$strings.posted(),
-				},
-			],
-		}
+		return {}
+	},
+	computed: {
+		orderStatuses(): any[] {
+			return this.$store.state.type.orderStatuses || []
+		},
 	},
 	created() {},
 	props: {

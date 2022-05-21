@@ -6,14 +6,14 @@
 				class="w-12 h-12 rounded-full bg-gray-400 text-white flex-shrink-0"
 			/>
 			<div class="flex flex-col flex-grow overflow-hidden ms-3 me-3">
-				<span class="text-sm font-bold text-natural-dark mb-1">
+				<span class="text-sm font-bold text-natural-dark mb-1 line-clamp-1">
 					{{
 						((user && user.first_name) || '~') +
 						' ' +
 						((user && user.last_name) || '~')
 					}}
 				</span>
-				<span class="text-xs text-natural-semidark">
+				<span class="text-xs text-natural-semidark line-clamp-1">
 					<span dir="ltr">
 						{{ (user && user.phone) || '~' }}
 					</span>

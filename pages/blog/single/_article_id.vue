@@ -62,14 +62,14 @@
 					</p>
 				</div>
 				<div class="col-span-4 flex flex-col">
-					<span class="text-natural-dark text-2xl font-bold mb-10">
+					<span class="text-natural-dark text-xl font-bold mb-10">
 						{{ $strings.most_visited() }}
 					</span>
 					<ArticleHCard
 						v-for="(a, i) in mostVisitedArticles"
 						:key="i"
 						:article="a"
-						class="mb-8"
+						class="mb-6"
 					/>
 				</div>
 			</div>

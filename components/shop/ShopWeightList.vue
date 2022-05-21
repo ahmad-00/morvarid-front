@@ -1,26 +1,9 @@
 <template>
-	<div class="flex flex-col items-center px-6">
-		<div class="flex flex-col max-w-screen-xl w-full">
-			<div class="flex items-center mb-12">
-				<span
-					class="text-2xl lg:text-3xl font-bold flex-grow text-natural-dark line-clamp-1 me-4"
-				>
-					{{ title }}
-				</span>
-				<nuxt-link
-					v-if="moreLink"
-					class="flex items-center text-primary-dark rounded-md hover:text-primary duration-300 cursor-pointer flex-shrink-0"
-					:to="moreLink"
-				>
-					<span class="text-base lg:text-lg font-medium me-2.5">
-						{{ $strings.view_all_products() }}
-					</span>
-					<MyIcon name="arrow-left-square" class="w-5 h-5" />
-				</nuxt-link>
-			</div>
+	<div class="flex flex-col px-6 items-center">
+		<div class="max-w-screen-xl w-full flex flex-col">
 			<div
 				ref="swiper"
-				class="product-list-swiper swiper w-full"
+				class="shop-weight-list-swiper swiper w-full"
 				:class="{
 					hidden: !sliderInitialized,
 				}"
@@ -28,20 +11,24 @@
 				<div class="swiper-wrapper">
 					<template v-if="!loading">
 						<div
-							v-for="(product, i) in products"
+							v-for="(d, i) in data"
 							:key="i"
-							class="swiper-slide h-auto flex flex-col"
+							class="swiper-slide"
 						>
-							<ProductCard :product="product" class="flex-grow" />
+							<ShopWeightCard
+								:key="i"
+								:title="d.title"
+								:subtitle="d.subtitle"
+								:image="d.image"
+								:selected="d.selected"
+								@click="$emit('select', d.weight)"
+								class=""
+							/>
 						</div>
 					</template>
 					<template v-else>
-						<div
-							v-for="i in 4"
-							:key="i"
-							class="swiper-slide h-auto flex flex-col"
-						>
-							<ProductCard :loading="true" class="flex-grow" />
+						<div v-for="i in 5" :key="i" class="swiper-slide">
+							<ShopWeightCard :key="i" :loading="true" />
 						</div>
 					</template>
 				</div>
@@ -57,22 +44,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import Vue from 'vue'
+import { Component, Prop } from 'nuxt-property-decorator'
 import MyIcon from '~/components/utils/MyIcon.vue'
-import ProductCard from '~/components/product/ProductCard.vue'
-import { Product } from '~/config/types'
+import ShopWeightCard from '~/components/shop/ShopWeightCard.vue'
 import { Swiper, Pagination } from 'swiper'
 import 'swiper/swiper.min.css'
 
 Swiper.use([Pagination])
 
 @Component({
-	components: { ProductCard, MyIcon },
+	components: {
+		ShopWeightCard,
+		MyIcon,
+	},
 })
-export default class ProductList extends Vue {
-	@Prop() products!: Product[]
-	@Prop() title!: string
-	@Prop() moreLink!: string
+export default class ShopWeightList extends Vue {
+	@Prop() data!: any[]
 	@Prop({ default: false }) loading?: boolean
 
 	sliderInitialized = false
@@ -97,19 +85,19 @@ export default class ProductList extends Vue {
 			},
 			breakpoints: {
 				0: {
-					slidesPerView: 1,
-					spaceBetween: 24,
-				},
-				600: {
 					slidesPerView: 2,
 					spaceBetween: 24,
 				},
-				1024: {
+				600: {
 					slidesPerView: 3,
 					spaceBetween: 24,
 				},
-				1280: {
+				1024: {
 					slidesPerView: 4,
+					spaceBetween: 24,
+				},
+				1280: {
+					slidesPerView: 5,
 					spaceBetween: 40,
 				},
 			},
@@ -128,15 +116,11 @@ export default class ProductList extends Vue {
 </script>
 
 <style>
-.product-list-swiper .swiper-slide {
-	height: auto !important;
-}
-
-.product-list-swiper .swiper-pagination-bullet {
+.shop-weight-list-swiper .swiper-pagination-bullet {
 	@apply w-1.5 h-1.5 rounded-full bg-gray-300 text-xs text-natural-semidark mx-1 duration-300 cursor-pointer;
 }
 
-.product-list-swiper .swiper-pagination-bullet-active {
+.shop-weight-list-swiper .swiper-pagination-bullet-active {
 	@apply w-3 bg-primary-dark text-white;
 }
 </style>

@@ -34,7 +34,7 @@
 				"
 			/>
 		</div>
-		<div class="grid grid-cols-2 gap-5 mt-6">
+		<div class="grid gird-cols-1 sm:grid-cols-2 gap-5 mt-6">
 			<div class="flex items-center text-natural-mute text-sm">
 				<span class="text-natural-mute font-bold">
 					{{ $strings.province() }}

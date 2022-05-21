@@ -7,7 +7,7 @@
 		}"
 	>
 		<div
-			class="flex items-center justify-center px-6 py-28"
+			class="flex items-center justify-center px-6 py-28 -mt-px -mb-px"
 			:style="{
 				background:
 					'linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.5) 100%)',

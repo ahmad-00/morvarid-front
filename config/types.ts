@@ -12,9 +12,15 @@ export type User = {
 	} | null
 }
 
+export type ProductImage = {
+	id: string
+	image: string
+	product: string
+}
+
 export type Product = {
 	id: string
-	images: string[]
+	images: ProductImage[]
 	main_image: string | null
 	title: string
 	description: string
@@ -75,6 +81,12 @@ export type ShopCategory = {
 	id: string
 	image: string
 	name: string
+}
+
+export type BlogCategory = {
+	id: string
+	image: string
+	title: string
 }
 
 export type Image = {

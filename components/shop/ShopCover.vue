@@ -8,9 +8,9 @@
 			}"
 		>
 			<div
-				class="w-full flex items-center justify-center bg-black bg-opacity-50 py-20 px-6"
+				class="w-full flex items-center justify-center bg-black bg-opacity-50 py-24 px-6"
 			>
-				<span class="text-white font-bold text-5xl">
+				<span class="text-white font-bold text-4xl text-center">
 					{{ title }}
 				</span>
 			</div>

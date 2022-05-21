@@ -29,10 +29,10 @@
 				</MaterialLabel>
 				<div class="flex flex-col w-full max-w-md">
 					<div class="flex items-center py-px ps-8 pe-6 w-full">
-						<span class="text-2xl text-natural-dark flex-grow">
+						<span class="text-xl text-natural-dark flex-grow">
 							{{ $strings.total() }}
 						</span>
-						<span class="text-4xl text-natural-dark font-bold">
+						<span class="text-3xl text-natural-dark font-bold">
 							{{ formattedTotalPrice }}
 						</span>
 						<MyIcon
@@ -44,38 +44,38 @@
 						v-if="false"
 						class="flex items-center py-px ps-8 pe-6 w-full mt-3"
 					>
-						<span class="text-2xl text-natural-dark flex-grow">
+						<span class="text-xl text-natural-dark flex-grow">
 							{{ $strings.discount() }}
 						</span>
-						<span class="text-4xl text-green-500 font-bold">
+						<span class="text-3xl text-green-500 font-bold">
 							{{ formattedTotalPrice }}
 						</span>
 						<MyIcon
 							name="toman"
-							class="w-8 h-8 text-natural-dark ms-1 flex-shrink-0"
+							class="w-7 h-7 text-natural-dark ms-1 flex-shrink-0"
 						/>
 					</div>
 					<div
 						class="flex items-center bg-primary-dark bg-opacity-10 rounded-full py-2 ps-8 pe-6 w-full mt-7"
 					>
 						<span
-							class="text-2xl text-natural-dark flex-grow font-medium"
+							class="text-xl text-natural-dark flex-grow font-medium"
 						>
 							{{ $strings.payment_amount() }}
 						</span>
-						<span class="text-4xl font-black text-natural-dark">
+						<span class="text-3xl font-bold text-natural-dark">
 							{{ formattedTotalPrice }}
 						</span>
 						<MyIcon
 							name="toman"
-							class="w-8 h-8 text-natural-dark ms-1 flex-shrink-0"
+							class="w-7 h-7 text-natural-dark ms-1 flex-shrink-0"
 						/>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div v-else class="flex flex-col flex-grow items-center justify-center">
-			<span class="text-3xl font-black text-natural-mute opacity-50 my-12">
+			<span class="text-3xl font-bold text-natural-mute opacity-50 my-12">
 				{{ $strings.nothing_found() }}
 			</span>
 		</div>

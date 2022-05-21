@@ -5,22 +5,24 @@
 		@tryAgain="fetchData"
 	>
 		<MainHeroSection class="mt-4 mb-20" />
-		<SaffronHistorySection class="mb-px" />
+		<SaffronHistorySection class="mb-8 lg:mb-px" />
 		<SaffronBenefitSection class="mb-16" />
 		<ProductList
 			:products="saffrons"
 			:title="$strings.types_of_saffron_available_for_sale()"
 			:more-link="$routeUrl.ShopCategoryUrl(saffronCategoryId)"
 			class="mb-8"
+			:loading="loading"
 		/>
 		<SaffronFooterSection class="mb-20" />
-		<CardamonHistorySection class="mb-px" />
+		<CardamonHistorySection class="mb-8 lg:mb-px" />
 		<CardamonBenefitSection class="mb-16" />
 		<ProductList
 			:products="cardamons"
 			:title="$strings.types_of_cardamon_available_for_sale()"
 			:more-link="$routeUrl.ShopCategoryUrl(cardamonCategoryId)"
 			class="mb-8"
+			:loading="loading"
 		/>
 		<CardamonFooterSection class="mb-16" />
 		<ArticleList

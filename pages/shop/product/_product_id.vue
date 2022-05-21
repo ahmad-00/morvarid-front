@@ -7,21 +7,22 @@
 	>
 		<div class="flex flex-col px-6 items-center mt-16">
 			<div class="max-w-screen-xl w-full flex flex-col">
-				<div class="grid grid-cols-12 gap-12 mb-32">
-					<div class="col-span-6 flex flex-col">
-						<ProductSliderSection :images="images" />
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-32">
+					<div class="grid-cols-1 lg:col-span-6 flex flex-col">
+						<ProductSliderSection :loading="loading" :images="images" />
 					</div>
-					<div class="col-span-6">
-						<ProductInfoSection :product="product" />
+					<div class="grid-cols-1 lg:col-span-6">
+						<ProductInfoSection :loading="loading" :product="product" />
 					</div>
 				</div>
-				<ProductList
-					:products="relatedProducts"
-					:title="$strings.related_goods()"
-					class="mb-32"
-				/>
 			</div>
 		</div>
+		<ProductList
+			:products="relatedProducts"
+			:title="$strings.related_goods()"
+			class="mb-32"
+			:loading="loading"
+		/>
 	</MainContainer>
 </template>
 
@@ -39,22 +40,16 @@ import { Context } from '@nuxt/types'
 const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 	try {
 		const productId = route.params.product_id || null
-		const r1 = await $axios.get(app.$apiUrl.GetShopProducts(), {
+		const r1 = await $axios.get(app.$apiUrl.GetShopProduct(productId))
+		const product: Product = r1.data
+		const r2 = await $axios.get(app.$apiUrl.GetShopProducts(), {
 			params: {
-				limit: 200,
 				offset: 0,
+				limit: 8,
+				category_id: product.category,
 			},
 		})
-		const products: Product[] = r1.data.results || []
-		const product = products.find((v) => v.id === productId)
-
-		if (!product) {
-			throw { statusCode: 404, message: app.$strings.page_not_found() }
-		}
-
-		const relatedProducts = products
-			.filter((v) => v.category === product?.category)
-			.slice(0, 8)
+		const relatedProducts = r2.data.results
 
 		return {
 			product: product,
@@ -88,7 +83,10 @@ export default class ProductPage extends Vue {
 
 	get images(): Image[] {
 		return (
-			([this.product.main_image, ...(this.product.images || [])]
+			([
+				this.product.main_image,
+				...(this.product.images?.map((v) => v.image) || []),
+			]
 				.filter((v) => v)
 				.map((v) => ({
 					id: null,

@@ -7,7 +7,7 @@
 			<div class="self-center max-w-screen-xl w-full h-px bg-white opacity-50"/>
 		</div>
 		<div class="flex flex-col py-4 px-6">
-			<div class="self-center max-w-screen-xl w-full grid grid-cols-3 text-base font-medium text-white gap-6">
+			<div class="self-center max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 text-base font-medium text-white gap-6">
 				<div class="flex items-center justify-center">
 					<span class="me-6">
 						{{ $strings.phone_number() + ' :' }}
@@ -42,8 +42,8 @@
 		</div>
 		<div class="w-full h-px bg-white opacity-100"/>
 		<div class="flex flex-col px-6 py-6">
-			<div class="max-w-screen-xl w-full flex items-start self-center">
-				<div class="flex-grow flex flex-col me-20 text-white">
+			<div class="max-w-screen-xl w-full flex flex-col lg:flex-row items-start self-center">
+				<div class="flex-grow flex flex-col me-0 lg:me-20 text-white mb-6 lg:mb-0">
 					<b class="font-bold mb-6">
 						{{ $strings.app_subtitle() }}
 					</b>
@@ -51,7 +51,7 @@
 						{{ $strings.app_description() }}
 					</p>
 				</div>
-				<div class="flex items-center">
+				<div class="flex items-center self-center lg:self-start">
 					<div class="w-40 h-40 rounded-xl bg-gray-100 me-6">
 						<img v-if="false" src="" alt="" class="w-full h-full">
 					</div>
@@ -65,7 +65,7 @@
 			<div class="self-center max-w-screen-xl w-full h-px bg-white opacity-50"/>
 		</div>
 		<div class="flex flex-col px-6 relative">
-			<div class="self-center max-w-screen-xl w-full py-8 text-center">
+			<div class="self-center max-w-screen-xl w-full pt-8 pb-12 lg:pb-8 text-center">
 				<p class="m-0 text-xs text-white">
 					{{ $strings.copyright_text() }}
 				</p>

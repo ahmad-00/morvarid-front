@@ -3,11 +3,11 @@
 		<img
 			:src="article.image"
 			alt=""
-			class="w-24 h-24 flex-shrink-0 me-4"
+			class="w-20 h-20 flex-shrink-0 me-4"
 		/>
 		<nuxt-link
 			:to="$routeUrl.BlogArticleUrl(article.id)"
-			class="text-natural-dark text-lg font-medium hover:text-primary duration-300 clam"
+			class="text-natural-dark text-base font-medium hover:text-primary duration-300 clam"
 		>
 			{{ article.title || '~' }}
 		</nuxt-link>

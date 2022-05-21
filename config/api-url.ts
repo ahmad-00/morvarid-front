@@ -22,10 +22,12 @@ export default {
 	GetShopCategories: () => `category`,
 	// product
 	GetShopProducts: () => `product`,
-	GetShopProduct: () => `product`,
+	GetShopProduct: (id: any) => `product/${id}`,
 	// media
 	GetMediaUrl: (url: string) => `media/${url}`,
 	// order
 	SubmitOrderUrl: () => `order`,
 	GetOrdersUrl: () => `order`,
+	// weight
+	GetWeightsUrl: () => `weights`,
 }

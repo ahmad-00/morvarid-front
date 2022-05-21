@@ -11,9 +11,15 @@
 				:loading="loading"
 				@update:loading="(v) => $emit('update:loading', v)"
 				class="shadow-md"
+				:user-selected="selected"
 			/>
-			<div class="grid grid-cols-12 w-full px-8 py-8 gap-8 flex-grow">
-				<div class="col-span-3 flex flex-col">
+			<div class="grid grid-cols-1 lg:grid-cols-12 w-full px-6 lg:px-8 py-8 gap-x-8 gap-y-12 flex-grow">
+				<div class="col-span-1 lg:col-span-3 flex-col"
+				:class="{
+					'hidden lg:flex': selected !== 'dashboard',
+					'flex': selected === 'dashboard',
+				}"
+				>
 					<div
 						class="flex flex-col bg-white rounded-2xl overflow-hidden"
 						:style="{
@@ -27,7 +33,7 @@
 						/>
 					</div>
 				</div>
-				<div class="col-span-9 flex flex-col">
+				<div class="col-span-1 lg:col-span-9 flex flex-col">
 					<slot></slot>
 				</div>
 			</div>

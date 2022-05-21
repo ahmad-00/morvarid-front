@@ -1,6 +1,12 @@
 <template>
-	<div class="relative cursor-pointer" @click="$emit('click')">
-		<div class="pt-1/1">
+	<div
+		class="relative cursor-pointer"
+		@click="$emit('click')"
+		:class="{
+			'animate-pulse': loading,
+		}"
+	>
+		<div v-if="!loading" class="pt-1/1">
 			<div
 				class="absolute left-0 top-0 right-0 bottom-0 bg-primary-dark m-2 duration-300"
 				:style="{ borderRadius: selected ? '100%' : '25%' }"
@@ -19,10 +25,10 @@
 				<div
 					class="w-full h-full flex flex-col items-center justify-center text-white bg-natural-dark bg-opacity-75"
 				>
-					<span class="text-6xl font-black mb-8">
+					<span class="text-4xl lg:text-5xl font-bold mb-6">
 						{{ title }}
 					</span>
-					<span class="text-3xl font-medium">
+					<span class="text-xl lg:text-2xl font-medium">
 						{{ subtitle }}
 					</span>
 				</div>
@@ -35,6 +41,7 @@
 				}"
 			/>
 		</div>
+		<div v-else class="pt-1/1 bg-gray-200 rounded-full"></div>
 	</div>
 </template>
 
@@ -53,6 +60,7 @@ export default class ShopWeightCard extends Vue {
 	@Prop({ default: 'subtitle' }) subtitle?: string
 	@Prop({}) image?: string
 	@Prop({}) selected?: boolean
+	@Prop({ default: false }) loading?: boolean
 }
 </script>
 

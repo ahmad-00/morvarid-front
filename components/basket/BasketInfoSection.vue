@@ -1,156 +1,165 @@
 <template>
-	<div class="flex">
-		<div class="w-7/12 flex-shrink-0 flex flex-col pt-8 pb-8">
-			<span class="text-xl text-natural-dark font-bold mb-6">
-				{{ $strings.your_details() }}
-			</span>
-			<span class="mb-4 max-w-lg relative">
-				<TextInput
-					:label="$strings.your_phone_number()"
-					class=""
-					:disabled="true"
-					:value="user && user.phone"
-					input-class="text-start"
-				/>
-				<MyIcon
-					name="edit"
-					class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
-					@click="openUserEditDialog('mobile')"
-				/>
-			</span>
-			<span class="mb-4 max-w-lg relative">
-				<TextInput
-					:label="$strings.your_email_address()"
-					class=""
-					:disabled="true"
-					:value="user && user.email"
-					input-class="text-start"
-				/>
-				<MyIcon
-					name="edit"
-					class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
-					@click="openUserEditDialog('email')"
-				/>
-			</span>
-			<span class="max-w-lg relative mb-8">
-				<TextInput
-					:label="$strings.your_full_name()"
-					class=""
-					:disabled="true"
-					:value="
-						user &&
-						user.first_name &&
-						user.last_name &&
-						user.first_name + ' ' + user.last_name
-					"
-					input-class="text-start"
-				/>
-				<MyIcon
-					name="edit"
-					class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
-					@click="openUserEditDialog('name')"
-				/>
-			</span>
-			<div class="flex items-center mb-6 max-w-lg overflow-hidden">
-				<span class="text-xl text-natural-dark font-bold flex-grow line-clamp-1">
-					{{ $strings.order_receipt_information() }}
+	<div class="flex flex-col">
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-8">
+			<div class="col-span-1 lg:col-span-7 flex flex-col">
+				<span class="text-xl text-natural-dark font-bold mb-6">
+					{{ $strings.your_details() }}
 				</span>
-				<span
-					class="text-white font-bold text-xs py-2 px-3 rounded-lg ripple-bg-green-500 cursor-pointer flex-shrink-0"
-					@click="openCreateAddress"
-				>
-				{{ $strings.add_n($strings.address()) }}
-			</span>
-			</div>
-			<div class="flex flex-col max-w-lg mb-6">
-				<span
-					v-if="!addressLoading && !addresses"
-					class="text-white font-bold text-sm ripple-bg-yellow-500 rounded-lg px-4 py-2.5 self-center cursor-pointer"
-				>
-					{{ $strings.try_again() }}
-				</span>
-				<span
-					v-else-if="addressLoading"
-					class="w-6 h-6 rounded-full animate-ping bg-primary self-center"
-				></span>
-				<span
-					v-else-if="!addresses.length"
-					class="text-2xl font-black text-natural-mute opacity-50 self-center"
-				>
-					{{ $strings.nothing_found() }}
-				</span>
-				<div v-else class="flex flex-col">
-					<AddressCard
-						v-for="(address, i) in addresses"
-						:key="i"
-						:data="address"
-						class="mb-4 cursor-pointer"
-						:selected="address.id === selectedAddressId"
-						@edit="openEditAddress(address)"
-						@delete="openDeleteAddress(address)"
-						@click="$store.commit('basket/selectAddressId', address.id)"
+				<span class="mb-4 max-w-lg relative">
+					<TextInput
+						:label="$strings.your_phone_number()"
+						class=""
+						:disabled="true"
+						:value="user && user.phone"
+						input-class="text-start"
 					/>
+					<MyIcon
+						name="edit"
+						class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
+						@click="openUserEditDialog('mobile')"
+					/>
+				</span>
+				<span class="mb-4 max-w-lg relative">
+					<TextInput
+						:label="$strings.your_email_address()"
+						class=""
+						:disabled="true"
+						:value="user && user.email"
+						input-class="text-start"
+					/>
+					<MyIcon
+						name="edit"
+						class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
+						@click="openUserEditDialog('email')"
+					/>
+				</span>
+				<span class="max-w-lg relative mb-8">
+					<TextInput
+						:label="$strings.your_full_name()"
+						class=""
+						:disabled="true"
+						:value="
+							user &&
+							user.first_name &&
+							user.last_name &&
+							user.first_name + ' ' + user.last_name
+						"
+						input-class="text-start"
+					/>
+					<MyIcon
+						name="edit"
+						class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
+						@click="openUserEditDialog('name')"
+					/>
+				</span>
+				<div class="flex items-center mb-6 max-w-lg overflow-hidden">
+					<span
+						class="text-xl text-natural-dark font-bold flex-grow line-clamp-1"
+					>
+						{{ $strings.order_receipt_information() }}
+					</span>
+					<span
+						class="text-white font-bold text-xs py-2 px-3 rounded-lg ripple-bg-green-500 cursor-pointer flex-shrink-0"
+						@click="openCreateAddress"
+					>
+						{{ $strings.add_n($strings.address()) }}
+					</span>
+				</div>
+				<div class="flex flex-col max-w-lg mb-6">
+					<span
+						v-if="!addressLoading && !addresses"
+						class="text-white font-bold text-sm ripple-bg-yellow-500 rounded-lg px-4 py-2.5 self-center cursor-pointer"
+					>
+						{{ $strings.try_again() }}
+					</span>
+					<span
+						v-else-if="addressLoading"
+						class="w-6 h-6 rounded-full animate-ping bg-primary self-center"
+					></span>
+					<span
+						v-else-if="!addresses.length"
+						class="text-2xl font-bold text-natural-mute opacity-50 self-center"
+					>
+						{{ $strings.nothing_found() }}
+					</span>
+					<div v-else class="flex flex-col">
+						<AddressCard
+							v-for="(address, i) in addresses"
+							:key="i"
+							:data="address"
+							class="mb-4 cursor-pointer"
+							:selected="address.id === selectedAddressId"
+							@edit="openEditAddress(address)"
+							@delete="openDeleteAddress(address)"
+							@click="
+								$store.commit(
+									'basket/selectAddressId',
+									address.id
+								)
+							"
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="flex-grow pl-8" />
-		<div class="w-5/12 max-w-sm flex-shrink-0 flex flex-col pt-8 pb-8">
-			<span class="text-natural-dark font-bold text-xl mb-4">
-				{{ $strings.order_summary() }}
-			</span>
-			<BasketProductHorizontalCard
-				v-for="(item, i) in products"
-				:key="i"
-				:product="item"
-				class="bg-primary bg-opacity-3 mb-2"
-			/>
-			<div class="flex flex-col w-full mt-6">
-				<div class="flex items-center py-px ps-8 pe-6 w-full">
-					<span
-						class="text-lg text-natural-dark flex-grow font-medium"
+			<div class="col-span-1 lg:col-span-5 flex flex-col">
+				<span class="text-natural-dark font-bold text-xl mb-4">
+					{{ $strings.order_summary() }}
+				</span>
+				<BasketProductHorizontalCard
+					v-for="(item, i) in products"
+					:key="i"
+					:product="item"
+					class="bg-primary bg-opacity-3 mb-2"
+				/>
+				<div class="flex flex-col w-full mt-6">
+					<div class="flex items-center py-px ps-8 pe-6 w-full">
+						<span
+							class="text-lg text-natural-dark flex-grow font-medium"
+						>
+							{{ $strings.total() }}
+						</span>
+						<span class="text-3xl text-natural-dark font-medium">
+							{{ formattedTotalPrice }}
+						</span>
+						<MyIcon
+							name="toman"
+							class="w-6 h-6 text-natural-dark ms-1 self-center"
+						/>
+					</div>
+					<div
+						v-if="false"
+						class="flex items-center py-px ps-8 pe-6 w-full"
 					>
-						{{ $strings.total() }}
-					</span>
-					<span class="text-3xl text-natural-dark font-medium">
-						{{ formattedTotalPrice }}
-					</span>
-					<span
-						class="text-xs text-natural-dark ms-1 self-start font-medium"
+						<span
+							class="text-lg text-natural-dark flex-grow font-medium"
+						>
+							{{ $strings.discount() }}
+						</span>
+						<span class="text-3xl text-green font-medium">
+							{{ formattedTotalPrice }}
+						</span>
+						<span
+							class="text-xs text-natural-dark ms-1 self-start font-medium"
+						>
+							{{ $strings.toman() }}
+						</span>
+					</div>
+					<div
+						class="flex items-center bg-primary bg-opacity-10 rounded-full py-1.5 ps-8 pe-6 w-full mt-6"
 					>
-						{{ $strings.toman() }}
-					</span>
-				</div>
-				<div v-if="false" class="flex items-center py-px ps-8 pe-6 w-full">
-					<span
-						class="text-lg text-natural-dark flex-grow font-medium"
-					>
-						{{ $strings.discount() }}
-					</span>
-					<span class="text-3xl text-green font-medium">
-						{{ formattedTotalPrice }}
-					</span>
-					<span
-						class="text-xs text-natural-dark ms-1 self-start font-medium"
-					>
-						{{ $strings.toman() }}
-					</span>
-				</div>
-				<div
-					class="flex items-center bg-primary bg-opacity-10 rounded-full py-1 ps-8 pe-6 w-full mt-6"
-				>
-					<span
-						class="text-lg text-natural-dark flex-grow font-medium"
-					>
-						{{ $strings.payment_amount() }}
-					</span>
-					<span class="text-3xl font-black text-natural-dark">
-						{{ formattedTotalPrice }}
-					</span>
-					<span
-						class="text-xs text-natural-dark ms-1 self-start mt-1 font-medium"
-					>
-						{{ $strings.toman() }}
-					</span>
+						<span
+							class="text-lg text-natural-dark flex-grow font-medium"
+						>
+							{{ $strings.payment_amount() }}
+						</span>
+						<span class="text-3xl font-bold text-natural-dark">
+							{{ formattedTotalPrice }}
+						</span>
+						<MyIcon
+							name="toman"
+							class="w-6 h-6 text-natural-dark ms-1 self-center"
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -457,7 +466,7 @@ export default class BasketInfoSection extends Vue {
 				'',
 				{} as any
 			)
-			if(this.selectedAddressId === this.targetAddress.id) {
+			if (this.selectedAddressId === this.targetAddress.id) {
 				this.$store.commit('basket/selectAddressId', null)
 			}
 			this.addresses =

@@ -17,42 +17,50 @@
 				:title="$strings.types_of_saffron_available_for_sale()"
 				:more-link="$routeUrl.ShopCategoryUrl(this.saffronCategoryId)"
 				class="mb-20"
+				:loading="loading"
 			/>
 			<ProductList
 				:products="cardamons"
 				:title="$strings.types_of_cardamon_available_for_sale()"
 				:more-link="$routeUrl.ShopCategoryUrl(this.cardamonCategoryId)"
 				class="mb-32"
+				:loading="loading"
 			/>
 		</template>
-		<div v-else class="flex flex-col px-6 items-center mb-32">
-			<div class="max-w-screen-xl w-full flex flex-col">
-				<div class="grid grid-cols-4 gap-16 mb-20">
-					<ShopWeightCard
-						v-for="(weight, i) in weights"
-						:key="i"
-						:title="$stringUtils.stringWeight(weight).value || $strings.all()"
-						:subtitle="$stringUtils.stringWeight(weight).label  || $strings.weight()"
-						:image="coverInfo.image2"
-						:selected="selectedWeight === weight"
-						@click="selectedWeight = weight"
-					/>
-				</div>
-				<div class="h-px bg-gray-300 mb-20" />
-				<div class="grid grid-cols-4 gap-10">
-					<ProductCard
-						v-for="(p, i) in filteredProducts"
-						:key="i"
-						:product="p"
-					/>
+		<template v-else>
+			<ShopWeightList
+				:data="weightInfoList"
+				@select="(w) => changeWeight(w)"
+				class="mb-20"
+				:loading="loading"
+			/>
+			<div class="flex flex-col px-6 items-center mb-32">
+				<div class="max-w-screen-xl w-full flex flex-col">
+					<div class="h-px bg-gray-300 mb-20" />
+					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 xl:gap-10">
+						<template v-if="!loading">
+							<ProductCard
+								v-for="(p, i) in products"
+								:key="i"
+								:product="p"
+							/>
+						</template>
+						<template v-else>
+							<ProductCard
+								v-for="(i) in 4"
+								:key="i"
+								:loading="true"
+							/>
+						</template>
+					</div>
 				</div>
 			</div>
-		</div>
+		</template>
 	</MainContainer>
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
+import { Component, Watch } from 'nuxt-property-decorator'
 import MyIcon from '~/components/utils/MyIcon.vue'
 import Vue from 'vue'
 import MainContainer from '~/components/home/MainContainer.vue'
@@ -63,12 +71,17 @@ import ProductList from '~/components/product/ProductList.vue'
 import ProductCard from '~/components/product/ProductCard.vue'
 import ShopWeightCard from '~/components/shop/ShopWeightCard.vue'
 import { Context } from '@nuxt/types'
+import ShopWeightList from '~/components/shop/ShopWeightList.vue'
+
+const Qs = require('qs')
 
 const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 	try {
+		const weights = route.query['weights[]'] || []
 		const categoryId = route.params.category_id || null
 		if (!categoryId) {
-			const [r1, r2] = await Promise.all([
+			const [r1, r2, r3] = await Promise.all([
+				$axios.get(app.$apiUrl.GetWeightsUrl()),
 				$axios.get(app.$apiUrl.GetShopProducts(), {
 					params: {
 						limit: 8,
@@ -85,24 +98,31 @@ const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 				}),
 			])
 			return {
-				saffrons: r1.data.results,
-				cardamons: r2.data.results,
+				weights: [0, ...r1.data.weights],
+				saffrons: r2.data.results,
+				cardamons: r3.data.results,
 				products: [],
 			}
 		} else {
-			const [r1] = await Promise.all([
+			const [r1, r2] = await Promise.all([
+				$axios.get(app.$apiUrl.GetWeightsUrl()),
 				$axios.get(app.$apiUrl.GetShopProducts(), {
 					params: {
 						limit: 100,
 						offset: 0,
 						category_id: categoryId,
+						weight: weights,
+					},
+					paramsSerializer: function (params) {
+						return Qs.stringify(params, { arrayFormat: 'repeat' })
 					},
 				}),
 			])
 			return {
 				saffrons: [],
 				cardamons: [],
-				products: r1.data.results,
+				weights: [0, ...r1.data.weights],
+				products: r2.data.results,
 			}
 		}
 	} catch (e: any) {
@@ -114,6 +134,7 @@ const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 @Component({
 	middleware: ['fetch'],
 	components: {
+		ShopWeightList,
 		ShopWeightCard,
 		ProductCard,
 		ProductList,
@@ -126,10 +147,10 @@ const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 export default class ShopPage extends Vue {
 	fetched = false
 	loading = true
-	selectedWeight = null as number | null
 	saffrons = [] as Product[]
 	cardamons = [] as Product[]
 	products = [] as Product[]
+	weights = [] as number[]
 
 	get saffronCategoryId(): string {
 		return process.env.CATEGORY_SAFFRON_ID || ''
@@ -149,10 +170,6 @@ export default class ShopPage extends Vue {
 
 	get category(): ShopCategory | null {
 		return this.categories.find((v) => v.id === this.categoryId) || null
-	}
-
-	get weights(): (number | null)[] {
-		return [0, ...new Set(this.products.map(v => +v.weight))].sort()
 	}
 
 	get coverInfo() {
@@ -183,8 +200,69 @@ export default class ShopPage extends Vue {
 		}
 	}
 
-	get filteredProducts() {
-		return this.products.filter(v => !this.selectedWeight || v.weight === this.selectedWeight)
+	get queryWeights(): any {
+		return this.$route.query['weights[]']
+	}
+
+	get selectedWeights(): number[] {
+		const w = this.queryWeights
+		if (!w) return [0]
+		if (typeof w === 'string') return [0]
+		const a = w
+			.map((v: any) => +(v || 0))
+			.filter((v: any) => v)
+			.filter((v: any) => this.weights.includes(v))
+		return a.length ? a : [0]
+	}
+
+	get weightInfoList(): any[] {
+		return this.weights.map((w) => ({
+			weight: w,
+			title:
+				this.$stringUtils.stringWeight(w).value || this.$strings.all(),
+			subtitle:
+				this.$stringUtils.stringWeight(w).label ||
+				this.$strings.weight(),
+			image: this.coverInfo.image2,
+			selected: this.selectedWeights.includes(w),
+		}))
+	}
+
+	@Watch('queryWeights')
+	onWeightChange() {
+		this.fetchData()
+	}
+
+	async changeWeight(w: number) {
+		if (w === 0 && this.selectedWeights.includes(0)) return
+		this.loading = true
+		if (w === 0) {
+			await this.$router.replace({
+				query: {
+					...this.$route.query,
+					'weights[]': [],
+				},
+			})
+		} else if (this.selectedWeights.includes(w)) {
+			await this.$router.replace({
+				query: {
+					...this.$route.query,
+					'weights[]': this.selectedWeights
+						.filter((v) => v)
+						.filter((v) => v !== w)
+						.map((v) => String(v)),
+				},
+			})
+		} else {
+			await this.$router.replace({
+				query: {
+					...this.$route.query,
+					'weights[]': [...this.selectedWeights, w]
+						.filter((v) => v)
+						.map((v) => String(v)),
+				},
+			})
+		}
 	}
 
 	async asyncData(context: Context) {
@@ -212,6 +290,7 @@ export default class ShopPage extends Vue {
 			error: this.$nuxt.error,
 		} as any)
 			.then((r) => {
+				this.weights = r.weights
 				this.saffrons = r.saffrons
 				this.cardamons = r.cardamons
 				this.products = r.products

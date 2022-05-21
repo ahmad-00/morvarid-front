@@ -2,7 +2,7 @@
 	<div class="flex flex-col items-center justify-center">
 		<div class="flex flex-col items-start mt-20 mb-32">
 			<MyIcon name="invoice" class="w-20 h-20 text-primary-dark mb-8" />
-			<span class="text-natural-dark font-black text-3xl">
+			<span class="text-natural-dark font-bold text-3xl">
 				{{ $strings.payment_was_successful() }}
 			</span>
 			<span class="text-natural-dark mt-1">
@@ -12,7 +12,7 @@
 				<span class="text-xl text-natural-dark font-medium">
 					{{ $strings.your_purchase_tracking_code() + ' :' }}
 				</span>
-				<span class="text-3xl font-black text-natural-dark ms-3">
+				<span class="text-3xl font-bold text-natural-dark ms-3">
 					{{ trackingCode }}
 				</span>
 			</div>

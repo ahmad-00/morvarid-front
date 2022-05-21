@@ -1,6 +1,12 @@
 <template>
-	<div class="flex flex-col">
+	<div
+		class="flex flex-col"
+		:class="{
+			'animate-pulse': loading,
+		}"
+	>
 		<nuxt-link
+			v-if="!loading"
 			:to="$routeUrl.ShopProductUrl(product.id)"
 			class="relative w-full rounded-13 block mt-8"
 		>
@@ -16,7 +22,10 @@
 					alt=""
 					class="w-full h-full absolute left-0 top-0 object-cover"
 				/>
-				<span v-if="product.quantity" class="w-8 h-8 bg-white rounded-xl absolute end-0 top-0 start-0 end-0 mx-auto mt-4 flex items-center justify-center text-sm text-natural-semidark font-bold shadow-sm p-0.5">
+				<span
+					v-if="product.quantity"
+					class="w-8 h-8 bg-white rounded-xl absolute end-0 top-0 start-0 end-0 mx-auto mt-4 flex items-center justify-center text-sm text-natural-semidark font-bold shadow-sm p-0.5"
+				>
 					<span class="line-clamp-1">
 						{{ product.quantity }}
 					</span>
@@ -32,23 +41,39 @@
 				</div>
 			</div>
 		</nuxt-link>
+		<div v-else class="relative w-full mt-8">
+			<div
+				class="w-full h-1/2 bg-gray-200 bg-opacity-25 absolute left-0 top-0 -mt-8 rounded-13"
+			/>
+			<div class="pt-1/1 rounded-13 bg-gray-200 w-full"></div>
+		</div>
 		<div class="flex items-start mt-4">
 			<nuxt-link
+				v-if="!loading"
 				:to="$routeUrl.ShopProductUrl(product.id)"
-				class="text-lg font-black text-natural-dark hover:text-primary duration-300 line-clamp-2 me-3"
+				class="text-lg font-bold text-natural-dark hover:text-primary duration-300 line-clamp-2 me-3"
 			>
 				{{ product.title || '~' }}
 			</nuxt-link>
-			<span class="flex-grow" />
-			<span class="text-lg font-black text-natural-dark flex-shrink-0">
-				{{ formattedPrice || '0' }}
+			<span v-else class="bg-gray-200 rounded-md w-20 me-3">
+				<span class="text-lg opacity-0 select-none"> . </span>
 			</span>
-			<MyIcon
-				name="toman"
-				class="w-6 h-6 text-natural-dark ms-1 flex-shrink-0"
-			/>
+			<span class="flex-grow" />
+			<div v-if="!loading" class="flex items-center">
+				<span class="text-lg font-bold text-natural-dark flex-shrink-0">
+					{{ formattedPrice || '0' }}
+				</span>
+				<MyIcon
+					name="toman"
+					class="w-6 h-6 text-natural-dark ms-1 flex-shrink-0"
+				/>
+			</div>
+			<span v-else class="bg-gray-200 rounded-md w-12">
+				<span class="text-lg opacity-0 select-none"> . </span>
+			</span>
 		</div>
-		<div class="flex items-center mt-2">
+		<span class="flex-grow" />
+		<div v-if="!loading" class="flex items-center mt-2">
 			<span class="text-sm text-natural-dark opacity-50 me-2">
 				{{ (product.weight && weightString) || '~' }}
 			</span>
@@ -58,6 +83,9 @@
 				{{ (category && category.name) || '~' }}
 			</span>
 		</div>
+		<span v-else class="bg-gray-200 rounded-md w-32 mt-2">
+			<span class="text-sm opacity-0 select-none"> . </span>
+		</span>
 	</div>
 </template>
 
@@ -71,6 +99,7 @@ import { Product, ShopCategory } from '~/config/types'
 })
 export default class ProductCard extends Vue {
 	@Prop() product!: Product
+	@Prop({ default: false }) loading?: boolean
 
 	get formattedPrice(): string {
 		return this.$stringUtils.thousandFormat(this.product.price || '') || ''

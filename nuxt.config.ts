@@ -46,6 +46,10 @@ const config: NuxtConfig = {
 			mode: 'client',
 		},
 		{
+			src: '~/plugins/scroll-lock.ts',
+			mode: 'client',
+		},
+		{
 			src: '~/plugins/custom-scrollbar.ts',
 			mode: 'client',
 		},

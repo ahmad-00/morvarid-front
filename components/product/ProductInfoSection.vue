@@ -1,9 +1,26 @@
 <template>
-	<div class="flex flex-col">
-		<span class="text-4xl font-black text-natural-dark mb-3">
-			{{ product.title || '~' }}
-		</span>
-		<div class="flex items-center mb-5">
+	<div
+		class="flex flex-col"
+		:class="{
+			'animate-pulse': loading,
+		}"
+	>
+		<div class="flex items-center mb-3">
+			<span v-if="!loading" class="text-3xl font-bold text-natural-dark">
+				{{ product.title || '~' }}
+			</span>
+			<span v-else class="w-52 rounded-md bg-gray-200">
+				<span class="opacity-0 select-none text-3xl">.</span>
+			</span>
+			<div class="flex-grow" />
+			<MyIcon
+				name="arrow-left"
+				class="w-10 h-10 text-natural-dark hover:text-primary duration-300 cursor-pointer flex-shrink-0 self-start"
+				@click="back"
+			/>
+		</div>
+
+		<div v-if="!loading" class="flex items-center mb-5">
 			<span class="text-natural-dark opacity-50 me-2">
 				{{ (product.weight && weightString) || '~' }}
 			</span>
@@ -13,16 +30,27 @@
 				{{ (category && category.name) || '~' }}
 			</span>
 		</div>
-		<div class="flex items-center">
-			<span class="text-5xl font-black text-natural-dark">
+		<div v-else class="bg-gray-200 rounded-md w-32 mb-5">
+			<span class="opacity-0 select-none">.</span>
+		</div>
+		<div v-if="!loading" class="flex items-center">
+			<span class="text-5xl font-bold text-natural-dark">
 				{{ formattedPrice || '0' }}
 			</span>
 			<MyIcon name="toman" class="w-10 h-10 text-natural-dark ms-1" />
 		</div>
-		<span class="text-natural-dark mt-8">
+		<div v-else class="flex items-center w-40 bg-gray-200 rounded-md">
+			<span class="text-5xl opacity-0 select-none">. </span>
+		</div>
+		<span v-if="!loading" class="text-natural-dark mt-8">
 			{{ product.description }}
 		</span>
-		<div class="flex items-center mt-5">
+		<div v-else class="flex flex-col mt-8">
+			<span v-for="i in 4" class="bg-gray-200 rounded-md mb-3">
+				<span class="opacity-0 select-none">.</span>
+			</span>
+		</div>
+		<div v-if="!loading" class="flex items-center mt-5">
 			<span class="text-natural-dark w-20 me-4">
 				{{ $strings.weight() + ' :' }}
 			</span>
@@ -43,12 +71,17 @@
 			</span>
 		</div>
 		<span
-			class="text-lg font-bold border-2 px-8 py-4 rounded-xl mt-8 self-start cursor-pointer"
+			v-if="!loading"
+			class="text-base font-bold border-2 px-8 py-4 rounded-xl mt-8 self-start cursor-pointer"
 			:class="{
-				'ripple-bg-primary-dark border-transparent text-white': !isInBasket,
-				'ripple-bg-white border-primary-dark text-primary-dark': isInBasket,
+				'ripple-bg-primary-dark border-transparent text-white':
+					!isInBasket,
+				'ripple-bg-white border-primary-dark text-primary-dark':
+					isInBasket,
 			}"
-			@click="isInBasket ? removeFromBasket(product) : addToBasket(product, 1)"
+			@click="
+				isInBasket ? removeFromBasket(product) : addToBasket(product, 1)
+			"
 		>
 			{{
 				isInBasket
@@ -72,6 +105,7 @@ import { Product, ShopCategory } from '~/config/types'
 })
 export default class ProductInfoSection extends Vue {
 	@Prop({}) product!: Product
+	@Prop({ default: false }) loading?: boolean
 
 	get formattedPrice(): string {
 		return this.$stringUtils.thousandFormat(this.product.price || '') || ''
@@ -110,6 +144,14 @@ export default class ProductInfoSection extends Vue {
 
 	removeFromBasket(product: Product) {
 		this.$store.dispatch('basket/remove', product.id)
+	}
+
+	back() {
+		if (window.history.length > 2) {
+			this.$router.back()
+		} else {
+			this.$router.push(this.$routeUrl.ShopUrl())
+		}
 	}
 }
 </script>
