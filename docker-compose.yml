@@ -1,0 +1,21 @@
+version: '3'
+services:
+    front:
+        image: node:14.17.5
+        container_name: morvarid-sepid-front
+        working_dir: '/usr/src/nuxt-app'
+        restart: always
+        environment:
+            - HOST=0.0.0.0
+            - NUXT_HOST=0.0.0.0
+            - NUXT_PORT=3000
+            - BASE_URL=http://141.11.42.199/
+            - SITE_URL=https://morvaridsepid.herokuapp.com
+            - ENABLE_PROXY=1
+            - CATEGORY_SAFFRON_ID=6b966d25-5559-4925-a660-029c6f511873
+            - CATEGORY_CARDAMON_ID=97103baa-7746-4aae-a4f2-4eecb20a2512
+        ports:
+            - '3000:3000'
+        volumes:
+            - .:/usr/src/nuxt-app
+        command: sh -c "yarn install; yarn build; yarn start;"
