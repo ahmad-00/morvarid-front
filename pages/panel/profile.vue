@@ -88,7 +88,10 @@
 					:show-email="dialogData.showEmail"
 					class="-mb-8"
 				/>
-				<span v-if="dialogData.showMobile" class="text-sm text-yellow-400 text-center mt-8">
+				<span
+					v-if="dialogData.showMobile"
+					class="text-sm text-yellow-400 text-center mt-8"
+				>
 					{{ $strings.you_must_confirm_this_number_to_register() }}
 				</span>
 			</div>
@@ -250,6 +253,15 @@ export default class PanelProfilePage extends Vue {
 			this.$toastErrors(this, e)
 		}
 		this.dialogData = { ...this.dialogData, loading: false }
+	}
+
+	head() {
+		return {
+			title:
+				this.$strings.account_information() +
+				' | ' +
+				this.$strings.app_title(),
+		}
 	}
 }
 </script>

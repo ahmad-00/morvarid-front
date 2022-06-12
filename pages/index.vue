@@ -165,5 +165,14 @@ export default class HomeIndex extends Vue {
 			this.fetchData()
 		}
 	}
+
+	head() {
+		return {
+			title:
+				this.$strings.app_title() +
+				' | ' +
+				this.$strings.app_subtitle(),
+		}
+	}
 }
 </script>

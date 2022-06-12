@@ -84,6 +84,15 @@ export default class LoginPage extends Vue {
 			}
 		}
 	}
+
+	head() {
+		return {
+			title:
+				this.$strings.login_with_password() +
+				' | ' +
+				this.$strings.app_title(),
+		}
+	}
 }
 </script>
 

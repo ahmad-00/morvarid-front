@@ -3,6 +3,7 @@
 		:fetched="fetched"
 		:loading.sync="loading"
 		selected="orders"
+		@tryAgain="fetchData"
 	>
 		<div class="flex items-center mb-10">
 			<MyIcon
@@ -84,6 +85,15 @@ export default class PanelAddressesPage extends Vue {
 
 	mounted() {
 		this.fetchData()
+	}
+
+	head() {
+		return {
+			title:
+				this.$strings.orders() +
+				' | ' +
+				this.$strings.app_title(),
+		}
 	}
 }
 </script>

@@ -28,6 +28,7 @@ export default {
 	// order
 	SubmitOrderUrl: () => `order`,
 	GetOrdersUrl: () => `order`,
+	GetOrderCountUrl: () => `order/count`,
 	// weight
 	GetWeightsUrl: () => `weights`,
 }

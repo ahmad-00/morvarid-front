@@ -3,6 +3,7 @@
 		:fetched="fetched"
 		:loading.sync="loading"
 		selected="addresses"
+		@tryAgain="fetchData"
 	>
 		<div class="flex items-center mb-10">
 			<span class="text-xl font-bold text-natural-dark me-4">
@@ -167,6 +168,15 @@ export default class PanelAddressesPage extends Vue {
 
 	mounted() {
 		this.fetchData()
+	}
+
+	head() {
+		return {
+			title:
+				this.$strings.addresses() +
+				' | ' +
+				this.$strings.app_title(),
+		}
 	}
 }
 </script>

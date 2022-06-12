@@ -16,9 +16,12 @@
 	},
 	"dependencies": {
 		"@nuxtjs/axios": "^5.13.6",
+		"@nuxtjs/robots": "^2.5.0",
+		"@nuxtjs/sitemap": "^2.4.0",
 		"@tailwindcss/line-clamp": "^0.3.1",
 		"@types/moment-jalaali": "^0.7.5",
 		"@types/uuid": "^8.3.4",
+		"axios": "^0.27.2",
 		"cookie-universal-nuxt": "^2.1.5",
 		"core-js": "^3.19.3",
 		"dotenv": "^16.0.0",

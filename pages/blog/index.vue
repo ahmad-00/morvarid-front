@@ -37,7 +37,7 @@ import { Component } from 'nuxt-property-decorator'
 import MainContainer from '~/components/home/MainContainer.vue'
 import BlogHeader from '~/components/blog/BlogHeader.vue'
 import ArticleCard from '~/components/article/ArticleCard.vue'
-import {Article, ArticleCategory} from '~/config/types'
+import { Article, ArticleCategory } from '~/config/types'
 import Pagination from '~/components/utils/Pagination.vue'
 
 const LIMIT = 12
@@ -69,7 +69,7 @@ export default class HomeIndex extends Vue {
 	}
 
 	get category(): ArticleCategory | null {
-		return this.categories.find(c => c.id == this.categoryId) || null
+		return this.categories.find((c) => c.id == this.categoryId) || null
 	}
 
 	articles = Array(12)
@@ -82,5 +82,23 @@ export default class HomeIndex extends Vue {
 			category: 'ﻧﺎم دﺳﺘﻪ',
 			image: '/img/image_article_sample.jpg',
 		})) as Article[]
+
+	head() {
+		if (this.category) {
+			return {
+				title:
+					this.$strings.n_category(this.category.title) +
+					' | ' +
+					this.$strings.app_blog(),
+			}
+		} else {
+			return {
+				title:
+					this.$strings.app_blog() +
+					' | ' +
+					this.$strings.app_subtitle(),
+			}
+		}
+	}
 }
 </script>

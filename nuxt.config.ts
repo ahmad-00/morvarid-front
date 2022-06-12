@@ -1,14 +1,18 @@
 import type { NuxtConfig } from '@nuxt/types'
-const env = require('dotenv').config({path: './.env'}).parsed || {}
+import axios from 'axios'
+import ApiUrl from './config/api-url'
+
+const env = require('dotenv').config({ path: './.env' }).parsed || {}
 
 env.BROWSER_BASE_URL =
 	env.BROWSER_BASE_URL || process.env.BROWSER_BASE_URL || '/api/'
-env.BASE_URL =
-	env.BASE_URL || process.env.BASE_URL || 'https://cgdev.ir/sms-panel-api/'
+env.BASE_URL = env.BASE_URL || process.env.BASE_URL || 'http://141.11.42.199/'
 env.ENABLE_PROXY =
 	Number(env.ENABLE_PROXY) || Number(process.env.ENABLE_PROXY) || 0
-env.CATEGORY_SAFFRON_ID = env.CATEGORY_SAFFRON_ID || process.env.CATEGORY_SAFFRON_ID
-env.CATEGORY_CARDAMON_ID = env.CATEGORY_CARDAMON_ID || process.env.CATEGORY_CARDAMON_ID
+env.CATEGORY_SAFFRON_ID =
+	env.CATEGORY_SAFFRON_ID || process.env.CATEGORY_SAFFRON_ID
+env.CATEGORY_CARDAMON_ID =
+	env.CATEGORY_CARDAMON_ID || process.env.CATEGORY_CARDAMON_ID
 
 const dev = process.env.NODE_ENV !== 'production'
 const enableProxy = env.ENABLE_PROXY
@@ -21,15 +25,27 @@ const config: NuxtConfig = {
 	head: {
 		title: 'Saffron',
 		meta: [
-			{charset: 'utf-8'},
-			{name: 'viewport', content: 'width=device-width, initial-scale=1'},
-			{hid: 'description', name: 'description', content: ''},
-			{name: 'format-detection', content: 'telephone=no'},
+			{ charset: 'utf-8' },
+			{
+				name: 'viewport',
+				content: 'width=device-width, initial-scale=1',
+			},
+			{ hid: 'description', name: 'description', content: '' },
+			{ name: 'format-detection', content: 'telephone=no' },
+			{ name: 'msapplication-TileColor', content: '#ffffff' },
+			{ name: 'theme-color', content: '#603CB7' },
 		],
-		link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
+		link: [
+			{ rel: 'apple-touch-icon', size: '180x180', href: '/apple-touch-icon.png' },
+			{ rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+			{ rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+			{ rel: 'manifest', href: '/site.webmanifest' },
+			{ rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#7E5DED' },
+		],
 		bodyAttrs: {
-			dir: 'rtl'
-		}
+			dir: 'rtl',
+		},
 	},
 	// Global CSS: https://go.nuxtjs.dev/config-css
 	css: ['~/assets/css/style.scss'],
@@ -74,6 +90,8 @@ const config: NuxtConfig = {
 		'@nuxtjs/axios',
 		'cookie-universal-nuxt',
 		'nuxt-svg-loader',
+		'@nuxtjs/sitemap',
+		'@nuxtjs/robots',
 	],
 
 	// Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -94,13 +112,75 @@ const config: NuxtConfig = {
 	proxy: {
 		[browserBaseUrl]: {
 			target: baseUrl,
-			pathRewrite: {[`^${browserBaseUrl}`]: ''},
+			pathRewrite: { [`^${browserBaseUrl}`]: '' },
 		},
 	},
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
 		standalone: true,
 	},
+	sitemap: {
+		gzip: true,
+		cacheTime: 1000 * 60 * 60,
+		exclude: ['/panel/**', '/shop/basket', '/blog', '/blog/**'],
+		routes: async () => {
+			// shop categories
+			const shopCategories = (
+				await axios.get(baseUrl + ApiUrl.GetShopCategories())
+			).data.map((v: any) => `/shop/category/${v.id}`)
+
+			// shop products
+			let shopProducts: string[] = []
+			let fetchedProductPage = 0
+			while (true) {
+				const r = (
+					await axios.get(baseUrl + ApiUrl.GetShopProducts(), {
+						params: {
+							limit: 100,
+							offset: fetchedProductPage * 100,
+						},
+					})
+				).data
+				shopProducts = [
+					...shopProducts,
+					...r.results.map((v: any) => `/shop/product/${v.id}`),
+				]
+				fetchedProductPage++
+				if (!r.next) break
+			}
+
+			return [
+				// auth
+				'/auth/forget-password',
+				'/auth/login',
+				'/auth/register',
+				'/auth/secret-login',
+				// shop
+				'/shop',
+				...shopCategories,
+				...shopProducts,
+				""
+			]
+		},
+	},
+	robots: [
+		{
+			UserAgent: '*',
+			Disallow: '/auth/',
+		},
+		{
+			UserAgent: '*',
+			Disallow: '/panel/',
+		},
+		{
+			UserAgent: '*',
+			Disallow: '/shop/basket',
+		},
+		{
+			UserAgent: '*',
+			Disallow: '/blog/',
+		},
+	]
 }
 
 export default config

@@ -137,6 +137,21 @@ export default class ProductPage extends Vue {
 			this.fetchData()
 		}
 	}
+
+	head() {
+		if (this.product.id) {
+			return {
+				title: this.$strings.buy_n(this.product.title),
+			}
+		} else {
+			return {
+				title:
+					this.$strings.app_title() +
+					' | ' +
+					this.$strings.app_subtitle(),
+			}
+		}
+	}
 }
 </script>
 

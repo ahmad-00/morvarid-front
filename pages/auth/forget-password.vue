@@ -124,6 +124,31 @@ export default class LoginPage extends Vue {
 	}
 
 	mounted() {}
+
+	head() {
+		if (this.step === 1) {
+			return {
+				title:
+					this.$strings.change_password() +
+					' | ' +
+					this.$strings.app_title(),
+			}
+		} else if (this.step === 2) {
+			return {
+				title:
+					this.$strings.confirmation_code() +
+					' | ' +
+					this.$strings.app_title(),
+			}
+		} else {
+			return {
+				title:
+					this.$strings.app_title() +
+					' | ' +
+					this.$strings.app_subtitle(),
+			}
+		}
+	}
 }
 </script>
 

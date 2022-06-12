@@ -114,6 +114,21 @@ export default class SingleArticlePage extends Vue {
 			category: 'ﻧﺎم دﺳﺘﻪ',
 			image: '/img/image_article_sample.jpg',
 		})) as Article[]
+
+	head() {
+		if (this.article?.id) {
+			return {
+				title: this.article.title + ' | ' + this.$strings.app_blog(),
+			}
+		} else {
+			return {
+				title:
+					this.$strings.app_title() +
+					' | ' +
+					this.$strings.app_subtitle(),
+			}
+		}
+	}
 }
 </script>
 

@@ -7,23 +7,24 @@ import FA from '~/config/fa'
 import { AxiosError } from 'axios'
 
 export const toastErrors = (ctx: Vue, e: AxiosError) => {
-	if (!e.response) {
+	const r = e?.response as any
+
+	if (!r) {
 		ctx.$toast.error(
 			e.message || ctx.$strings.something_went_wrong(),
 			'',
 			{} as any
 		)
-	} else if (!e.response.data) {
-		if (!e.response.statusText)
+	} else if (!r.data) {
+		if (!r.statusText)
 			ctx.$toast.error(ctx.$strings.something_went_wrong(), '', {} as any)
-		else if ([401, 403].includes(e.response.status)) {
+		else if ([401, 403].includes(r.status)) {
 			ctx.$toast.error(ctx.$strings.login_error(), '', {} as any)
-		} else ctx.$toast.error(e.response.statusText, '', {} as any)
-	} else if(typeof e.response.data === 'string') {
-		ctx.$toast.error(e.response.data, '', {} as any)
-	}else {
-
-		Object.values(e.response.data).forEach((i: any) => {
+		} else ctx.$toast.error(r.statusText, '', {} as any)
+	} else if (typeof r.data === 'string') {
+		ctx.$toast.error(r.data, '', {} as any)
+	} else {
+		Object.values(r.data).forEach((i: any) => {
 			if (!i) return
 			if (typeof i === 'string') {
 				ctx.$toast.error(i || '', '', {} as any)
@@ -41,15 +42,17 @@ export const toastErrors = (ctx: Vue, e: AxiosError) => {
 }
 
 export const errorPage = (error: Function, e: AxiosError) => {
+	const r = e?.response as any
+
 	const code = e.code
 	let statusCode
 	let message = null
 
-	if (e.response) {
-		statusCode = e.response.status
+	if (r) {
+		statusCode = r.status
 
-		if (e.response.data && e.response.data.errors) {
-			const a = Object.values(e.response.data.errors)
+		if (r.data && r.data.errors) {
+			const a = Object.values(r.data.errors)
 			if (a.length > 0) {
 				const b = Object.values(a[0] as any)
 				if (b.length > 0) {
@@ -58,7 +61,7 @@ export const errorPage = (error: Function, e: AxiosError) => {
 			}
 		}
 
-		if (!message) message = e.response.statusText
+		if (!message) message = r.statusText
 	} else {
 		if (code === 'ECONNREFUSED') {
 			statusCode = 503

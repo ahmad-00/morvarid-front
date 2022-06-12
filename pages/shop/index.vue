@@ -37,7 +37,9 @@
 			<div class="flex flex-col px-6 items-center mb-32">
 				<div class="max-w-screen-xl w-full flex flex-col">
 					<div class="h-px bg-gray-300 mb-20" />
-					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 xl:gap-10">
+					<div
+						class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 xl:gap-10"
+					>
 						<template v-if="!loading">
 							<ProductCard
 								v-for="(p, i) in products"
@@ -47,7 +49,7 @@
 						</template>
 						<template v-else>
 							<ProductCard
-								v-for="(i) in 4"
+								v-for="i in 4"
 								:key="i"
 								:loading="true"
 							/>
@@ -176,18 +178,21 @@ export default class ShopPage extends Vue {
 		if (this.category?.id === this.cardamonCategoryId) {
 			return {
 				title: this.$strings.buy_n(this.category.name),
+				subtitle: this.$strings.cardamon_footer_message(),
 				image: '/img/image_category_cardamon.jpg',
 				image2: '/img/image_cardamon_weight.jpg',
 			}
 		} else if (this.category?.id === this.saffronCategoryId) {
 			return {
 				title: this.$strings.buy_n(this.category.name),
+				subtitle: this.$strings.saffron_footer_message(),
 				image: '/img/image_category_saffron.jpg',
 				image2: '/img/image_saffron_weight.jpg',
 			}
 		} else if (this.category) {
 			return {
 				title: this.$strings.buy_n(this.category.name),
+				subtitle: '',
 				image: '/img/image_category_all.jpg',
 				image2: null,
 			}
@@ -305,6 +310,21 @@ export default class ShopPage extends Vue {
 	mounted() {
 		if (!this.fetched) {
 			this.fetchData()
+		}
+	}
+
+	head() {
+		if (this.category) {
+			return {
+				title: this.coverInfo.subtitle
+					? this.coverInfo.title + ' | ' + this.coverInfo.subtitle
+					: this.coverInfo.title,
+			}
+		} else {
+			return {
+				title:
+					this.$strings.shop() + ' | ' + this.$strings.app_subtitle(),
+			}
 		}
 	}
 }
