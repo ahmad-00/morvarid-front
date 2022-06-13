@@ -1,7 +1,7 @@
 version: '3'
 services:
     front:
-        image: node:14.17.5
+        image: <image-id>
         container_name: morvarid-sepid-front
         working_dir: '/usr/src/nuxt-app'
         restart: always
@@ -16,6 +16,4 @@ services:
             - CATEGORY_CARDAMON_ID=97103baa-7746-4aae-a4f2-4eecb20a2512
         ports:
             - '3000:3000'
-        volumes:
-            - .:/usr/src/nuxt-app
-        command: sh -c "yarn install; yarn build; yarn start;"
+        command: ['yarn', 'start']
