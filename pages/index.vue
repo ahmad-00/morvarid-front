@@ -53,21 +53,21 @@ import CardamonFooterSection from '~/components/home/CardamonFooterSection.vue'
 import ArticleList from '~/components/article/ArticleList.vue'
 import { Context } from '@nuxt/types'
 
-const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
+const _fetchData = async ({ app, store, route, error, $axios, $config }: Context) => {
 	try {
 		const [r1, r2] = await Promise.all([
 			$axios.get(app.$apiUrl.GetShopProducts(), {
 				params: {
 					limit: 8,
 					offset: 0,
-					category_id: process.env.CATEGORY_SAFFRON_ID,
+					category_id: $config.env.CATEGORY_SAFFRON_ID,
 				},
 			}),
 			$axios.get(app.$apiUrl.GetShopProducts(), {
 				params: {
 					limit: 8,
 					offset: 0,
-					category_id: process.env.CATEGORY_CARDAMON_ID,
+					category_id: $config.env.CATEGORY_CARDAMON_ID,
 				},
 			}),
 		])
@@ -118,11 +118,11 @@ export default class HomeIndex extends Vue {
 		})) as Article[]
 
 	get saffronCategoryId(): string {
-		return process.env.CATEGORY_SAFFRON_ID || ''
+		return this.$config.env.CATEGORY_SAFFRON_ID || ''
 	}
 
 	get cardamonCategoryId(): string {
-		return process.env.CATEGORY_CARDAMON_ID || ''
+		return this.$config.env.CATEGORY_CARDAMON_ID || ''
 	}
 
 	async asyncData(context: Context) {
@@ -147,6 +147,7 @@ export default class HomeIndex extends Vue {
 			route: this.$route,
 			store: this.$store,
 			$axios: this.$axios,
+			$config: this.$config,
 			error: this.$nuxt.error,
 		} as any)
 			.then((r) => {

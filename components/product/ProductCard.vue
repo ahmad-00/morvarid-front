@@ -16,7 +16,7 @@
 			<div class="pt-1/1 rounded-13 overflow-hidden relative bg-white">
 				<img
 					:src="
-						$apiUrl.BaseUrl() +
+						$apiUrl.BaseUrl($config) +
 						$apiUrl.GetMediaUrl(product.main_image)
 					"
 					alt=""
@@ -30,6 +30,9 @@
 						{{ product.quantity }}
 					</span>
 				</span>
+				<div
+					class="absolute left-0 top-0 w-full h-full rounded-13 border-2 border-primary border-opacity-25 shadow-inner pointer-events-none"
+				/>
 				<div
 					class="absolute left-0 top-0 right-0 bottom-0 flex items-center justify-center bg-primary-dark bg-opacity-30 cursor-pointer opacity-0 hover:opacity-100 duration-300"
 				>

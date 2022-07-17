@@ -99,7 +99,7 @@ export default Vue.extend({
 			this.$emit('update:index', t)
 		},
 		getImagePath(path: string): string {
-			return this.$apiUrl.BaseUrl() + this.$apiUrl.GetMediaUrl(path)
+			return this.$apiUrl.BaseUrl(this.$config) + this.$apiUrl.GetMediaUrl(path)
 		}
 	},
 	computed: {

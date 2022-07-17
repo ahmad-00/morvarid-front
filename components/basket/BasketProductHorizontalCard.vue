@@ -1,10 +1,18 @@
 <template>
 	<div class="flex w-full p-2 rounded-2xl">
-		<img
-			:src="$apiUrl.BaseUrl() + $apiUrl.GetMediaUrl(product.main_image)"
-			alt=""
-			class="w-16 h-16 rounded-xl"
-		/>
+		<div class="relative w-16 h-16">
+			<img
+				:src="
+					$apiUrl.BaseUrl($config) +
+					$apiUrl.GetMediaUrl(product.main_image)
+				"
+				alt=""
+				class="rounded-xl w-full h-full"
+			/>
+			<div
+				class="absolute left-0 top-0 w-full h-full rounded-xl border-2 border-primary border-opacity-25 shadow-inner pointer-events-none"
+			/>
+		</div>
 		<div class="flex flex-col ms-2 flex-grow me-3 text-natural-dark">
 			<div class="flex flex-row items-center">
 				<span class="text-sm font-bold me-4">

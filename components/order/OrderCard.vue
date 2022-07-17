@@ -15,9 +15,7 @@
 						class="w-5 h-5 text-white me-1.5 rounded-md p-0.5"
 						:class="{ [status.bgClass]: true }"
 					/>
-					<span
-						class="text-xs me-1 text-natural-semidark"
-					>
+					<span class="text-xs me-1 text-natural-semidark">
 						{{ status.name || '~' }}
 					</span>
 				</div>
@@ -91,17 +89,25 @@
 		<div class="h-px bg-gray-100" />
 		<div v-if="!detailed" class="flex items-center p-1.5" v-dragscroll.x>
 			<div v-for="(item, i) in data.items" :key="i" class="p-1.5">
-				<img
-					:src="
-						$apiUrl.BaseUrl() +
-						$apiUrl.GetMediaUrl(item.product_detail.main_image)
-					"
-					class="w-16 h-16 rounded-xl"
-					alt=""
-				/>
+				<div class="relative w-16 h-16">
+					<img
+						:src="
+							$apiUrl.BaseUrl($config) +
+							$apiUrl.GetMediaUrl(item.product_detail.main_image)
+						"
+						class="rounded-xl w-full h-full"
+						alt=""
+					/>
+					<div
+						class="absolute left-0 top-0 w-full h-full rounded-xl border-2 border-primary border-opacity-25 shadow-inner pointer-events-none"
+					/>
+				</div>
 			</div>
 		</div>
-		<div v-if="detailed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5">
+		<div
+			v-if="detailed"
+			class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5"
+		>
 			<ProductCard
 				v-for="(product, i) in products"
 				:key="i"

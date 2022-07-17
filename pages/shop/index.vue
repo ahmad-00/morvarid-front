@@ -77,7 +77,7 @@ import ShopWeightList from '~/components/shop/ShopWeightList.vue'
 
 const Qs = require('qs')
 
-const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
+const _fetchData = async ({ app, store, route, error, $axios, $config }: Context) => {
 	try {
 		const weights = route.query['weights[]'] || []
 		const categoryId = route.params.category_id || null
@@ -88,14 +88,14 @@ const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 					params: {
 						limit: 8,
 						offset: 0,
-						category_id: process.env.CATEGORY_SAFFRON_ID,
+						category_id: $config.env.CATEGORY_SAFFRON_ID,
 					},
 				}),
 				$axios.get(app.$apiUrl.GetShopProducts(), {
 					params: {
 						limit: 8,
 						offset: 0,
-						category_id: process.env.CATEGORY_CARDAMON_ID,
+						category_id: $config.env.CATEGORY_CARDAMON_ID,
 					},
 				}),
 			])
@@ -155,11 +155,11 @@ export default class ShopPage extends Vue {
 	weights = [] as number[]
 
 	get saffronCategoryId(): string {
-		return process.env.CATEGORY_SAFFRON_ID || ''
+		return this.$config.env.CATEGORY_SAFFRON_ID || ''
 	}
 
 	get cardamonCategoryId(): string {
-		return process.env.CATEGORY_CARDAMON_ID || ''
+		return this.$config.env.CATEGORY_CARDAMON_ID || ''
 	}
 
 	get categoryId(): string | null {
@@ -292,6 +292,7 @@ export default class ShopPage extends Vue {
 			route: this.$route,
 			store: this.$store,
 			$axios: this.$axios,
+			$config: this.$config,
 			error: this.$nuxt.error,
 		} as any)
 			.then((r) => {

@@ -1,8 +1,8 @@
+import Vue from 'vue'
+import { NuxtRuntimeConfig } from '@nuxt/types/config/runtime'
+
 export default {
-	BaseUrl: () =>
-		process.env.ENABLE_PROXY
-			? process.env.BROWSER_BASE_URL || ''
-			: process.env.BASE_URL || '',
+	BaseUrl: (config: NuxtRuntimeConfig) => config.env.BASE_URL,
 	// auth
 	LoginUrl: () => 'user/login',
 	RegisterUrl: () => 'user/register',

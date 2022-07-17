@@ -1,4 +1,6 @@
+// @ts-ignore
 import type { NuxtConfig } from '@nuxt/types'
+// @ts-ignore
 import axios from 'axios'
 import ApiUrl from './config/api-url'
 
@@ -7,9 +9,12 @@ const env = require('dotenv').config({ path: './.env' }).parsed || {}
 env.BROWSER_BASE_URL =
 	process.env.BROWSER_BASE_URL || env.BROWSER_BASE_URL || '/api/'
 env.BASE_URL = process.env.BASE_URL || env.BASE_URL || 'http://141.11.42.199/'
+env.BASE_URL = env.BASE_URL?.replace(/\/$/, '') + '/'
 env.SITE_URL =
-	process.env.SITE_URL || env.SITE_URL || 'https://morvaridsepid.herokuapp.com'
-env.SITE_URL = env.SITE_URL.trimEnd('/')
+	process.env.SITE_URL ||
+	env.SITE_URL ||
+	'https://morvaridsepid.herokuapp.com'
+env.SITE_URL = env.SITE_URL?.replace(/\/$/, '')
 env.ENABLE_PROXY =
 	Number(process.env.ENABLE_PROXY) || Number(env.ENABLE_PROXY) || 0
 env.CATEGORY_SAFFRON_ID =
@@ -24,7 +29,6 @@ const siteUrl = env.SITE_URL
 const browserBaseUrl = env.ENABLE_PROXY ? env.BROWSER_BASE_URL : env.BASE_URL
 
 const config: NuxtConfig = {
-	env,
 	// Global page headers: https://go.nuxtjs.dev/config-head
 	head: {
 		title: 'Saffron',
@@ -38,6 +42,7 @@ const config: NuxtConfig = {
 			{ name: 'format-detection', content: 'telephone=no' },
 			{ name: 'msapplication-TileColor', content: '#ffffff' },
 			{ name: 'theme-color', content: '#603CB7' },
+			{ name: 'fontiran.com:license', content: 'XPQYPB' },
 		],
 		link: [
 			{
@@ -133,10 +138,22 @@ const config: NuxtConfig = {
 		axios: {
 			baseURL: browserBaseUrl,
 		},
+		env: {
+			BASE_URL: browserBaseUrl,
+			SITE_URL: siteUrl,
+			CATEGORY_SAFFRON_ID: env.CATEGORY_SAFFRON_ID,
+			CATEGORY_CARDAMON_ID: env.CATEGORY_CARDAMON_ID,
+		},
 	},
 	privateRuntimeConfig: {
 		axios: {
 			baseURL: baseUrl,
+		},
+		env: {
+			BASE_URL: baseUrl,
+			SITE_URL: siteUrl,
+			CATEGORY_SAFFRON_ID: env.CATEGORY_SAFFRON_ID,
+			CATEGORY_CARDAMON_ID: env.CATEGORY_CARDAMON_ID,
 		},
 	},
 	proxy: {

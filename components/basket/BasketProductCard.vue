@@ -3,13 +3,19 @@
 		class="bg-primary bg-opacity-3 rounded-2xl px-4 py-4 flex-col lg:flex-row flex lg:items-center"
 	>
 		<div class="flex items-center mb-4 lg:mb-0">
-			<img
-				:src="
-					$apiUrl.BaseUrl() + $apiUrl.GetMediaUrl(product.main_image)
+			<div class="relative w-28 h-28 me-6">
+				<img
+					:src="
+					$apiUrl.BaseUrl($config) +
+					$apiUrl.GetMediaUrl(product.main_image)
 				"
-				alt=""
-				class="w-28 h-28 rounded-2xl me-6"
-			/>
+					alt=""
+					class="rounded-2xl w-full h-full"
+				/>
+				<div
+					class="absolute left-0 top-0 w-full h-full rounded-2xl border-2 border-primary border-opacity-25 shadow-inner pointer-events-none"
+				/>
+			</div>
 			<div class="flex flex-col flex-grow me-4">
 				<span
 					class="text-natural-dark font-bold text-lg mb-3 line-clamp-2"

@@ -1,6 +1,7 @@
 <template>
-	<div class="select-none"
-		 :class="{
+	<div
+		class="select-none"
+		:class="{
 			'animate-pulse': loading,
 		}"
 	>
@@ -14,18 +15,18 @@
 					class="absolute left-0 top-0 w-full h-full object-cover"
 					:src="
 						selectedImage
-							? $apiUrl.BaseUrl() +
+							? $apiUrl.BaseUrl($config) +
 							  $apiUrl.GetMediaUrl(selectedImage.path)
 							: null
 					"
 					alt=""
 				/>
+				<div
+					class="absolute left-0 top-0 w-full h-full rounded-3xl border-2 border-primary border-opacity-25 shadow-inner pointer-events-none"
+				/>
 			</div>
 		</div>
-		<div
-			v-else
-			class="mb-8 pt-3/4 rounded-3xl bg-gray-200"
-		></div>
+		<div v-else class="mb-8 pt-3/4 rounded-3xl bg-gray-200"></div>
 		<div
 			ref="swiper"
 			class="swiper w-full"
@@ -45,7 +46,7 @@
 							<img
 								class="absolute left-0 top-0 w-full h-full object-cover"
 								:src="
-									$apiUrl.BaseUrl() +
+									$apiUrl.BaseUrl($config) +
 									$apiUrl.GetMediaUrl(image.path_thumb1)
 								"
 								alt=""
