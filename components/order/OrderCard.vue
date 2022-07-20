@@ -92,7 +92,7 @@
 				<div class="relative w-16 h-16">
 					<img
 						:src="
-							$apiUrl.BaseUrl($config) +
+							$apiUrl.MediaBaseUrl($config) +
 							$apiUrl.GetMediaUrl(item.product_detail.main_image)
 						"
 						class="rounded-xl w-full h-full"

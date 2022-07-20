@@ -3,7 +3,7 @@
 		<div class="relative w-16 h-16">
 			<img
 				:src="
-					$apiUrl.BaseUrl($config) +
+					$apiUrl.MediaBaseUrl($config) +
 					$apiUrl.GetMediaUrl(product.main_image)
 				"
 				alt=""

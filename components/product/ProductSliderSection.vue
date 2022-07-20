@@ -15,7 +15,7 @@
 					class="absolute left-0 top-0 w-full h-full object-cover"
 					:src="
 						selectedImage
-							? $apiUrl.BaseUrl($config) +
+							? $apiUrl.MediaBaseUrl($config) +
 							  $apiUrl.GetMediaUrl(selectedImage.path)
 							: null
 					"
@@ -46,7 +46,7 @@
 							<img
 								class="absolute left-0 top-0 w-full h-full object-cover"
 								:src="
-									$apiUrl.BaseUrl($config) +
+									$apiUrl.MediaBaseUrl($config) +
 									$apiUrl.GetMediaUrl(image.path_thumb1)
 								"
 								alt=""

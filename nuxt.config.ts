@@ -8,23 +8,34 @@ const env = require('dotenv').config({ path: './.env' }).parsed || {}
 
 env.BROWSER_BASE_URL =
 	process.env.BROWSER_BASE_URL || env.BROWSER_BASE_URL || '/api/'
+
 env.BASE_URL = process.env.BASE_URL || env.BASE_URL || 'http://141.11.42.199/'
 env.BASE_URL = env.BASE_URL?.replace(/\/$/, '') + '/'
+
 env.SITE_URL =
 	process.env.SITE_URL ||
 	env.SITE_URL ||
 	'https://morvaridsepid.herokuapp.com'
 env.SITE_URL = env.SITE_URL?.replace(/\/$/, '')
+
+env.MEDIA_URL = process.env.MEDIA_URL || env.MEDIA_URL || null
+if (env.MEDIA_URL) {
+	env.MEDIA_URL = env.MEDIA_URL?.replace(/\/$/, '') + '/'
+}
+
 env.ENABLE_PROXY =
 	Number(process.env.ENABLE_PROXY) || Number(env.ENABLE_PROXY) || 0
+
 env.CATEGORY_SAFFRON_ID =
 	process.env.CATEGORY_SAFFRON_ID || env.CATEGORY_SAFFRON_ID
+
 env.CATEGORY_CARDAMON_ID =
 	process.env.CATEGORY_CARDAMON_ID || env.CATEGORY_CARDAMON_ID
 
 const dev = process.env.NODE_ENV !== 'production'
 const enableProxy = env.ENABLE_PROXY
 const baseUrl = env.BASE_URL
+const mediaUrl = env.MEDIA_URL
 const siteUrl = env.SITE_URL
 const browserBaseUrl = env.ENABLE_PROXY ? env.BROWSER_BASE_URL : env.BASE_URL
 
@@ -141,6 +152,7 @@ const config: NuxtConfig = {
 		env: {
 			BASE_URL: browserBaseUrl,
 			SITE_URL: siteUrl,
+			MEDIA_URL: mediaUrl || browserBaseUrl,
 			CATEGORY_SAFFRON_ID: env.CATEGORY_SAFFRON_ID,
 			CATEGORY_CARDAMON_ID: env.CATEGORY_CARDAMON_ID,
 		},
@@ -152,6 +164,7 @@ const config: NuxtConfig = {
 		env: {
 			BASE_URL: baseUrl,
 			SITE_URL: siteUrl,
+			MEDIA_URL: mediaUrl || baseUrl,
 			CATEGORY_SAFFRON_ID: env.CATEGORY_SAFFRON_ID,
 			CATEGORY_CARDAMON_ID: env.CATEGORY_CARDAMON_ID,
 		},

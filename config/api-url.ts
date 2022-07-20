@@ -3,6 +3,7 @@ import { NuxtRuntimeConfig } from '@nuxt/types/config/runtime'
 
 export default {
 	BaseUrl: (config: NuxtRuntimeConfig) => config.env.BASE_URL,
+	MediaBaseUrl: (config: NuxtRuntimeConfig) => config.env.MEDIA_URL,
 	// auth
 	LoginUrl: () => 'user/login',
 	RegisterUrl: () => 'user/register',

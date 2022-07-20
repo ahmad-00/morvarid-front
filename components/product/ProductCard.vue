@@ -16,7 +16,7 @@
 			<div class="pt-1/1 rounded-13 overflow-hidden relative bg-white">
 				<img
 					:src="
-						$apiUrl.BaseUrl($config) +
+						$apiUrl.MediaBaseUrl($config) +
 						$apiUrl.GetMediaUrl(product.main_image)
 					"
 					alt=""
