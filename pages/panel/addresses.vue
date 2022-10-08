@@ -16,7 +16,7 @@
 				{{ $strings.add() }}
 			</span>
 		</div>
-		<div v-if="addresses && addresses.length" class="flex flex-col">
+		<div v-if="addresses && addresses.length" class="flex flex-col mb-12">
 			<AddressCard
 				v-for="(address, i) in addresses"
 				:key="i"
@@ -26,6 +26,10 @@
 				@delete="openDeleteAddress(address)"
 			/>
 		</div>
+		<UndrawNoData
+			v-else
+			class="w-full max-w-xs h-auto text-primary self-center mt-12 mb-12"
+		/>
 		<CreateAddressDialog
 			:visible="isCreateDialogVisible"
 			@close="isCreateDialogVisible = false"
@@ -83,6 +87,7 @@ import { Address } from '~/config/types'
 import AddressCard from '~/components/address/AddressCard.vue'
 import CreateAddressDialog from '~/components/address/CreateAddressDialog.vue'
 import ModalContainer from '~/components/utils/ModalContainer.vue'
+import UndrawNoData from '~/assets/img/undraw_no_data.svg'
 
 @Component({
 	middleware: ['fetch', 'auth'],
@@ -94,6 +99,7 @@ import ModalContainer from '~/components/utils/ModalContainer.vue'
 		PanelContainer,
 		UserMenu,
 		MyIcon,
+		UndrawNoData,
 	},
 })
 export default class PanelAddressesPage extends Vue {

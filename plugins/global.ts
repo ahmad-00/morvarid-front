@@ -1,12 +1,12 @@
-import { Plugin } from '@nuxt/types'
+import {Plugin} from '@nuxt/types'
 import ApiUrl from '~/config/api-url'
 import RouteUrl from '~/config/route-url'
 import Validator from '~/plugins/validator'
 import StringUtils from '~/plugins/string-utils'
 import FA from '~/config/fa'
-import { AxiosError } from 'axios'
+import {AxiosError} from 'axios'
 
-export const toastErrors = (ctx: Vue, e: AxiosError) => {
+export const toastErrors = (ctx: Vue, e: AxiosError, toast = true) => {
 	const r = e?.response as any
 
 	if (!r) {
@@ -24,21 +24,27 @@ export const toastErrors = (ctx: Vue, e: AxiosError) => {
 	} else if (typeof r.data === 'string') {
 		ctx.$toast.error(r.data, '', {} as any)
 	} else {
-		Object.values(r.data).forEach((i: any) => {
-			if (!i) return
-			if (typeof i === 'string') {
-				ctx.$toast.error(i || '', '', {} as any)
-			} else {
-				Object.values(i)
-					.filter((v) => v)
-					.forEach((t: any) => {
-						if (typeof t === 'string') {
-							ctx.$toast.error(t || '', '', {} as any)
-						}
-					})
-			}
-		})
+		if (toast) {
+			Object.values(r.data).forEach((i: any) => {
+				if (!i) return
+				if (typeof i === 'string') {
+					ctx.$toast.error(i || '', '', {} as any)
+				} else {
+					Object.values(i)
+						.filter((v) => v)
+						.forEach((t: any) => {
+							if (typeof t === 'string') {
+								ctx.$toast.error(t || '', '', {} as any)
+							}
+						})
+				}
+			})
+			return r.data
+		} else {
+			return r.data
+		}
 	}
+	return null
 }
 
 export const errorPage = (error: Function, e: AxiosError) => {
@@ -71,7 +77,7 @@ export const errorPage = (error: Function, e: AxiosError) => {
 		message = e.message
 	}
 
-	error({ code, statusCode, message })
+	error({code, statusCode, message})
 }
 
 export const fanum = (v: any) => {
@@ -108,7 +114,7 @@ export const fanum = (v: any) => {
 	)
 }
 
-const myPlugin: Plugin = ({ app }, inject) => {
+const myPlugin: Plugin = ({app}, inject) => {
 	inject('apiUrl', ApiUrl)
 	inject('routeUrl', RouteUrl)
 	inject('toastErrors', toastErrors)

@@ -127,22 +127,19 @@
 						/>
 					</div>
 					<div
-						v-if="false"
-						class="flex items-center py-px ps-8 pe-6 w-full"
+						v-if="discountPrice"
+						class="flex items-center py-px ps-8 pe-6 w-full mt-3"
 					>
-						<span
-							class="text-lg text-natural-dark flex-grow font-medium"
-						>
+						<span class="text-lg text-natural-dark flex-grow">
 							{{ $strings.discount() }}
 						</span>
-						<span class="text-3xl text-green font-medium">
-							{{ formattedTotalPrice }}
+						<span class="text-3xl text-green-500 font-bold">
+							{{ formattedDiscountPrice }}
 						</span>
-						<span
-							class="text-xs text-natural-dark ms-1 self-start font-medium"
-						>
-							{{ $strings.toman() }}
-						</span>
+						<MyIcon
+							name="toman"
+							class="w-7 h-7 text-natural-dark ms-1 flex-shrink-0"
+						/>
 					</div>
 					<div
 						class="flex items-center bg-primary bg-opacity-10 rounded-full py-1.5 ps-8 pe-6 w-full mt-6"
@@ -153,7 +150,7 @@
 							{{ $strings.payment_amount() }}
 						</span>
 						<span class="text-3xl font-bold text-natural-dark">
-							{{ formattedTotalPrice }}
+							{{ formattedActualTotalPrice }}
 						</span>
 						<MyIcon
 							name="toman"
@@ -311,8 +308,37 @@ export default class BasketInfoSection extends Vue {
 		)
 	}
 
+	get actualTotalPrice(): number {
+		return (
+			this.products
+				.map((v) => {
+					const q = Number(v.quantity) || 0
+					if (q >= v.wholesale_min_count && v.wholesale_payable_price) {
+						return (v.quantity || 0) * v.wholesale_payable_price
+					} else if(v.payable_price) {
+						return (v.quantity || 0) * v.payable_price
+					}else {
+						return (v.quantity || 0) * v.price
+					}
+				})
+				.reduce((a, b) => a + b, 0) || 0
+		)
+	}
+
+	get discountPrice(): number {
+		return this.totalPrice - this.actualTotalPrice
+	}
+
 	get formattedTotalPrice(): string {
-		return this.$stringUtils.thousandFormat(this.totalPrice) || ''
+		return this.$stringUtils.prettyPrice(this.totalPrice) || ''
+	}
+
+	get formattedActualTotalPrice(): string {
+		return this.$stringUtils.prettyPrice(this.actualTotalPrice) || ''
+	}
+
+	get formattedDiscountPrice(): string {
+		return this.$stringUtils.prettyPrice(this.discountPrice) || ''
 	}
 
 	@Watch('user')

@@ -33,12 +33,39 @@
 		<div v-else class="bg-gray-200 rounded-md w-32 mb-5">
 			<span class="opacity-0 select-none">.</span>
 		</div>
-		<div v-if="!loading" class="flex items-center">
-			<span class="text-5xl font-bold text-natural-dark">
-				{{ formattedPrice || '0' }}
-			</span>
-			<MyIcon name="toman" class="w-10 h-10 text-natural-dark ms-1" />
+		<div v-if="!loading" class="flex flex-col">
+			<div v-if="hasWholesale" class="flex items-center mb-3">
+				<span class="text-sm font-bold text-yellow-500 flex-shrink-0">
+					{{ formattedWholesaleDiscountPrice || '0' }}
+				</span>
+				<MyIcon
+					name="toman"
+					class="w-5 h-5 text-yellow-500 mx-1 flex-shrink-0"
+				/>
+				<span class="text-sm font-medium text-yellow-500 flex-shrink-0">
+					{{ $strings.wholesale_discount() }}
+				</span>
+			</div>
+			<div class="flex items-center">
+				<span class="text-5xl font-bold text-natural-dark">
+					{{ formattedPrice || '0' }}
+				</span>
+				<MyIcon name="toman" class="w-10 h-10 text-natural-dark ms-1" />
+			</div>
+			<div v-if="hasDiscount" class="flex items-center mt-2.5">
+				<span
+					class="text-base font-normal text-natural-mute flex-shrink-0 line-through text-opacity-50 me-2"
+				>
+					{{ formattedMainPrice || '0' }}
+				</span>
+				<div
+					class="text-white bg-green-500 rounded-full py-1 px-3 text-xs font-medium"
+				>
+					{{ discountPercent + '٪' }}
+				</div>
+			</div>
 		</div>
+
 		<div v-else class="flex items-center w-40 bg-gray-200 rounded-md">
 			<span class="text-5xl opacity-0 select-none">. </span>
 		</div>
@@ -107,8 +134,55 @@ export default class ProductInfoSection extends Vue {
 	@Prop({}) product!: Product
 	@Prop({ default: false }) loading?: boolean
 
-	get formattedPrice(): string {
+	get hasDiscount(): boolean {
+		return (
+			!!this.product.payable_price &&
+			this.product.payable_price != this.product.price
+		)
+	}
+
+	get hasWholesale(): boolean {
+		return (
+			!!this.product.wholesale_payable_price &&
+			this.product.payable_price != this.product.wholesale_payable_price
+		)
+	}
+
+	get formattedMainPrice(): string {
 		return this.$stringUtils.thousandFormat(this.product.price || '') || ''
+	}
+
+	get formattedPrice(): string {
+		if (this.hasDiscount) {
+			return this.formattedPayablePrice
+		} else {
+			return this.$stringUtils.prettyPrice(this.product.price || '') || ''
+		}
+	}
+
+	get formattedPayablePrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(this.product.payable_price || '') ||
+			''
+		)
+	}
+
+	get discountPercent(): number {
+		return (
+			+(
+				100 -
+				(this.product.payable_price / this.product.price) * 100
+			).toFixed(0) || 0
+		)
+	}
+
+	get formattedWholesaleDiscountPrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(
+				this.product.payable_price -
+					this.product.wholesale_payable_price
+			) || ''
+		)
 	}
 
 	get categories(): ShopCategory[] {

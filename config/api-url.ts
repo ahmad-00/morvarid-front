@@ -32,4 +32,7 @@ export default {
 	GetOrderCountUrl: () => `order/count`,
 	// weight
 	GetWeightsUrl: () => `weights`,
+	// review
+	SubmitReviewUrl: () => `review`,
+	DeleteReviewUrl: (id: string) => `review/${id}`,
 }

@@ -3,11 +3,17 @@
 		class="w-full bg-white rounded-xl py-4 px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4"
 		:style="{ boxShadow: '0px 0px 19px -19px #F2F2F2' }"
 	>
-		<div
+		<nuxt-link
 			v-for="(item, index) in orderStatuses"
 			:key="index"
-			class="bg-opacity-10 rounded-2xl flex items-center"
+			class="bg-opacity-10 hover:bg-opacity-20 duration-300 rounded-2xl flex items-center cursor-pointer"
 			:class="[item.bgClass]"
+			:to="{
+				path: $routeUrl.PanelOrdersUrl(),
+				query: {
+					status: item.value
+				}
+			}"
 		>
 			<span
 				class="flex items-center justify-center w-12 h-12 rounded-lg ms-8 my-6"
@@ -23,13 +29,14 @@
 					{{ items[index] }}
 				</span>
 			</div>
-		</div>
+		</nuxt-link>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
+import {StatusType} from "~/store/type";
 
 export default Vue.extend({
 	components: { MyIcon },
@@ -37,7 +44,7 @@ export default Vue.extend({
 		return {}
 	},
 	computed: {
-		orderStatuses(): any[] {
+		orderStatuses(): StatusType[] {
 			return this.$store.state.type.orderStatuses || []
 		},
 	},

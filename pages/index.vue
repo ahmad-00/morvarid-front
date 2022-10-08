@@ -24,12 +24,13 @@
 			class="mb-8"
 			:loading="loading"
 		/>
-		<CardamonFooterSection class="mb-16" />
+		<CardamonFooterSection class="" />
 		<ArticleList
+			v-if="false"
 			:articles="articles"
 			:title="$strings.latest_articles()"
 			more-link="#"
-			class="mb-28"
+			class="mb-28 mt-16"
 		/>
 	</MainContainer>
 </template>

@@ -27,28 +27,52 @@
 				/>
 			</div>
 			<div class="flex items-center flex-wrap">
-				<span class="text-sm text-natural-mute font-medium">
-					{{ createdString }}
-				</span>
-				<span
-					class="w-1 h-1 rounded-full bg-natural-mute opacity-25 mx-3"
-				/>
-				<span class="text-xs text-natural-mute me-1.5">
-					{{ $strings.order_code() }}
-				</span>
-				<span class="text-sm text-natural-semidark font-bold">
-					{{ data.tracking_number }}
-				</span>
-				<span
-					class="w-1 h-1 rounded-full bg-natural-mute opacity-25 mx-3"
-				/>
-				<span class="text-xs text-natural-mute me-1.5">
-					{{ $strings.amount() }}
-				</span>
-				<span class="text-sm text-natural-semidark font-bold me-1">
-					{{ totalPriceString }}
-				</span>
-				<MyIcon name="toman" class="w-5 h-5 text-natural-semidark" />
+				<div class="flex items-center">
+					<span class="text-sm text-natural-mute font-medium">
+						{{ createdString }}
+					</span>
+				</div>
+				<div class="flex items-center">
+					<span
+						class="w-1 h-1 rounded-full bg-natural-mute opacity-25 mx-3"
+					/>
+					<span class="text-xs text-natural-mute me-1.5">
+						{{ $strings.order_code() }}
+					</span>
+					<span class="text-sm text-natural-semidark font-bold">
+						{{ data.tracking_number }}
+					</span>
+				</div>
+				<div class="flex items-center">
+					<span
+						class="w-1 h-1 rounded-full bg-natural-mute opacity-25 mx-3"
+					/>
+					<span class="text-xs text-natural-mute me-1.5">
+						{{ $strings.amount() }}
+					</span>
+					<span class="text-sm text-natural-semidark font-bold me-1">
+						{{ formattedActualTotalPrice }}
+					</span>
+					<MyIcon
+						name="toman"
+						class="w-5 h-5 text-natural-semidark"
+					/>
+				</div>
+				<div v-if="discountPrice" class="flex items-center">
+					<span
+						class="w-1 h-1 rounded-full bg-natural-mute opacity-25 mx-3"
+					/>
+					<span class="text-xs text-natural-mute me-1.5">
+						{{ $strings.discount() }}
+					</span>
+					<span class="text-sm text-natural-semidark font-bold me-1">
+						{{ formattedDiscountPrice }}
+					</span>
+					<MyIcon
+						name="toman"
+						class="w-5 h-5 text-natural-semidark"
+					/>
+				</div>
 			</div>
 		</div>
 		<div v-if="detailed" class="h-px mx-5 bg-gray-100" />
@@ -154,8 +178,45 @@ export default class OrderCard extends Vue {
 		)
 	}
 
-	get totalPriceString(): string {
-		return this.$stringUtils.thousandFormat(this.data?.total_fee)
+	get totalPrice(): number {
+		return (
+			this.products
+				.map((v) => (v.quantity || 0) * v.price)
+				.reduce((a, b) => a + b, 0) || 0
+		)
+	}
+
+	get actualTotalPrice(): number {
+		return (
+			this.products
+				.map((v) => {
+					const q = Number(v.quantity) || 0
+					if (q >= v.wholesale_min_count && v.wholesale_payable_price) {
+						return (v.quantity || 0) * v.wholesale_payable_price
+					} else if(v.payable_price) {
+						return (v.quantity || 0) * v.payable_price
+					}else {
+						return (v.quantity || 0) * v.price
+					}
+				})
+				.reduce((a, b) => a + b, 0) || 0
+		)
+	}
+
+	get discountPrice(): number {
+		return this.totalPrice - this.actualTotalPrice
+	}
+
+	get formattedTotalPrice(): string {
+		return this.$stringUtils.prettyPrice(this.totalPrice) || ''
+	}
+
+	get formattedActualTotalPrice(): string {
+		return this.$stringUtils.prettyPrice(this.actualTotalPrice) || ''
+	}
+
+	get formattedDiscountPrice(): string {
+		return this.$stringUtils.prettyPrice(this.discountPrice) || ''
 	}
 
 	get createdString(): string {

@@ -8,6 +8,7 @@
 			:btnTitle="$strings.send_code()"
 			:show-mobile="true"
 			:show-back="!mobile"
+			:form-errors="formErrors"
 			@back="back"
 			@submit="sendOPT"
 		/>
@@ -21,6 +22,7 @@
 			:show-password="true"
 			:show-edit-mobile="true"
 			:show-back="!mobile"
+			:form-errors="formErrors"
 			@back="back"
 			@submit="submitOPT"
 		/>
@@ -48,6 +50,7 @@ export default class LoginPage extends Vue {
 		code: '',
 		password: '',
 	}
+	formErrors = null as any
 
 	get mobile() {
 		return String(this.$route.query.mobile || '')
@@ -79,7 +82,7 @@ export default class LoginPage extends Vue {
 			)
 			this.step = 2
 		} catch (e: any) {
-			this.$toastErrors(this, e)
+			this.formErrors = this.$toastErrors(this, e, false)
 		}
 		this.fetched = true
 		this.loading = false

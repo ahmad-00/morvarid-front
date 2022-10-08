@@ -1,14 +1,17 @@
 <template>
 	<div class="flex flex-col bg-white items-center px-6">
 		<div class="flex items-center max-w-screen-xl w-full py-6">
-			<nuxt-link :to="$routeUrl.HomeUrl()" class="flex items-center">
+			<nuxt-link :to="$routeUrl.HomeUrl()" class="flex items-center me-8">
 				<span class="me-4">
 					<img src="/img/site_logo.png" alt="" class="h-9 w-auto" />
 				</span>
 				<span
-					class="text-xl font-lalezar me-8 text-natural-dark hover:text-primary duration-300"
+					class="text-2xl font-lalezar text-natural-dark hover:text-primary duration-300"
 				>
-					{{ $strings.app_title() }}
+					{{ $strings.app_title_part_1() }}
+				</span>
+				<span class="text-xs text-natural-dark -mb-8 -ms-3 opacity-75">
+					{{ $strings.app_title_part_2() }}
 				</span>
 			</nuxt-link>
 			<div class="items-center hidden lg:flex">
@@ -130,7 +133,7 @@
 					<div class="flex items-center px-6 py-6 flex-shrink-0">
 						<nuxt-link
 							:to="$routeUrl.HomeUrl()"
-							class="flex items-center"
+							class="flex items-center me-8"
 						>
 							<span class="me-4">
 								<img
@@ -140,9 +143,14 @@
 								/>
 							</span>
 							<span
-								class="text-xl font-lalezar me-8 text-natural-dark hover:text-primary duration-300"
+								class="text-2xl font-lalezar text-natural-dark hover:text-primary duration-300"
 							>
-								{{ $strings.app_title() }}
+								{{ $strings.app_title_part_1() }}
+							</span>
+							<span
+								class="text-xs text-natural-dark -mb-8 -ms-3 opacity-75"
+							>
+								{{ $strings.app_title_part_2() }}
 							</span>
 						</nuxt-link>
 						<div class="flex-grow" />
@@ -242,7 +250,9 @@
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import MyIcon, { IconType } from '~/components/utils/MyIcon.vue'
 import { Product, User } from '~/config/types'
-import UserMenu, { MenuItemIds as UserMenuItemIds } from '~/components/home/UserMenu.vue'
+import UserMenu, {
+	MenuItemIds as UserMenuItemIds,
+} from '~/components/home/UserMenu.vue'
 import TransitionFade from '~/components/anim/TransitionFade.vue'
 
 export type MenuItemIds = null | 'home' | 'contact-us' | 'blog'
@@ -260,7 +270,7 @@ export type MenuItem = {
 export default class MainHeader extends Vue {
 	@Prop({ default: 'main' }) type?: 'main' | 'shop'
 	@Prop({}) loading?: boolean
-	@Prop({ }) userSelected?: UserMenuItemIds
+	@Prop({}) userSelected?: UserMenuItemIds
 
 	isMenuVisible = false
 	isUserMenuVisible = false
@@ -279,11 +289,6 @@ export default class MainHeader extends Vue {
 				id: 'home',
 				name: this.$strings.home(),
 				link: this.$routeUrl.HomeUrl(),
-			},
-			{
-				id: 'blog',
-				name: this.$strings.blog(),
-				link: this.$routeUrl.BlogUrl(),
 			},
 		]
 	}

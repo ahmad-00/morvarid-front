@@ -22,9 +22,19 @@
 					alt=""
 					class="w-full h-full absolute left-0 top-0 object-cover"
 				/>
+				<div
+					class="absolute left-0 right-0 bottom-0 flex items-center mb-6 mx-6 justify-end"
+				>
+					<div
+						v-if="hasDiscount"
+						class="text-white bg-green-500 border-white border-2 rounded-full py-1 px-3 text-xs font-medium"
+					>
+						{{ discountPercent + '٪' }}
+					</div>
+				</div>
 				<span
 					v-if="product.quantity"
-					class="w-8 h-8 bg-white rounded-xl absolute end-0 top-0 start-0 end-0 mx-auto mt-4 flex items-center justify-center text-sm text-natural-semidark font-bold shadow-sm p-0.5"
+					class="w-8 h-8 bg-white rounded-xl absolute end-0 top-0 start-0 mx-auto mt-4 flex items-center justify-center text-sm text-natural-semidark font-bold shadow-sm p-0.5"
 				>
 					<span class="line-clamp-1">
 						{{ product.quantity }}
@@ -54,7 +64,7 @@
 			<nuxt-link
 				v-if="!loading"
 				:to="$routeUrl.ShopProductUrl(product.id)"
-				class="text-lg font-bold text-natural-dark hover:text-primary duration-300 line-clamp-2 me-3"
+				class="text-lg font-bold text-natural-dark hover:text-primary duration-300 line-clamp-2 me-4"
 			>
 				{{ product.title || '~' }}
 			</nuxt-link>
@@ -62,20 +72,49 @@
 				<span class="text-lg opacity-0 select-none"> . </span>
 			</span>
 			<span class="flex-grow" />
-			<div v-if="!loading" class="flex items-center">
-				<span class="text-lg font-bold text-natural-dark flex-shrink-0">
-					{{ formattedPrice || '0' }}
-				</span>
-				<MyIcon
-					name="toman"
-					class="w-6 h-6 text-natural-dark ms-1 flex-shrink-0"
-				/>
+			<div v-if="!loading" class="flex flex-col">
+				<div class="flex items-center">
+					<span
+						class="text-lg font-bold text-natural-dark flex-shrink-0"
+					>
+						{{ formattedPrice || '0' }}
+					</span>
+					<MyIcon
+						name="toman"
+						class="w-6 h-6 text-natural-dark ms-1 flex-shrink-0"
+					/>
+				</div>
+				<div
+					v-if="hasDiscount"
+					class="flex items-center mt-1 self-center"
+				>
+					<span
+						class="text-sm font-normal text-natural-mute flex-shrink-0 line-through text-opacity-50"
+					>
+						{{ formattedMainPrice || '0' }}
+					</span>
+				</div>
 			</div>
 			<span v-else class="bg-gray-200 rounded-md w-12">
 				<span class="text-lg opacity-0 select-none"> . </span>
 			</span>
 		</div>
 		<span class="flex-grow" />
+		<div
+			v-if="!loading && (product.quantity ? isWholesale : hasWholesale)"
+			class="flex items-center mt-1"
+		>
+			<span class="text-xs font-bold text-yellow-500 flex-shrink-0">
+				{{ formattedWholesaleDiscountPrice || '0' }}
+			</span>
+			<MyIcon
+				name="toman"
+				class="w-4 h-4 text-yellow-500 mx-1 flex-shrink-0"
+			/>
+			<span class="text-xs font-medium text-yellow-500 flex-shrink-0">
+				{{ $strings.wholesale_discount() }}
+			</span>
+		</div>
 		<div v-if="!loading" class="flex items-center mt-2">
 			<span class="text-sm text-natural-dark opacity-50 me-2">
 				{{ (product.weight && weightString) || '~' }}
@@ -104,8 +143,65 @@ export default class ProductCard extends Vue {
 	@Prop() product!: Product
 	@Prop({ default: false }) loading?: boolean
 
-	get formattedPrice(): string {
+	get hasDiscount(): boolean {
+		return (
+			!!this.product.payable_price &&
+			this.product.payable_price != this.product.price
+		)
+	}
+
+	get hasWholesale(): boolean {
+		return (
+			!!this.product.wholesale_payable_price &&
+			this.product.payable_price != this.product.wholesale_payable_price
+		)
+	}
+
+	get isWholesale(): boolean {
+		const q = Number(this.product.quantity) || 0
+		return (
+			!!this.product.wholesale_payable_price &&
+			this.product.payable_price !=
+				this.product.wholesale_payable_price &&
+			q >= this.product.wholesale_min_count
+		)
+	}
+
+	get formattedMainPrice(): string {
 		return this.$stringUtils.thousandFormat(this.product.price || '') || ''
+	}
+
+	get formattedPrice(): string {
+		if (this.hasDiscount) {
+			return this.formattedPayablePrice
+		} else {
+			return this.$stringUtils.prettyPrice(this.product.price || '') || ''
+		}
+	}
+
+	get formattedPayablePrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(this.product.payable_price || '') ||
+			''
+		)
+	}
+
+	get discountPercent(): number {
+		return (
+			+(
+				100 -
+				(this.product.payable_price / this.product.price) * 100
+			).toFixed(0) || 0
+		)
+	}
+
+	get formattedWholesaleDiscountPrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(
+				this.product.payable_price -
+					this.product.wholesale_payable_price
+			) || ''
+		)
 	}
 
 	get categories(): ShopCategory[] {
@@ -123,6 +219,8 @@ export default class ProductCard extends Vue {
 		if (!m.value) return ''
 		return m.value + ' ' + m.label
 	}
+
+	mounted() {}
 }
 </script>
 

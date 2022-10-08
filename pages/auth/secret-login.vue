@@ -8,6 +8,7 @@
 			:btnTitle="$strings.send_code()"
 			:show-mobile="true"
 			:show-password-login-button="true"
+			:form-errors="formErrors"
 			@submit="sendOPT"
 		/>
 		<AuthFormCard
@@ -19,6 +20,7 @@
 			:show-code="true"
 			:show-edit-mobile="true"
 			:show-back="!mobile"
+			:form-errors="formErrors"
 			@back="back"
 			@submit="submitOPT"
 		/>
@@ -46,6 +48,7 @@ export default class LoginPage extends Vue {
 		mobile: '',
 		code: '',
 	}
+	formErrors = null as any
 
 	get mobile() {
 		return String(this.$route.query.mobile || '')
@@ -106,7 +109,7 @@ export default class LoginPage extends Vue {
 			this.$toast.success(this.$strings.account_verified(), '', {} as any)
 			await this.$router.push(this.$routeUrl.LoginUrl())
 		} catch (e: any) {
-			this.$toastErrors(this, e)
+			this.formErrors = this.$toastErrors(this, e, false)
 			this.loading = false
 		}
 	}

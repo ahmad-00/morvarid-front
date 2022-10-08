@@ -8,6 +8,7 @@ const env = require('dotenv').config({ path: './.env' }).parsed || {}
 
 env.BROWSER_BASE_URL =
 	process.env.BROWSER_BASE_URL || env.BROWSER_BASE_URL || '/api/'
+env.BROWSER_BASE_URL = '/' + env.BROWSER_BASE_URL?.replace(/\//g, '') + '/'
 
 env.BASE_URL = process.env.BASE_URL || env.BASE_URL || 'http://141.11.42.199/'
 env.BASE_URL = env.BASE_URL?.replace(/\/$/, '') + '/'
@@ -38,6 +39,8 @@ const baseUrl = env.BASE_URL
 const mediaUrl = env.MEDIA_URL
 const siteUrl = env.SITE_URL
 const browserBaseUrl = env.ENABLE_PROXY ? env.BROWSER_BASE_URL : env.BASE_URL
+
+console.log(env)
 
 const config: NuxtConfig = {
 	// Global page headers: https://go.nuxtjs.dev/config-head
@@ -169,12 +172,12 @@ const config: NuxtConfig = {
 			CATEGORY_CARDAMON_ID: env.CATEGORY_CARDAMON_ID,
 		},
 	},
-	proxy: {
+	proxy: enableProxy ? {
 		[browserBaseUrl]: {
 			target: baseUrl,
 			pathRewrite: { [`^${browserBaseUrl}`]: '' },
 		},
-	},
+	} : {},
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
 		standalone: true,

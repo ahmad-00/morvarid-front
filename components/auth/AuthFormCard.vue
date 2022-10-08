@@ -59,6 +59,7 @@
 			:value="data.username"
 			class="mb-8"
 			name="username"
+			:errors="formErrors"
 			@change="(v) => changeData({ username: v })"
 		/>
 		<TextInput
@@ -68,6 +69,7 @@
 			:value="data.email"
 			class="mb-8"
 			name="email"
+			:errors="formErrors"
 			@change="(v) => changeData({ email: v })"
 		/>
 		<div v-if="showMobile" class="grid gap-4 grid-cols-3 mb-8 relative">
@@ -80,7 +82,8 @@
 				<TextInput
 					type="number"
 					:label="$strings.phone_number()"
-					name="mobile"
+					name="phone"
+					:errors="formErrors"
 					:value="mobileWithoutAreaCode"
 					@change="(v) => changeData({ mobile: areaCode + v })"
 				/>
@@ -97,6 +100,7 @@
 					type="text"
 					:label="$strings.area_code()"
 					name="area-code"
+					:errors="formErrors"
 					:value="isAreaCodeFocused ? areaCodeSearchText : areaCode"
 					@change="
 						(v) =>
@@ -139,7 +143,8 @@
 			type="text"
 			:label="$strings.firstname()"
 			:value="data.firstname"
-			name="firstname"
+			name="first_name"
+			:errors="formErrors"
 			class="mb-8"
 			@change="(v) => changeData({ firstname: v })"
 		/>
@@ -148,7 +153,8 @@
 			type="text"
 			:label="$strings.lastname()"
 			:value="data.lastname"
-			name="lastname"
+			name="last_name"
+			:errors="formErrors"
 			class="mb-8"
 			@change="(v) => changeData({ lastname: v })"
 		/>
@@ -157,6 +163,8 @@
 			type="password"
 			:label="$strings.password()"
 			:value="data.password"
+			name="password"
+			:errors="formErrors"
 			class="mb-8"
 			@change="(v) => changeData({ password: v })"
 		/>
@@ -166,7 +174,8 @@
 			:label="$strings.repeat_password()"
 			:value="data.rePassword"
 			class="mb-8"
-			name="password"
+			name="repeat-password"
+			:errors="formErrors"
 			@change="(v) => changeData({ rePassword: v })"
 		/>
 		<TextInput
@@ -175,7 +184,8 @@
 			:label="$strings.confirmation_code()"
 			:value="data.code"
 			class="mb-8"
-			name="repeat-password"
+			name="otp"
+			:errors="formErrors"
 			@change="(v) => changeData({ code: v })"
 		/>
 		<nuxt-link
@@ -259,6 +269,7 @@ export default class AuthFormCard extends Vue {
 	@Prop({}) showForgetButton?: boolean
 	@Prop({}) showSecretLoginButton?: boolean
 	@Prop({}) showPasswordLoginButton?: boolean
+	@Prop({}) formErrors?: any
 
 	isAreaCodeFocused = false
 	areaCodeSearchText = ''

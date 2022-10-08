@@ -38,23 +38,28 @@
 				<div class="max-w-screen-xl w-full flex flex-col">
 					<div class="h-px bg-gray-300 mb-20" />
 					<div
+						v-if="loading || products.length"
 						class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 xl:gap-10"
 					>
-						<template v-if="!loading">
-							<ProductCard
-								v-for="(p, i) in products"
-								:key="i"
-								:product="p"
-							/>
-						</template>
-						<template v-else>
+						<template v-if="loading">
 							<ProductCard
 								v-for="i in 4"
 								:key="i"
 								:loading="true"
 							/>
 						</template>
+						<template v-else>
+							<ProductCard
+								v-for="(p, i) in products"
+								:key="i"
+								:product="p"
+							/>
+						</template>
 					</div>
+					<UndrawEmpty
+						v-else
+						class="w-full max-w-xs h-auto text-primary self-center"
+					/>
 				</div>
 			</div>
 		</template>
@@ -74,10 +79,18 @@ import ProductCard from '~/components/product/ProductCard.vue'
 import ShopWeightCard from '~/components/shop/ShopWeightCard.vue'
 import { Context } from '@nuxt/types'
 import ShopWeightList from '~/components/shop/ShopWeightList.vue'
+import UndrawEmpty from '~/assets/img/undraw_empty.svg'
 
 const Qs = require('qs')
 
-const _fetchData = async ({ app, store, route, error, $axios, $config }: Context) => {
+const _fetchData = async ({
+	app,
+	store,
+	route,
+	error,
+	$axios,
+	$config,
+}: Context) => {
 	try {
 		const weights = route.query['weights[]'] || []
 		const categoryId = route.params.category_id || null
@@ -144,6 +157,7 @@ const _fetchData = async ({ app, store, route, error, $axios, $config }: Context
 		ShopCategories,
 		MainContainer,
 		MyIcon,
+		UndrawEmpty,
 	},
 })
 export default class ShopPage extends Vue {

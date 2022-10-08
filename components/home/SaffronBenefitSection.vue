@@ -9,7 +9,8 @@
 				</span>
 				<div class="grid grid-cols-2 md:grid-cols-3 flex-grow gap-y-3 gap-x-16">
 					<div v-for="(text, i) in items" :key="i" class="flex items-center">
-						<span class="me-3 w-8 h-8 rounded-full bg-primary bg-opacity-50 font-bold text-white text-sm flex-shrink-0 flex items-center justify-center">
+						<span
+							class="me-3 w-8 h-8 rounded-full bg-primary bg-opacity-50 font-bold text-white text-sm flex-shrink-0 flex items-center justify-center">
 							{{ i + 1 }}
 						</span>
 						<span class="text-sm text-natural-dark opacity-50 truncate">{{ text }}</span>
@@ -37,7 +38,20 @@ import MyIcon from "~/components/utils/MyIcon.vue";
 })
 export default class SaffronHistorySection extends Vue {
 
-	items = Array(12).fill('').map(() => ('درمان افسردگی و ایجاد نشاط'))
+	items = [
+		'افزایش ایمنی بدن',
+		'افزایش گردش خون',
+		'محافظت از سلامت قلب',
+		'کنترل دیابت',
+		'کاهش اضطراب',
+		'تقویت قدرت استخوانی',
+		'بهبود عملکرد عصب',
+		'ضد افسردگی',
+		'جلوگیری از سرطان',
+		'کاهش اختلالات معده',
+		'درمان التهاب و کاهش درد',
+		'ایجاد نشاط'
+	]
 
 }
 </script>

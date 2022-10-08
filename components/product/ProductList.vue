@@ -19,6 +19,7 @@
 				</nuxt-link>
 			</div>
 			<div
+				v-if="loading || products.length"
 				ref="swiper"
 				class="product-list-swiper swiper w-full"
 				:class="{
@@ -52,6 +53,12 @@
 				<div class="swiper-button-next"></div>
 				<div class="swiper-scrollbar"></div>
 			</div>
+			<span
+				v-else
+				class="text-2xl font-bold text-natural-mute opacity-50 self-center"
+			>
+				{{ $strings.nothing_found() }}
+			</span>
 		</div>
 	</div>
 </template>

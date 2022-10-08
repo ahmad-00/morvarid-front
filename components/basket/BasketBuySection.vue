@@ -41,14 +41,14 @@
 						/>
 					</div>
 					<div
-						v-if="false"
+						v-if="discountPrice"
 						class="flex items-center py-px ps-8 pe-6 w-full mt-3"
 					>
 						<span class="text-xl text-natural-dark flex-grow">
 							{{ $strings.discount() }}
 						</span>
 						<span class="text-3xl text-green-500 font-bold">
-							{{ formattedTotalPrice }}
+							{{ formattedDiscountPrice }}
 						</span>
 						<MyIcon
 							name="toman"
@@ -64,7 +64,7 @@
 							{{ $strings.payment_amount() }}
 						</span>
 						<span class="text-3xl font-bold text-natural-dark">
-							{{ formattedTotalPrice }}
+							{{ formattedActualTotalPrice }}
 						</span>
 						<MyIcon
 							name="toman"
@@ -74,11 +74,10 @@
 				</div>
 			</div>
 		</div>
-		<div v-else class="flex flex-col flex-grow items-center justify-center">
-			<span class="text-3xl font-bold text-natural-mute opacity-50 my-12">
-				{{ $strings.nothing_found() }}
-			</span>
-		</div>
+		<UndrawEmptyCart
+			v-else
+			class="w-full max-w-xs h-auto text-primary self-center my-6"
+		/>
 	</div>
 </template>
 
@@ -88,9 +87,10 @@ import MyIcon from '~/components/utils/MyIcon.vue'
 import BasketProductCard from '~/components/basket/BasketProductCard.vue'
 import { Product } from '~/config/types'
 import MaterialLabel from '~/components/utils/MaterialLabel.vue'
+import UndrawEmptyCart from '~/assets/img/undraw_empty_cart.svg'
 
 @Component({
-	components: { MaterialLabel, BasketProductCard, MyIcon },
+	components: { MaterialLabel, BasketProductCard, MyIcon, UndrawEmptyCart },
 })
 export default class BasketBuySection extends Vue {
 	@Prop({}) products!: Product[]
@@ -105,8 +105,37 @@ export default class BasketBuySection extends Vue {
 		)
 	}
 
+	get actualTotalPrice(): number {
+		return (
+			this.products
+				.map((v) => {
+					const q = Number(v.quantity) || 0
+					if (q >= v.wholesale_min_count && v.wholesale_payable_price) {
+						return (v.quantity || 0) * v.wholesale_payable_price
+					} else if(v.payable_price) {
+						return (v.quantity || 0) * v.payable_price
+					}else {
+						return (v.quantity || 0) * v.price
+					}
+				})
+				.reduce((a, b) => a + b, 0) || 0
+		)
+	}
+
+	get discountPrice(): number {
+		return this.totalPrice - this.actualTotalPrice
+	}
+
 	get formattedTotalPrice(): string {
-		return this.$stringUtils.thousandFormat(this.totalPrice) || ''
+		return this.$stringUtils.prettyPrice(this.totalPrice) || ''
+	}
+
+	get formattedActualTotalPrice(): string {
+		return this.$stringUtils.prettyPrice(this.actualTotalPrice) || ''
+	}
+
+	get formattedDiscountPrice(): string {
+		return this.$stringUtils.prettyPrice(this.discountPrice) || ''
 	}
 
 	updateItem(product: Product) {

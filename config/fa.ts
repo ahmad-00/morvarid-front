@@ -2,6 +2,8 @@ const app_title = () => 'مروارید سپید'
 
 export default {
 	// app
+	app_title_part_1:() => 'مروارید',
+	app_title_part_2:() => 'سپید فرشتگان',
 	app_title,
 	app_subtitle: () => 'خرید زعفران و هل',
 	app_description: () =>
@@ -50,6 +52,7 @@ export default {
 	order_code: () => 'کد سفارش',
 	amount: () => 'مبلغ',
 	all: () => 'همه',
+	quantity: () => 'تعداد',
 	transferee: () => 'تحویل گیرنده',
 	buy_n: (s: string) => `خرید ${s}`,
 	gram: () => 'گرم',
@@ -82,6 +85,7 @@ export default {
 	full_postal_address: () => 'آدرس پستی کامل',
 	order_summary: () => 'خلاصه سفارش',
 	discount: () => 'تخفیف',
+	wholesale_discount: () => 'تخفیف خرید عمده',
 	without_name: () => 'بدون نام',
 	payment_was_successful: () => 'پرداخت با موفقیت انجام شد.',
 	thank_you_for_your_purchase_and_trust: () => 'سپاس از خرید و اعتماد شما.',
@@ -148,6 +152,23 @@ export default {
 	cancel: () => 'بیخیال',
 	delete: () => 'حذف',
 	error_empty_basket: () => 'سبد خرید خالی است',
+	error_product_number_is_wrong: () => 'تعداد محصول اشتباه است',
 	error_empty_user_info: () => 'مشخصات خود را کامل کنید',
-	error_empty_address: () => 'اطلاعات دریافت سفارش را کامل کنید',
+	error_empty_address: () => 'اطلاعات دریافت سفارش را کامل کنید و یک آدرس را انتخاب کنید.',
+	status: () => "وضعیت",
+	comments: () => 'نظرات',
+	comment: () => 'نظر',
+	write_a_comment: () => 'یک نظر بنویسید',
+	violation_report: () => 'گزارش تخلف',
+	submit_comment: () => 'ثبت نظر',
+	send: () => 'ارسال',
+	rate: () => 'امتیاز',
+	your_comment: () => 'نظر شما',
+	your_name: () => 'نام شما',
+	description: () => 'مشخصات',
+	please_login: () => 'لطفا وارد شوید',
+	for_comment_login_first: () =>
+		'برای ثبت نظر ابتدا وارد حساب کاربری خود شوید',
+	comment_sent: () => 'نظر ارسال شد',
+	no_comment_has_been_registered_yet: () => 'هنوز نظری ثبت نشده است',
 }

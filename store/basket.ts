@@ -22,6 +22,8 @@ export const mutations: MutationTree<BasketState> = {
 			max_order_quantity: v.max_order_quantity,
 			category: v.category,
 			quantity: v.quantity,
+			wholesale_min_count: v.wholesale_min_count,
+			wholesale_payable_price: v.wholesale_payable_price,
 		}))
 		// @ts-ignore
 		this.$cookies.set(

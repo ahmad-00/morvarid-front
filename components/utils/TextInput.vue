@@ -1,5 +1,5 @@
 <template>
-	<div class="relative" :class="{ 'pointer-events-none': disabled }">
+	<div class="relative flex flex-col" :class="{ 'pointer-events-none': disabled }">
 		<div
 			v-if="mode === 'underline'"
 			class="textinput-underline relative border-b-2 focus-within:border-primary duration-300"
@@ -110,13 +110,19 @@
 				:show="show"
 			/>
 		</client-only>
+		<TransitionExpand from="0" to="auto">
+			<span v-if="isErrorVisible" class="text-xs text-red-500 mt-1 ms-1 self-start">
+				{{ targetErrors[0] || 'error' }}
+			</span>
+		</TransitionExpand>
 	</div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, {PropType} from 'vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
-import { v4 as uuid } from "uuid";
+import {v4 as uuid} from "uuid";
+import TransitionExpand from "~/components/anim/TransitionExpand.vue";
 
 export default Vue.extend({
 	data() {
@@ -124,17 +130,21 @@ export default Vue.extend({
 			id: `text-input-${uuid()}`,
 			show: false,
 			isDropdownOpen: false,
+			isTextChanged: false,
 		}
 	},
 	components: {
+		TransitionExpand,
 		MyIcon,
 		VuePersianDatetimePicker: () =>
 			process.client
 				? import('vue-persian-datetime-picker')
-				: Promise.resolve({ MyIcon }),
+				: Promise.resolve({MyIcon}),
 	},
-	mounted() {},
-	destroyed() {},
+	mounted() {
+	},
+	destroyed() {
+	},
 	model: {
 		prop: 'value',
 		event: 'change',
@@ -179,6 +189,12 @@ export default Vue.extend({
 			default: '',
 			type: String
 		},
+		errors: Object as PropType<any>,
+	},
+	watch: {
+		errors(n) {
+			this.isTextChanged = false
+		},
 	},
 	computed: {
 		valueFormatted(): string {
@@ -199,12 +215,31 @@ export default Vue.extend({
 				return 'direction-rtl'
 			}
 		},
+		targetErrors(): string[] {
+			try {
+				const errors = this.errors?.[this.name]
+				if (!errors) {
+					return []
+				} else if (typeof errors === 'string') {
+					return [errors]
+				} else {
+					return [...errors]
+				}
+			} catch (e) {
+				return []
+			}
+		},
+		isErrorVisible(): boolean {
+			return !!this.targetErrors[0] && !this.isTextChanged
+		},
 	},
 	methods: {
 		onDateChange(v: any): void {
+			this.isTextChanged = true
 			this.$emit('change', v)
 		},
 		onChange(e: any): void {
+			this.isTextChanged = true
 			const value = e.target.value
 			if (this.type === 'number' && isNaN(Number(value))) {
 				e.target.value = e.target._value || ''

@@ -11,6 +11,7 @@
 			:show-lastname="true"
 			:show-password="true"
 			:show-re-password="true"
+			:form-errors="formErrors"
 			@submit="submit"
 		/>
 		<nuxt-link
@@ -44,6 +45,7 @@ export default class RegisterPage extends Vue {
 		password: '',
 		rePassword: '',
 	}
+	formErrors = null as any
 
 	async submit() {
 		const errors = [
@@ -103,7 +105,7 @@ export default class RegisterPage extends Vue {
 				},
 			})
 		} catch (e: any) {
-			this.$toastErrors(this, e)
+			this.formErrors = this.$toastErrors(this, e, false)
 		}
 		this.loading = false
 	}

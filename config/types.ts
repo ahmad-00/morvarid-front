@@ -31,6 +31,9 @@ export type Product = {
 	is_deleted: boolean
 	category: string
 	quantity?: number
+	reviews: any[]
+	wholesale_min_count: number
+	wholesale_payable_price: number
 }
 
 export type Address = {
@@ -94,4 +97,11 @@ export type Image = {
 	path: string
 	path_thumb1: string
 	path_thumb2: string
+}
+
+export type Review = {
+	id: string
+	comment: string
+	user_name: string
+	created_at: string
 }

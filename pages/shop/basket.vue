@@ -94,6 +94,9 @@ export default class BasketPage extends Vue {
 				this.loading = true
 				await this.$router.push(this.$routeUrl.LoginUrl())
 				return
+			} else if (this.basket.some(p => !Number(p.quantity))) {
+				this.$toast.error(this.$strings.error_product_number_is_wrong(), '', {} as any)
+				return
 			}
 			this.step = 2
 		} else if (this.step === 2) {

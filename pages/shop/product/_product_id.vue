@@ -7,7 +7,7 @@
 	>
 		<div class="flex flex-col px-6 items-center mt-16">
 			<div class="max-w-screen-xl w-full flex flex-col">
-				<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-32">
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
 					<div class="grid-cols-1 lg:col-span-6 flex flex-col">
 						<ProductSliderSection :loading="loading" :images="images" />
 					</div>
@@ -17,6 +17,10 @@
 				</div>
 			</div>
 		</div>
+		<ProductCommentSection
+			:product="product"
+			class="mb-24"
+		/>
 		<ProductList
 			:products="relatedProducts"
 			:title="$strings.related_goods()"
@@ -36,6 +40,7 @@ import { Image, Product, ShopCategory } from '~/config/types'
 import ProductInfoSection from '~/components/product/ProductInfoSection.vue'
 import ProductList from '~/components/product/ProductList.vue'
 import { Context } from '@nuxt/types'
+import ProductCommentSection from "~/components/product/ProductCommentSection.vue";
 
 const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 	try {
@@ -64,6 +69,7 @@ const _fetchData = async ({ app, store, route, error, $axios }: Context) => {
 @Component({
 	middleware: ['fetch'],
 	components: {
+		ProductCommentSection,
 		ProductList,
 		ProductInfoSection,
 		ProductSliderSection,

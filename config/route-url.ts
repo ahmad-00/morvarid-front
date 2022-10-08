@@ -21,5 +21,6 @@ export default {
 	PanelDashboardUrl: () => '/panel/dashboard',
 	PanelProfileUrl: () => '/panel/profile',
 	PanelAddressesUrl: () => '/panel/addresses',
-	PanelOrdersUrl: () => '/panel/orders',
+	PanelOrdersUrl: (page?: number) =>
+		page ? `/panel/orders/page/${page}` : `/panel/orders`,
 }

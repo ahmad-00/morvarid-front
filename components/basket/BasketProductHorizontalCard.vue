@@ -15,25 +15,87 @@
 		</div>
 		<div class="flex flex-col ms-2 flex-grow me-3 text-natural-dark">
 			<div class="flex flex-row items-center">
-				<span class="text-sm font-bold me-4">
-					{{ product.title || $strings.without_name() }}
-				</span>
-				<span class="flex-grow" />
-				<span class="text-xs font-medium me-1">
-					{{ product.quantity || 1 }}
-				</span>
-				<span class="text-xs font-medium me-1"> * </span>
-				<span class="text-xl font-bold me-1">
-					{{ formattedPrice }}
-				</span>
-				<MyIcon name="toman" class="w-5 h-5" content="self-start" />
-			</div>
-			<div class="flex flex-row">
-				<span class="flex items-center py-1 px-4 rounded bg-white me-2">
-					<span class="text-xs font-bold">
-						{{ weightString }}
+				<div class="flex flex-col">
+					<span class="text-sm font-bold me-4">
+						{{ product.title || $strings.without_name() }}
 					</span>
-				</span>
+					<div class="flex flex-row mt-1.5">
+						<span
+							class="flex items-center py-1 px-4 rounded bg-white me-2"
+						>
+							<span class="text-xs font-bold">
+								{{ weightString }}
+							</span>
+						</span>
+					</div>
+				</div>
+				<span class="flex-grow" />
+				<div class="flex flex-col items-end">
+					<div class="flex items-center text-natural-dark">
+						<span class="text-xs font-medium me-1">
+							{{ product.quantity || 1 }}
+						</span>
+						<span class="text-xs font-medium me-1"> * </span>
+						<span class="text-xl font-bold me-1">
+							{{ formattedPrice }}
+						</span>
+						<MyIcon
+							name="toman"
+							class="w-5 h-5"
+							content="self-start"
+						/>
+					</div>
+					<div
+						v-if="hasDiscount"
+						class="flex items-center mt-1 text-green-500"
+					>
+						<span
+							class="text-xs font-medium me-1 text-natural-mute"
+						>
+							{{ product.quantity || 1 }}
+						</span>
+						<span
+							class="text-xs font-medium me-1 text-natural-mute"
+						>
+							*
+						</span>
+						<span class="text-xs font-bold flex-shrink-0">
+							{{ formattedDiscountPrice || '0' }}
+						</span>
+						<MyIcon
+							name="toman"
+							class="w-4 h-4 mx-1 flex-shrink-0"
+						/>
+						<span class="text-xs font-normal flex-shrink-0">
+							{{ $strings.discount() }}
+						</span>
+					</div>
+					<div
+						v-if="isWholesale"
+						class="flex items-center mt-1 text-yellow-500"
+					>
+						<span
+							class="text-xs font-medium me-1 text-natural-mute"
+						>
+							{{ product.quantity || 1 }}
+						</span>
+						<span
+							class="text-xs font-medium me-1 text-natural-mute"
+						>
+							*
+						</span>
+						<span class="text-xs font-bold flex-shrink-0">
+							{{ formattedWholesaleDiscountPrice || '0' }}
+						</span>
+						<MyIcon
+							name="toman"
+							class="w-4 h-4 mx-1 flex-shrink-0"
+						/>
+						<span class="text-xs font-normal flex-shrink-0">
+							{{ $strings.wholesale_discount() }}
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -53,8 +115,63 @@ import { Product, ShopCategory } from '~/config/types'
 export default class BasketProductHorizontalCard extends Vue {
 	@Prop({}) product!: Product
 
+	get hasDiscount(): boolean {
+		return (
+			!!this.product.payable_price &&
+			this.product.payable_price != this.product.price
+		)
+	}
+
+	get isWholesale(): boolean {
+		const q = Number(this.product.quantity) || 0
+		return (
+			!!this.product.wholesale_payable_price &&
+			this.product.payable_price !=
+				this.product.wholesale_payable_price &&
+			q >= this.product.wholesale_min_count
+		)
+	}
+
 	get formattedPrice(): string {
-		return this.$stringUtils.thousandFormat(this.product.price || '') || ''
+		if (this.isWholesale) {
+			return this.formattedWholesalePayablePrice
+		} else if (this.hasDiscount) {
+			return this.formattedPayablePrice
+		} else {
+			return this.$stringUtils.prettyPrice(this.product.price || '') || ''
+		}
+	}
+
+	get formattedPayablePrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(this.product.payable_price || '') ||
+			''
+		)
+	}
+
+	get formattedWholesalePayablePrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(
+				this.product.wholesale_payable_price || ''
+			) || ''
+		)
+	}
+
+	get formattedDiscountPrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(
+				this.product.price - this.product.payable_price
+			) || ''
+		)
+	}
+
+	get formattedWholesaleDiscountPrice(): string {
+		return (
+			this.$stringUtils.prettyPrice(
+				this.product.payable_price -
+					this.product.wholesale_payable_price
+			) || ''
+		)
 	}
 
 	get categories(): ShopCategory[] {

@@ -8,6 +8,7 @@
 			:show-username="true"
 			:show-password="true"
 			:show-forget-button="true"
+			:form-errors="formErrors"
 			@submit="submit"
 		/>
 		<nuxt-link
@@ -38,6 +39,7 @@ export default class LoginPage extends Vue {
 		username: '',
 		password: '',
 	}
+	formErrors = null as any
 
 	get user(): User | null {
 		return this.$store.state.user.user
@@ -72,14 +74,12 @@ export default class LoginPage extends Vue {
 			await this.$router.push(this.$routeUrl.HomeUrl())
 		} catch (e: any) {
 			if (e?.response?.data?.status === 'not_verified_user') {
-				this.$toast.error(
-					this.$strings.account_not_verified(),
-					'',
-					{} as any
-				)
+				this.formErrors = {
+					username: [ this.$strings.account_not_verified() ]
+				}
 				await this.$router.push(this.$routeUrl.SecretLoginUrl())
 			} else {
-				this.$toastErrors(this, e)
+				this.formErrors = this.$toastErrors(this, e, false)
 				this.loading = false
 			}
 		}
