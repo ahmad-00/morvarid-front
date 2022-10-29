@@ -26,7 +26,6 @@
 		/>
 		<CardamonFooterSection class="" />
 		<ArticleList
-			v-if="false"
 			:articles="articles"
 			:title="$strings.latest_articles()"
 			more-link="#"

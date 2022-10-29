@@ -1,5 +1,10 @@
 export default {
 	HomeUrl: () => `/`,
+	AboutUsUrl: () => `/about-us`,
+	TermsOfUseUrl: () => `/terms-of-use`,
+	PrivacyPolicyUrl: () => `/privacy-policy`,
+	PaymentSuccessfulUrl: () => '/payment/successful',
+	PaymentFailedUrl: () => '/payment/failed',
 	// auth
 	LoginUrl: () => '/auth/login',
 	RegisterUrl: () => '/auth/register',

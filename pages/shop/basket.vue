@@ -135,7 +135,8 @@ export default class BasketPage extends Vue {
 				address_id: this.selectedAddressId,
 			})
 			this.$store.commit('basket/set', [])
-			this.step = 4
+			this.step = 3
+			await this.$router.push(this.$routeUrl.PaymentSuccessfulUrl())
 		} catch (e: any) {
 			this.$toastErrors(this, e)
 		}

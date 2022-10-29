@@ -65,5 +65,6 @@ module.exports = {
 		require('tailwindcss-ripple')(),
 		require('tailwindcss-rtl'),
 		require('@tailwindcss/line-clamp'),
+		require('@tailwindcss/typography'),
 	],
 }

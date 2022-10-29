@@ -26,29 +26,29 @@
 				<div
 					class="flex items-center bg-white rounded-md border border-gray-200 self-start px-3 py-1"
 				>
-				<span
-					class="text-natural-dark pe-3 me-3 text-xs border-e border-gray-200"
-				>
-					{{ $strings.status() }}
-				</span>
-					<div class="flex items-center -me-2">
 					<span
-						v-for="(s, i) in statuses"
-						:key="i"
-						class="text-xs px-2 py-1 rounded-md me-2 border cursor-pointer duration-300"
-						:class="{
-							'border-opacity-100 bg-opacity-10':
-								s.value === status.value,
-							[status.borderClass]: s.value === status.value,
-							[status.bgClass]: s.value === status.value,
-							[status.textClass]: s.value === status.value,
-							'bg-opacity-0 border-opacity-0 text-natural-semidark ':
-								s.value !== status.value,
-						}"
-						@click="changeStatus(s.value)"
+						class="text-natural-dark pe-3 me-3 text-xs border-e border-gray-200"
 					>
-						{{ s.name }}
+						{{ $strings.status() }}
 					</span>
+					<div class="flex items-center -me-2">
+						<span
+							v-for="(s, i) in statuses"
+							:key="i"
+							class="text-xs px-2 py-1 rounded-md me-2 border cursor-pointer duration-300"
+							:class="{
+								'border-opacity-100 bg-opacity-10':
+									s.value === status.value,
+								[status.borderClass]: s.value === status.value,
+								[status.bgClass]: s.value === status.value,
+								[status.textClass]: s.value === status.value,
+								'bg-opacity-0 border-opacity-0 text-natural-semidark ':
+									s.value !== status.value,
+							}"
+							@click="changeStatus(s.value)"
+						>
+							{{ s.name }}
+						</span>
 					</div>
 				</div>
 				<div class="flex-grow" />
@@ -75,8 +75,58 @@
 			/>
 		</template>
 		<template v-else>
-			<OrderCard :data="targetOrder" class="mb-6" :detailed="true" />
+			<OrderCard
+				:data="targetOrder"
+				class="mb-6"
+				:detailed="true"
+				@pay="payOrder"
+				@cancel="openCancelOrderDialog"
+			/>
 		</template>
+		<ModalContainer
+			:visible="isCancelDialogVisible"
+			:title="$strings.cancel_order()"
+			size="lg"
+			:loading="modalLoading"
+			@close="isCancelDialogVisible = false"
+		>
+			<div class="flex flex-col items-center text-center p-8">
+				<span class="text-sm text-natural-semidark">
+					{{ $strings.cancel_order_message() }}
+				</span>
+			</div>
+			<div class="px-8 pb-8 grid grid-cols-1 gap-6">
+				<TextInput
+					:label="$strings.recipient_phone_number()"
+					v-model="cancelDialogData.iban"
+					name="iban"
+					:errors="cancelDialogErrors"
+				/>
+				<TextInput
+					:label="$strings.full_name_of_account_holder()"
+					v-model="cancelDialogData.account_owner_full_name"
+					name="account_owner_full_name"
+					:errors="cancelDialogErrors"
+				/>
+			</div>
+			<div
+				slot="footer"
+				class="flex items-center justify-end border-t border-gray-200 p-4"
+			>
+				<button
+					class="me-4 ripple-bg-white border-2 border-gray-200 ripple-bg-white text-natural-semidark px-8 py-3 font-bold rounded-xl"
+					@click="isCancelDialogVisible = false"
+				>
+					{{ $strings.cancel() }}
+				</button>
+				<button
+					class="text-white px-8 py-3 font-bold rounded-xl ripple-bg-red-500"
+					@click="cancelOrder"
+				>
+					{{ $strings.cancel_order() }}
+				</button>
+			</div>
+		</ModalContainer>
 	</PanelContainer>
 </template>
 
@@ -88,28 +138,40 @@ import PanelContainer from '~/components/panel/PanelContainer.vue'
 import { Order } from '~/config/types'
 import OrderCard from '~/components/order/OrderCard.vue'
 import { StatusType } from '~/store/type'
-import Pagination from "~/components/utils/Pagination.vue";
+import Pagination from '~/components/utils/Pagination.vue'
 import UndrawNoData from '~/assets/img/undraw_no_data.svg'
+import ModalContainer from '~/components/utils/ModalContainer.vue'
+import TextInput from '~/components/utils/TextInput.vue'
 
 export const LIMIT = 12
 
 @Component({
 	middleware: ['fetch', 'auth'],
 	components: {
+		ModalContainer,
 		Pagination,
 		OrderCard,
 		PanelContainer,
 		UserMenu,
 		MyIcon,
 		UndrawNoData,
+		TextInput,
 	},
 })
 export default class PanelOrdersPage extends Vue {
 	fetched = false
 	loading = false
+
 	orders = [] as Order[]
 	total = 0
 	targetOrder = null as Order | null
+	isCancelDialogVisible = false
+	modalLoading = false
+	cancelDialogData = {
+		iban: '',
+		account_owner_full_name: '',
+	}
+	cancelDialogErrors = null as any
 
 	@Watch('$route.query')
 	onRouteQueryChange() {
@@ -145,6 +207,45 @@ export default class PanelOrdersPage extends Vue {
 				status: v,
 			},
 		})
+	}
+
+	payOrder() {
+		this.$router.push(this.$routeUrl.PaymentSuccessfulUrl())
+	}
+
+	openCancelOrderDialog() {
+		this.cancelDialogErrors = null
+		this.cancelDialogData = {
+			iban: '',
+			account_owner_full_name: '',
+		}
+		this.isCancelDialogVisible = true
+	}
+
+	async cancelOrder() {
+		this.modalLoading = true
+		try {
+			await this.$axios.post(
+				this.$apiUrl.CancelOrderUrl(this.targetOrder?.id),
+				{
+					iban: this.cancelDialogData.iban,
+					account_owner_full_name:
+						this.cancelDialogData.account_owner_full_name,
+				}
+			)
+			this.$toast.success(
+				this.$strings.order_canceled(),
+				'',
+				{} as any
+			)
+			this.modalLoading = false
+			this.isCancelDialogVisible = false
+			this.targetOrder = null
+			await this.fetchData()
+		} catch (e: any) {
+			this.cancelDialogErrors = this.$toastErrors(this, e, false)
+			this.modalLoading = false
+		}
 	}
 
 	async fetchData() {

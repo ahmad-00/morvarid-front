@@ -138,6 +138,35 @@
 				:product="product"
 			/>
 		</div>
+		<div
+			v-if="
+				detailed &&
+				['submitted', 'payed', 'processing'].includes(
+					data && data.status
+				)
+			"
+			class="flex items-center p-5 border-t border-gray-100 bg-gray-50"
+		>
+			<div class="flex-grow" />
+			<span
+				v-if="['submitted'].includes(data && data.status)"
+				class="text-sm text-white font-bold ripple-bg-yellow-500 px-4 py-2 rounded-md ms-4 cursor-pointer"
+				@click="$emit('pay')"
+			>
+				{{ $strings.pay() }}
+			</span>
+			<span
+				v-if="
+					['submitted', 'payed', 'processing'].includes(
+						data && data.status
+					)
+				"
+				class="text-sm text-white font-bold ripple-bg-red-500 px-4 py-2 rounded-md ms-4 cursor-pointer"
+				@click="$emit('cancel')"
+			>
+				{{ $strings.cancel_order() }}
+			</span>
+		</div>
 	</div>
 </template>
 
@@ -191,11 +220,14 @@ export default class OrderCard extends Vue {
 			this.products
 				.map((v) => {
 					const q = Number(v.quantity) || 0
-					if (q >= v.wholesale_min_count && v.wholesale_payable_price) {
+					if (
+						q >= v.wholesale_min_count &&
+						v.wholesale_payable_price
+					) {
 						return (v.quantity || 0) * v.wholesale_payable_price
-					} else if(v.payable_price) {
+					} else if (v.payable_price) {
 						return (v.quantity || 0) * v.payable_price
-					}else {
+					} else {
 						return (v.quantity || 0) * v.price
 					}
 				})

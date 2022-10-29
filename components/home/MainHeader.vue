@@ -255,7 +255,7 @@ import UserMenu, {
 } from '~/components/home/UserMenu.vue'
 import TransitionFade from '~/components/anim/TransitionFade.vue'
 
-export type MenuItemIds = null | 'home' | 'contact-us' | 'blog'
+export type MenuItemIds = null | 'home' | 'contact-us' | 'blog' | 'about-us' | 'products'
 
 export type MenuItem = {
 	id: MenuItemIds
@@ -289,6 +289,16 @@ export default class MainHeader extends Vue {
 				id: 'home',
 				name: this.$strings.home(),
 				link: this.$routeUrl.HomeUrl(),
+			},
+			{
+				id: 'products',
+				name: this.$strings.products(),
+				link: this.$routeUrl.ShopUrl(),
+			},
+			{
+				id: 'about-us',
+				name: this.$strings.about_us(),
+				link: this.$routeUrl.AboutUsUrl(),
 			},
 		]
 	}

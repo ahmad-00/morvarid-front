@@ -38,7 +38,8 @@ const icons = [
 	'bag-fill',
 	'location',
 	'invoice',
-	'recent-time'
+	'recent-time',
+	'whatsapp'
 ] as const
 
 export type IconType = typeof icons[number]

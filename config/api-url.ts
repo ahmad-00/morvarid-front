@@ -30,6 +30,7 @@ export default {
 	SubmitOrderUrl: () => `order`,
 	GetOrdersUrl: () => `order`,
 	GetOrderCountUrl: () => `order/count`,
+	CancelOrderUrl: (id: any) => `order/${id}/cancel`,
 	// weight
 	GetWeightsUrl: () => `weights`,
 	// review

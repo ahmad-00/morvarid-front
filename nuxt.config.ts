@@ -40,8 +40,6 @@ const mediaUrl = env.MEDIA_URL
 const siteUrl = env.SITE_URL
 const browserBaseUrl = env.ENABLE_PROXY ? env.BROWSER_BASE_URL : env.BASE_URL
 
-console.log(env)
-
 const config: NuxtConfig = {
 	// Global page headers: https://go.nuxtjs.dev/config-head
 	head: {
@@ -54,8 +52,8 @@ const config: NuxtConfig = {
 			},
 			{ hid: 'description', name: 'description', content: '' },
 			{ name: 'format-detection', content: 'telephone=no' },
-			{ name: 'msapplication-TileColor', content: '#ffffff' },
-			{ name: 'theme-color', content: '#603CB7' },
+			{ name: 'msapplication-TileColor', content: '#603cb7' },
+			{ name: 'theme-color', content: '#ffffff' },
 			{ name: 'fontiran.com:license', content: 'XPQYPB' },
 		],
 		link: [
@@ -133,6 +131,7 @@ const config: NuxtConfig = {
 		'nuxt-svg-loader',
 		'@nuxtjs/sitemap',
 		'@nuxtjs/robots',
+		'@nuxt/content',
 	],
 
 	// Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -172,12 +171,14 @@ const config: NuxtConfig = {
 			CATEGORY_CARDAMON_ID: env.CATEGORY_CARDAMON_ID,
 		},
 	},
-	proxy: enableProxy ? {
-		[browserBaseUrl]: {
-			target: baseUrl,
-			pathRewrite: { [`^${browserBaseUrl}`]: '' },
-		},
-	} : {},
+	proxy: enableProxy
+		? {
+				[browserBaseUrl]: {
+					target: baseUrl,
+					pathRewrite: { [`^${browserBaseUrl}`]: '' },
+				},
+		  }
+		: {},
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
 		standalone: true,
@@ -223,6 +224,10 @@ const config: NuxtConfig = {
 				'/shop',
 				...shopCategories,
 				...shopProducts,
+				// static pages
+				'/about-us',
+				'/privacy-policy',
+				'/terms-of-use',
 				'',
 			]
 		},
