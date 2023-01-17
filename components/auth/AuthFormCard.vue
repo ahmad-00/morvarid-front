@@ -289,13 +289,14 @@ export default class AuthFormCard extends Vue {
 	}
 
 	get countryDialInfo() {
-		return CountryDialInfo.filter(
-			(v) =>
-				v.name
-					.toLowerCase()
-					.includes(this.areaCodeSearchText.toLowerCase()) ||
-				v.dial_code.includes(this.areaCodeSearchText)
-		)
+		return CountryDialInfo
+			.filter(
+				(v) =>
+					String(v.name)
+						.toLowerCase()
+						.includes(String(this.areaCodeSearchText).toLowerCase()) ||
+					String(v.dial_code).includes(this.areaCodeSearchText)
+			)
 	}
 
 	changeData(d: DataType) {

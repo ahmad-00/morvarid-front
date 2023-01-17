@@ -29,8 +29,10 @@
 			:articles="articles"
 			:title="$strings.latest_articles()"
 			more-link="#"
-			class="mb-28 mt-16"
+			class="mt-16"
 		/>
+		<FAQSection class="mt-16" />
+		<div class="mb-28" />
 	</MainContainer>
 </template>
 
@@ -52,6 +54,7 @@ import { Article, Product } from '~/config/types'
 import CardamonFooterSection from '~/components/home/CardamonFooterSection.vue'
 import ArticleList from '~/components/article/ArticleList.vue'
 import { Context } from '@nuxt/types'
+import FAQSection from "~/components/home/FAQSection.vue";
 
 const _fetchData = async ({ app, store, route, error, $axios, $config }: Context) => {
 	try {
@@ -84,6 +87,7 @@ const _fetchData = async ({ app, store, route, error, $axios, $config }: Context
 @Component({
 	middleware: ['fetch'],
 	components: {
+		FAQSection,
 		ArticleList,
 		CardamonFooterSection,
 		CardamonBenefitSection,

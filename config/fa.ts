@@ -190,4 +190,5 @@ export default {
 	order_canceled: () => 'سفارش لغو شد',
 	recipient_phone_number: () => 'شماره شبای دریافت کننده',
 	full_name_of_account_holder: () => 'نام کامل صاحب حساب',
+	faq: () => 'سوالات متداول',
 }

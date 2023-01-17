@@ -131,6 +131,10 @@ export default class MainHeader extends Vue {
 			title: this.$strings.terms_of_use(),
 			link: this.$routeUrl.TermsOfUseUrl(),
 		},
+		{
+			title: this.$strings.faq(),
+			link: this.$routeUrl.HomeUrl() + "#home-faq-section",
+		},
 	]
 }
 </script>

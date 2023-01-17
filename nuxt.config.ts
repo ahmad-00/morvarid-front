@@ -176,6 +176,7 @@ const config: NuxtConfig = {
 				[browserBaseUrl]: {
 					target: baseUrl,
 					pathRewrite: { [`^${browserBaseUrl}`]: '' },
+					secure: !dev
 				},
 		  }
 		: {},

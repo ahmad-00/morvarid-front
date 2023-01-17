@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body[dir='rtl'] .prose blockquote {
+	border-right-width: 0.25rem;
+	border-left-width: 0;
+}
+
+body[dir='rtl'] .prose ul > li,
+body[dir='rtl'] .prose ol > li {
+	padding-right: 1.75em;
+	padding-left: 0;
+}
+
+body[dir='rtl'] .prose ol > li:before {
+	right: 0.25em;
+	left: auto;
+}
+
+body[dir='rtl'] .prose ol > li:before,
+body[dir='rtl'] .prose ul > li:before {
+	right: 0.25em;
+	left: auto;
+}
+
+body[dir='rtl'] .prose thead td:first-child,
+body[dir='rtl'] .prose thead th:first-child {
+	padding-right: 0;
+}
+
+body[dir='rtl'] .prose thead td:last-child,
+body[dir='rtl'] .prose thead th:last-child {
+	padding-left: 0;
+}
