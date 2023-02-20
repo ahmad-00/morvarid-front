@@ -1,6 +1,4 @@
-// @ts-ignore
 import type { NuxtConfig } from '@nuxt/types'
-// @ts-ignore
 import axios from 'axios'
 import ApiUrl from './config/api-url'
 

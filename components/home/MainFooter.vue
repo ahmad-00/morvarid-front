@@ -44,7 +44,7 @@
 				class="max-w-screen-xl w-full flex flex-col lg:flex-row items-start self-center"
 			>
 				<div
-					class="flex-grow flex flex-col me-0 lg:me-20 text-white mb-6 lg:mb-0"
+					class="flex-grow flex flex-col me-0 lg:me-20 text-white mb-6 lg:mb-0 self-stretch lg:self-start"
 				>
 					<b class="font-bold mb-6">
 						{{ $strings.pages() }}
@@ -61,11 +61,23 @@
 					</div>
 				</div>
 				<div class="flex items-center self-center lg:self-start">
-					<div class="w-40 h-40 rounded-xl bg-gray-100 me-6">
-						<img v-if="false" src="" alt="" class="w-full h-full" />
-					</div>
-					<div class="w-40 h-40 rounded-xl bg-gray-100">
-						<img v-if="false" src="" alt="" class="w-full h-full" />
+					<div class="w-32 h-32 rounded-xl bg-gray-100">
+						<client-only>
+							<a
+								referrerpolicy="origin"
+								target="_blank"
+								href="https://trustseal.enamad.ir/?id=324644&Code=mRsJ7t5r2hDhyVvPKHEg"
+								class="w-full h-full flex items-center justify-center"
+							>
+								<img
+									referrerpolicy="origin"
+									src="https://Trustseal.eNamad.ir/logo.aspx?id=324644&Code=mRsJ7t5r2hDhyVvPKHEg"
+									alt=""
+									id="mRsJ7t5r2hDhyVvPKHEg"
+									class="w-20 h-20"
+								/>
+							</a>
+						</client-only>
 					</div>
 				</div>
 			</div>
@@ -133,7 +145,7 @@ export default class MainHeader extends Vue {
 		},
 		{
 			title: this.$strings.faq(),
-			link: this.$routeUrl.HomeUrl() + "#home-faq-section",
+			link: this.$routeUrl.HomeUrl() + '#home-faq-section',
 		},
 	]
 }
