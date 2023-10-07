@@ -28,9 +28,11 @@
 			"@nuxt/content",
 			"@nuxtjs/axios",
 			"@types/node",
-			"./types/*",
 			"@types/moment-jalaali",
 			"@types/uuid",
+			"./types/shims.d.ts",
+			"./types/svg.d.ts",
+			"./types/vue.d.ts",
 		]
 	},
 	"exclude": [

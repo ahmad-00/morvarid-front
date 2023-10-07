@@ -9,10 +9,10 @@
 					v-for="(c, i) in categories"
 					:key="i"
 					:to="
-							c.id
-								? $routeUrl.ShopCategoryUrl(c.id)
-								: $routeUrl.ShopUrl()
-						"
+						c.id
+							? $routeUrl.ShopCategoryUrl(c.id)
+							: $routeUrl.ShopUrl()
+					"
 					class="font-bold text-primary-dark py-4 px-8 flex flex-col relative bg-primary-dark bg-opacity-0 hover:bg-opacity-5 duration-300"
 				>
 					<span>{{ c.name }}</span>
@@ -24,30 +24,29 @@
 			</div>
 		</div>
 	</div>
-	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator";
-import MyIcon from "@/components/utils/MyIcon.vue";
-import { ShopCategory } from "~/config/types";
+import { Component, Vue } from 'nuxt-property-decorator'
+import MyIcon from '@/components/utils/MyIcon.vue'
+import { ShopCategory } from '~/config/types'
 
 @Component({
-	components: { MyIcon }
+	components: { MyIcon },
 })
 export default class ShopCategories extends Vue {
 	get categoryId(): string | null {
-		return this.$route.params.category_id || null;
+		return this.$route.params.category_id || null
 	}
 
 	get categories(): ShopCategory[] {
 		return [
 			{
 				id: null,
-				name: this.$strings.all()
+				name: this.$strings.all(),
 			},
-			...this.$store.state.category.shopCategories
-		];
+			...this.$store.state.category.shopCategories,
+		]
 	}
 }
 </script>

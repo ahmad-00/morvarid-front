@@ -3,7 +3,7 @@
 		class="flex flex-col"
 		:style="{
 			backgroundImage: `url('/img/image_saffron_footer.jpg')`,
-			backgroundSize: 'cover'
+			backgroundSize: 'cover',
 		}"
 	>
 		<div

@@ -11,8 +11,8 @@
 			:to="{
 				path: $routeUrl.PanelOrdersUrl(),
 				query: {
-					status: item.value
-				}
+					status: item.value,
+				},
 			}"
 		>
 			<span
@@ -36,7 +36,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
-import {StatusType} from "~/store/type";
+import { StatusType } from '~/store/type'
 
 export default Vue.extend({
 	components: { MyIcon },

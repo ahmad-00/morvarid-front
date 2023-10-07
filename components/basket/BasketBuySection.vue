@@ -110,11 +110,14 @@ export default class BasketBuySection extends Vue {
 			this.products
 				.map((v) => {
 					const q = Number(v.quantity) || 0
-					if (q >= v.wholesale_min_count && v.wholesale_payable_price) {
+					if (
+						q >= v.wholesale_min_count &&
+						v.wholesale_payable_price
+					) {
 						return (v.quantity || 0) * v.wholesale_payable_price
-					} else if(v.payable_price) {
+					} else if (v.payable_price) {
 						return (v.quantity || 0) * v.payable_price
-					}else {
+					} else {
 						return (v.quantity || 0) * v.price
 					}
 				})

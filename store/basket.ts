@@ -1,18 +1,17 @@
 import Vue from 'vue'
 import { ActionTree, MutationTree } from 'vuex'
-import { Context } from '@nuxt/types'
 import { Product } from '~/config/types'
 
 export const state = () => ({
 	basket: [] as Product[],
-	selectedAddressId: null as string | null
+	selectedAddressId: null as string | null,
 })
 
 export type BasketState = ReturnType<typeof state>
 
 export const mutations: MutationTree<BasketState> = {
 	set(state, basket: Product[]) {
-		const b = basket.map(v => ({
+		const b = basket.map((v) => ({
 			id: v.id,
 			title: v.title,
 			weight: v.weight,
@@ -26,20 +25,22 @@ export const mutations: MutationTree<BasketState> = {
 			wholesale_payable_price: v.wholesale_payable_price,
 		}))
 		// @ts-ignore
-		this.$cookies.set(
-			'basket',
-			b,
-			{
-				maxAge: 60 * 60 * 24 * 365,
-				path: '/',
-				httpOnly: false,
-			}
-		)
+		this.$cookies.set('basket', b, {
+			maxAge: 60 * 60 * 24 * 365,
+			path: '/',
+			httpOnly: false,
+		})
 		Vue.set(state, 'basket', b)
 	},
 	selectAddressId(state, addressId: string | null) {
+		// @ts-ignore
+		this.$cookies.set('selected_address_id', addressId, {
+			maxAge: 60 * 60 * 24 * 365,
+			path: '/',
+			httpOnly: false,
+		})
 		Vue.set(state, 'selectedAddressId', addressId)
-	}
+	},
 }
 
 export const actions: ActionTree<BasketState, BasketState> = {
@@ -52,6 +53,10 @@ export const actions: ActionTree<BasketState, BasketState> = {
 				b = []
 			}
 			context.commit('set', b)
+			context.commit(
+				'selectAddressId',
+				this.$cookies.get('selected_address_id') || null
+			)
 		}
 	},
 	async add(context, data) {

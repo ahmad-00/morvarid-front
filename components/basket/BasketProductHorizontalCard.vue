@@ -2,6 +2,7 @@
 	<div class="flex w-full p-2 rounded-2xl">
 		<div class="relative w-16 h-16">
 			<img
+				v-if="product && product.main_image"
 				:src="
 					$apiUrl.MediaBaseUrl($config) +
 					$apiUrl.GetMediaUrl(product.main_image)

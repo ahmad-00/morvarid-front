@@ -16,9 +16,10 @@ $ yarn start
 ```
 
 ## Environment Variables
+
 ```dotenv
 
-# api base url end with slash 
+# api base url end with slash
 BASE_URL=https://api.example.com/
 
 # site url

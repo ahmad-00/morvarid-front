@@ -13,18 +13,21 @@
 				class="shadow-md"
 				:user-selected="selected"
 			/>
-			<div class="grid grid-cols-1 lg:grid-cols-12 w-full px-6 lg:px-8 py-8 gap-x-8 gap-y-12 flex-grow">
-				<div class="col-span-1 lg:col-span-3 flex-col"
-				:class="{
-					'hidden lg:flex': selected !== 'dashboard',
-					'flex': selected === 'dashboard',
-				}"
+			<div
+				class="grid grid-cols-1 lg:grid-cols-12 w-full px-6 lg:px-8 py-8 gap-x-8 gap-y-12 flex-grow"
+			>
+				<div
+					class="col-span-1 lg:col-span-3 flex-col"
+					:class="{
+						'hidden lg:flex': selected !== 'dashboard',
+						flex: selected === 'dashboard',
+					}"
 				>
 					<div
 						class="flex flex-col bg-white rounded-2xl overflow-hidden"
 						:style="{
-						boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.15)',
-					}"
+							boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.15)',
+						}"
 					>
 						<UserMenu
 							:loading="loading"
@@ -64,14 +67,14 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import MyIcon from '~/components/utils/MyIcon.vue'
 import MainFooter from '~/components/home/MainFooter.vue'
 import MainHeader from '~/components/home/MainHeader.vue'
-import UserMenu, { MenuItemIds } from "~/components/home/UserMenu.vue";
+import UserMenu, { MenuItemIds } from '~/components/home/UserMenu.vue'
 
 @Component({
 	components: { UserMenu, MyIcon, MainFooter, MainHeader },
 })
 export default class MainContainer extends Vue {
 	@Prop({ default: 'main' }) type?: 'main' | 'shop'
-	@Prop({ }) selected?: MenuItemIds
+	@Prop({}) selected?: MenuItemIds
 	@Prop({ default: true }) fetched?: boolean
 	@Prop({ default: false }) loading?: boolean
 }

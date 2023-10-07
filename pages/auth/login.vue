@@ -75,11 +75,14 @@ export default class LoginPage extends Vue {
 		} catch (e: any) {
 			if (e?.response?.data?.status === 'not_verified_user') {
 				this.formErrors = {
-					username: [ this.$strings.account_not_verified() ]
+					username: [this.$strings.account_not_verified()],
 				}
 				await this.$router.push(this.$routeUrl.SecretLoginUrl())
 			} else {
 				this.formErrors = this.$toastErrors(this, e, false)
+				if (this.formErrors?.detail) {
+					this.$toast.error(this.formErrors?.detail, '', {} as any)
+				}
 				this.loading = false
 			}
 		}

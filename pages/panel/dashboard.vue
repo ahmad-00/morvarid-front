@@ -45,7 +45,9 @@ export default class PanelDashboardPage extends Vue {
 				.map((v) => 0)
 
 			r.data.result?.forEach((v: any) => {
-				const i = this.orderStatuses.findIndex(t => t.value === v.status)
+				const i = this.orderStatuses.findIndex(
+					(t) => t.value === v.status
+				)
 				if (i >= 0) {
 					newOrderCounts[i] = v.total || 0
 				}
@@ -67,9 +69,7 @@ export default class PanelDashboardPage extends Vue {
 	head() {
 		return {
 			title:
-				this.$strings.dashboard() +
-				' | ' +
-				this.$strings.app_title(),
+				this.$strings.dashboard() + ' | ' + this.$strings.app_title(),
 		}
 	}
 }

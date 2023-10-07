@@ -4,16 +4,7 @@
 			<nuxt-link
 				v-if="page.page"
 				:key="i"
-				class="
-					flex
-					items-center
-					justify-center
-					h-8
-					w-8
-					text-xs text-natural-dark
-					rounded-xl
-					me-3
-				"
+				class="flex items-center justify-center h-8 w-8 text-xs text-natural-dark rounded-xl me-3"
 				:class="{
 					'bg-black bg-opacity-5 font-bold pointer-events-none':
 						page.page === current,

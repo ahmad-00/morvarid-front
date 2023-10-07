@@ -1,28 +1,48 @@
 <template>
 	<div class="px-6 flex flex-col items-center">
-		<div class="flex flex-col-reverse lg:flex-row lg:items-center w-full max-w-screen-xl">
+		<div
+			class="flex flex-col-reverse lg:flex-row lg:items-center w-full max-w-screen-xl"
+		>
 			<div class="flex flex-col flex-grow w-full">
-				<span class="relative text-2xl font-bold text-natural-dark mb-8 mt-4 lg:mt-0 self-center lg:self-start">
+				<span
+					class="relative text-2xl font-bold text-natural-dark mb-8 mt-4 lg:mt-0 self-center lg:self-start"
+				>
 					<span>{{ $strings.saffron_benefits() }}</span>
 					<span
-						class="absolute -z-1 rounded-full h-3 w-20 bg-primary bg-opacity-30 start-0 top-0 bottom-0 my-auto"/>
+						class="absolute -z-1 rounded-full h-3 w-20 bg-primary bg-opacity-30 start-0 top-0 bottom-0 my-auto"
+					/>
 				</span>
-				<div class="grid grid-cols-2 md:grid-cols-3 flex-grow gap-y-3 gap-x-16">
-					<div v-for="(text, i) in items" :key="i" class="flex items-center">
+				<div
+					class="grid grid-cols-2 md:grid-cols-3 flex-grow gap-y-3 gap-x-16"
+				>
+					<div
+						v-for="(text, i) in items"
+						:key="i"
+						class="flex items-center"
+					>
 						<span
-							class="me-3 w-8 h-8 rounded-full bg-primary bg-opacity-50 font-bold text-white text-sm flex-shrink-0 flex items-center justify-center">
+							class="me-3 w-8 h-8 rounded-full bg-primary bg-opacity-50 font-bold text-white text-sm flex-shrink-0 flex items-center justify-center"
+						>
 							{{ i + 1 }}
 						</span>
-						<span class="text-sm text-natural-dark opacity-50 truncate">{{ text }}</span>
+						<span
+							class="text-sm text-natural-dark opacity-50 truncate"
+							>{{ text }}</span
+						>
 					</div>
 				</div>
 			</div>
 			<div class="flex max-w-xs w-full ms-16 self-end lg:self-center">
-				<img src="/img/image_saffron_benefits.png" alt="" class="w-full h-auto flex-grow my-9"/>
-				<span class="w-1 bg-natural-dark flex-shrink-0 rounded-full"
-					  :style="{
-						  boxShadow: '2px 2px 4px rgba(64, 70, 78, 0.25)'
-					  }"
+				<img
+					src="/img/image_saffron_benefits.png"
+					alt=""
+					class="w-full h-auto flex-grow my-9"
+				/>
+				<span
+					class="w-1 bg-natural-dark flex-shrink-0 rounded-full"
+					:style="{
+						boxShadow: '2px 2px 4px rgba(64, 70, 78, 0.25)',
+					}"
 				/>
 			</div>
 		</div>
@@ -30,14 +50,13 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "nuxt-property-decorator";
-import MyIcon from "~/components/utils/MyIcon.vue";
+import { Component, Vue } from 'nuxt-property-decorator'
+import MyIcon from '~/components/utils/MyIcon.vue'
 
 @Component({
-	components: {MyIcon},
+	components: { MyIcon },
 })
 export default class SaffronHistorySection extends Vue {
-
 	items = [
 		'افزایش ایمنی بدن',
 		'افزایش گردش خون',
@@ -50,12 +69,9 @@ export default class SaffronHistorySection extends Vue {
 		'جلوگیری از سرطان',
 		'کاهش اختلالات معده',
 		'درمان التهاب و کاهش درد',
-		'ایجاد نشاط'
+		'ایجاد نشاط',
 	]
-
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

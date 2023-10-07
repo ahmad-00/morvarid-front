@@ -164,7 +164,7 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="postcss">
 .modal-container {
 	overflow: auto;
 	max-height: calc(100vh - 64px);

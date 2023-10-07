@@ -145,7 +145,7 @@ export default class PanelAddressesPage extends Vue {
 				'',
 				{} as any
 			)
-			if(this.selectedAddressId === this.targetAddress.id) {
+			if (this.selectedAddressId === this.targetAddress.id) {
 				this.$store.commit('basket/selectAddressId', null)
 			}
 			this.addresses = this.addresses.filter(
@@ -179,9 +179,7 @@ export default class PanelAddressesPage extends Vue {
 	head() {
 		return {
 			title:
-				this.$strings.addresses() +
-				' | ' +
-				this.$strings.app_title(),
+				this.$strings.addresses() + ' | ' + this.$strings.app_title(),
 		}
 	}
 }

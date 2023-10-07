@@ -2,104 +2,88 @@
 	<div class="flex flex-col">
 		<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-8">
 			<div class="col-span-1 lg:col-span-7 flex flex-col">
-				<span class="text-xl text-natural-dark font-bold mb-6">
-					{{ $strings.your_details() }}
+				<span class="text-xl text-natural-dark font-bold mb-2">
+					{{ $strings.payment() }}
 				</span>
-				<span class="mb-4 max-w-lg relative">
-					<TextInput
-						:label="$strings.your_phone_number()"
-						class=""
-						:disabled="true"
-						:value="user && user.phone"
-						input-class="text-start direction-ltr"
-					/>
-					<MyIcon
-						name="edit"
-						class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
-						@click="openUserEditDialog('mobile')"
-					/>
+				<span class="text-sm text-natural-semidark mb-6">
+					{{ $strings.order_payment_message_1() }}
 				</span>
-				<span class="mb-4 max-w-lg relative">
-					<TextInput
-						:label="$strings.your_email_address()"
-						class=""
-						:disabled="true"
-						:value="user && user.email"
-						input-class="text-start direction-ltr"
-					/>
-					<MyIcon
-						name="edit"
-						class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
-						@click="openUserEditDialog('email')"
-					/>
-				</span>
-				<span class="max-w-lg relative mb-8">
-					<TextInput
-						:label="$strings.your_full_name()"
-						class=""
-						:disabled="true"
-						:value="
-							user &&
-							user.first_name &&
-							user.last_name &&
-							user.first_name + ' ' + user.last_name
-						"
-						input-class="text-start"
-					/>
-					<MyIcon
-						name="edit"
-						class="w-8 h-8 p-1 text-primary absolute end-0 top-0 bottom-0 my-auto me-4 cursor-pointer"
-						@click="openUserEditDialog('name')"
-					/>
-				</span>
-				<div class="flex items-center mb-6 max-w-lg overflow-hidden">
-					<span
-						class="text-xl text-natural-dark font-bold flex-grow line-clamp-1"
+				<div class="flex flex-col space-y-4 mb-8">
+					<div
+						v-for="(bankCard, i) in bankCards"
+						:key="i"
+						class="flex border border-gray-300 rounded-lg bg-white p-4 relative overflow-hidden"
 					>
-						{{ $strings.order_receipt_information() }}
-					</span>
-					<span
-						class="text-white font-bold text-xs py-2 px-3 rounded-lg ripple-bg-green-500 cursor-pointer flex-shrink-0"
-						@click="openCreateAddress"
-					>
-						{{ $strings.add_n($strings.address()) }}
-					</span>
-				</div>
-				<div class="flex flex-col max-w-lg mb-6">
-					<span
-						v-if="!addressLoading && !addresses"
-						class="text-white font-bold text-sm ripple-bg-yellow-500 rounded-lg px-4 py-2.5 self-center cursor-pointer"
-					>
-						{{ $strings.try_again() }}
-					</span>
-					<span
-						v-else-if="addressLoading"
-						class="w-6 h-6 rounded-full animate-ping bg-primary self-center"
-					></span>
-					<span
-						v-else-if="!addresses || !addresses.length"
-						class="text-2xl font-bold text-natural-mute opacity-50 self-center"
-					>
-						{{ $strings.nothing_found() }}
-					</span>
-					<div v-else class="flex flex-col">
-						<AddressCard
-							v-for="(address, i) in addresses"
-							:key="i"
-							:data="address"
-							class="mb-4 cursor-pointer"
-							:selected="address.id === selectedAddressId"
-							@edit="openEditAddress(address)"
-							@delete="openDeleteAddress(address)"
-							@click="
-								$store.commit(
-									'basket/selectAddressId',
-									address.id
-								)
-							"
+						<div class="flex flex-col z-1 flex-grow me-4">
+							<div class="flex flex-col mb-4">
+								<span
+									class="text-sm font-bold text-natural-dark"
+								>
+									{{ $strings.bank_name() }}
+								</span>
+								<span
+									class="text-sm text-natural-semidark mt-1.5"
+								>
+									{{ bankCard.name }}
+								</span>
+							</div>
+							<div class="flex flex-col">
+								<span
+									class="text-sm font-bold text-natural-dark"
+								>
+									{{ $strings.card_number() }}
+								</span>
+								<span
+									class="text-sm text-natural-semidark mt-1.5"
+								>
+									{{ bankCard.card_number }}
+								</span>
+							</div>
+						</div>
+						<div class="flex flex-col z-1 flex-grow">
+							<div class="flex flex-col mb-4">
+								<span
+									class="text-sm font-bold text-natural-dark"
+								>
+									{{ $strings.shaba() }}
+								</span>
+								<span
+									class="text-sm text-natural-semidark mt-1.5"
+								>
+									{{ bankCard.shaba }}
+								</span>
+							</div>
+							<div class="flex flex-col">
+								<span
+									class="text-sm font-bold text-natural-dark"
+								>
+									{{ $strings.account_number() }}
+								</span>
+								<span
+									class="text-sm text-natural-semidark mt-1.5"
+								>
+									{{ bankCard.account_number }}
+								</span>
+							</div>
+						</div>
+						<MyIcon
+							name="credit-card"
+							class="w-32 h-32 absolute bottom-0 end-0 transform scale-150 -mb-7 rotate-12 me-2 text-primary opacity-10 pointer-events-none"
 						/>
 					</div>
 				</div>
+				<span class="text-xl text-natural-dark font-bold mb-2">
+					{{ $strings.payment_receipt() }}
+				</span>
+				<span class="text-sm text-natural-semidark mb-6">
+					{{ $strings.order_payment_message_2() }}
+				</span>
+				<ImageUploader
+					:name="$strings.payment_receipt()"
+					:src="receiptImage"
+					@change="onUploadImage"
+					@uploading="(v) => $emit('uploading', v)"
+				/>
 			</div>
 			<div class="col-span-1 lg:col-span-5 flex flex-col">
 				<span class="text-natural-dark font-bold text-xl mb-4">
@@ -160,81 +144,6 @@
 				</div>
 			</div>
 		</div>
-		<ModalContainer
-			size="xl"
-			:visible="userData.visible"
-			:loading="userData.loading"
-			:title="userData.title"
-			:button-name="$strings.save()"
-			@close="
-				userData = {
-					...userData,
-					visible: false,
-				}
-			"
-			@button-click="saveUser"
-		>
-			<div class="flex flex-col px-6 py-8">
-				<AuthFormCard
-					v-model="userData"
-					:show-firstname="userData.showFirstname"
-					:show-lastname="userData.showLastname"
-					:show-mobile="userData.showMobile"
-					:show-email="userData.showEmail"
-					class="-mb-8"
-				/>
-				<span
-					v-if="userData.showMobile"
-					class="text-sm text-yellow-400 text-center mt-8"
-				>
-					{{ $strings.you_must_confirm_this_number_to_register() }}
-				</span>
-			</div>
-		</ModalContainer>
-		<CreateAddressDialog
-			:visible="isCreateAddressDialogVisible"
-			@close="isCreateAddressDialogVisible = false"
-			@done="fetchAddresses"
-			:data.sync="targetAddress"
-		/>
-		<ModalContainer
-			:visible="isDeleteAddressDialogVisible"
-			:title="$strings.delete_n($strings.address())"
-			size="lg"
-			:loading="modalLoading"
-			@close="isDeleteAddressDialogVisible = false"
-		>
-			<div class="flex flex-col items-center text-center p-8">
-				<span class="text-sm text-natural-semidark mb-3">
-					{{ targetAddress.details || '~' }}
-				</span>
-				<span class="text-natural-dark text-sm mb-6">
-					{{
-						(targetAddress.province || '~') +
-						' - ' +
-						(targetAddress.city || '~')
-					}}
-				</span>
-				<MyIcon name="trash" class="w-24 h-24 text-red-500" />
-			</div>
-			<div
-				slot="footer"
-				class="flex items-center justify-end border-t border-gray-200 p-4"
-			>
-				<button
-					class="me-4 ripple-bg-white border-2 border-gray-200 ripple-bg-white text-natural-semidark px-8 py-3 font-bold rounded-xl"
-					@click="isDeleteAddressDialogVisible = false"
-				>
-					{{ $strings.cancel() }}
-				</button>
-				<button
-					class="text-white px-8 py-3 font-bold rounded-xl ripple-bg-red-500"
-					@click="deleteAddress"
-				>
-					{{ $strings.delete() }}
-				</button>
-			</div>
-		</ModalContainer>
 	</div>
 </template>
 
@@ -253,6 +162,7 @@ import ModalContainer from '~/components/utils/ModalContainer.vue'
 import AuthFormCard from '~/components/auth/AuthFormCard.vue'
 import CreateAddressDialog from '~/components/address/CreateAddressDialog.vue'
 import AddressCard from '~/components/address/AddressCard.vue'
+import ImageUploader from '~/components/utils/ImageUploader.vue'
 
 @Component({
 	components: {
@@ -265,10 +175,12 @@ import AddressCard from '~/components/address/AddressCard.vue'
 		TextInput,
 		vSelect,
 		MaterialLabel,
+		ImageUploader,
 	},
 })
-export default class BasketInfoSection extends Vue {
+export default class BasketReceiptSection extends Vue {
 	@Prop({}) products!: Product[]
+	@Prop({}) receiptImage!: any
 
 	addressLoading = false
 	addresses = null as Address[] | null
@@ -342,6 +254,17 @@ export default class BasketInfoSection extends Vue {
 
 	get formattedDiscountPrice(): string {
 		return this.$stringUtils.prettyPrice(this.discountPrice) || ''
+	}
+
+	get bankCards() {
+		return [
+			{
+				name: 'مسکن',
+				shaba: 'IR670140040000014005211785',
+				card_number: '6280231382526035',
+				account_number: '14005211785',
+			},
+		]
 	}
 
 	@Watch('user')
@@ -520,6 +443,10 @@ export default class BasketInfoSection extends Vue {
 	openDeleteAddress(address: Address) {
 		this.targetAddress = { ...address } as Address
 		this.isDeleteAddressDialogVisible = true
+	}
+
+	onUploadImage(file: any) {
+		this.$emit('update:receiptImage', file || null)
 	}
 
 	mounted() {

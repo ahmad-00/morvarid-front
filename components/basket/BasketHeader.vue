@@ -2,11 +2,7 @@
 	<div class="flex flex-col pt-12 px-6 items-center">
 		<div class="max-w-screen-lg w-full flex flex-col">
 			<nuxt-link :to="$routeUrl.HomeUrl()" class="mb-6 self-center">
-				<img
-					src="/img/site_logo.png"
-					alt=""
-					class="h-11 w-auto"
-				/>
+				<img src="/img/site_logo.png" alt="" class="h-11 w-auto" />
 			</nuxt-link>
 			<StepBar :steps="steps" :step="step" />
 		</div>

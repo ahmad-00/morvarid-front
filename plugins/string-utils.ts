@@ -78,39 +78,39 @@ export default {
 			.replace(/'/g, '&#039;')
 	},
 	thousandFormat(value: any): any {
-		if (!value) return ""
-		let v = ((value || "") + "") as string
-		let v2 = ""
+		if (!value) return ''
+		let v = ((value || '') + '') as string
+		let v2 = ''
 		let m = false
-		if (v.includes(".")) {
-			const i = v.indexOf(".")
+		if (v.includes('.')) {
+			const i = v.indexOf('.')
 			v2 = v.substring(i, v.length)
 			v = v.substring(0, i)
 		}
-		if (v.includes("-")) {
-			v = v.replace("-", "")
+		if (v.includes('-')) {
+			v = v.replace('-', '')
 			m = true
 		}
 		v = v
-			.replace(/,/g, "")
-			.split("")
+			.replace(/,/g, '')
+			.split('')
 			.reverse()
-			.join("")
-			.replace(/(...)/g, "$1,")
-			.split("")
+			.join('')
+			.replace(/(...)/g, '$1,')
+			.split('')
 			.reverse()
-			.join("")
-			.replace(/^,+|,+$/, "")
-		if (m) v = "-" + v
+			.join('')
+			.replace(/^,+|,+$/, '')
+		if (m) v = '-' + v
 		return v + v2
 	},
 	prettyPrice(value: any) {
 		let p: any = +value
-		if (isNaN(p)) return ""
+		if (isNaN(p)) return ''
 
 		const fractionDigits = 0
 		p = +p.toFixed(fractionDigits)
-		const formatter = new Intl.NumberFormat("en-IN", {
+		const formatter = new Intl.NumberFormat('en-IN', {
 			useGrouping: false,
 			maximumFractionDigits: 15,
 		})
@@ -120,14 +120,14 @@ export default {
 	},
 	stringWeight(weight: any) {
 		weight = Number(weight)
-		if(!weight) return { value: null, label: null }
+		if (!weight) return { value: null, label: null }
 		const m2 = weight / (mesqal / 2)
-		if(m2 === Math.round(m2)) {
-			return { value: m2 / 2, label: 'مثقال'}
-		}else {
-			return { value: weight, label: 'گرم'}
+		if (m2 === Math.round(m2)) {
+			return { value: m2 / 2, label: 'مثقال' }
+		} else {
+			return { value: weight, label: 'گرم' }
 		}
-	}
+	},
 }
 
 const jsCoreDateCreator = (dateString: string) => {

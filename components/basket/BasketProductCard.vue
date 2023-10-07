@@ -5,6 +5,7 @@
 		<div class="flex items-center mb-4 lg:mb-0">
 			<div class="relative w-28 h-28 me-6">
 				<img
+					v-if="product && product.main_image"
 					:src="
 						$apiUrl.MediaBaseUrl($config) +
 						$apiUrl.GetMediaUrl(product.main_image)
@@ -103,10 +104,7 @@
 							class="w-6 h-6 text-natural-dark ms-1 flex-shrink-0"
 						/>
 					</div>
-					<div
-						v-if="hasDiscount"
-						class="flex items-center mt-1"
-					>
+					<div v-if="hasDiscount" class="flex items-center mt-1">
 						<span
 							class="text-xs font-bold text-green-500 flex-shrink-0"
 						>
@@ -122,10 +120,7 @@
 							{{ $strings.discount() }}
 						</span>
 					</div>
-					<div
-						v-if="isWholesale"
-						class="flex items-center mt-1"
-					>
+					<div v-if="isWholesale" class="flex items-center mt-1">
 						<span
 							class="text-xs font-bold text-yellow-500 flex-shrink-0"
 						>
@@ -178,7 +173,8 @@ export default class BasketItemCard extends Vue {
 		const q = Number(this.product.quantity) || 0
 		return (
 			!!this.product.wholesale_payable_price &&
-			this.product.payable_price != this.product.wholesale_payable_price &&
+			this.product.payable_price !=
+				this.product.wholesale_payable_price &&
 			q >= this.product.wholesale_min_count
 		)
 	}

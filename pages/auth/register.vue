@@ -112,10 +112,7 @@ export default class RegisterPage extends Vue {
 
 	head() {
 		return {
-			title:
-				this.$strings.register() +
-				' | ' +
-				this.$strings.app_title(),
+			title: this.$strings.register() + ' | ' + this.$strings.app_title(),
 		}
 	}
 }

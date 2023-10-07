@@ -2,12 +2,11 @@ const app_title = () => 'مروارید سپید'
 
 export default {
 	// app
-	app_title_part_1:() => 'مروارید',
-	app_title_part_2:() => 'سپید فرشتگان',
+	app_title_part_1: () => 'مروارید',
+	app_title_part_2: () => 'سپید فرشتگان',
 	app_title,
 	app_subtitle: () => 'خرید زعفران و هل',
-	app_description: () =>
-		'خرید زعفران و هل',
+	app_description: () => 'خرید زعفران و هل',
 	app_blog: () => `بلاگ ${app_title()}`,
 	n_category: (s: string) => `دسته ${s}`,
 	copyright_text: () =>
@@ -65,6 +64,9 @@ export default {
 	shopping_cart: () => 'سبد خرید',
 	additional_information: () => 'اطلاعات تکمیلی',
 	payment: () => 'پرداخت',
+	order_payment_message_1: () =>
+		'مبلغ سفارش را به یکی از کارت های زیر واریز کنید.',
+	order_payment_message_2: () => ' سپس عکس رسید پرداخت را در زیر آپلود کنید.',
 	end_of_purchase: () => 'پایان خرید',
 	total: () => 'مجموع',
 	toman: () => 'ﺗﻮﻣﺎن',
@@ -92,6 +94,7 @@ export default {
 	your_purchase_tracking_code: () => 'کد پیگیری خرید شما',
 	continue_the_buying_process: () => 'ادامه فرایند خرید',
 	registration_of_information_and_payment: () => 'ثبت اطلاعات و پرداخت',
+	registration_of_information: () => 'ثبت اطلاعات',
 	confirmation_code_sent: () => 'کد تایید به موبایل شما ارسال شد.',
 	confirmation_code: () => 'کد تایید',
 	confirmation_code_subtitle_message: () =>
@@ -156,8 +159,10 @@ export default {
 	error_empty_basket: () => 'سبد خرید خالی است',
 	error_product_number_is_wrong: () => 'تعداد محصول اشتباه است',
 	error_empty_user_info: () => 'مشخصات خود را کامل کنید',
-	error_empty_address: () => 'اطلاعات دریافت سفارش را کامل کنید و یک آدرس را انتخاب کنید.',
-	status: () => "وضعیت",
+	error_empty_payment_receipt: () => 'رسید پرداخت را آپلود کنید',
+	error_empty_address: () =>
+		'اطلاعات دریافت سفارش را کامل کنید و یک آدرس را انتخاب کنید.',
+	status: () => 'وضعیت',
 	comments: () => 'نظرات',
 	comment: () => 'نظر',
 	write_a_comment: () => 'یک نظر بنویسید',
@@ -179,16 +184,23 @@ export default {
 	terms_of_use: () => 'شرایط استفاده',
 	pages: () => 'صفحات',
 	your_order_will_be_sent_after_verification: () =>
-		"سفارش شما بعد از بررسی ارسال می‌شود.",
-	payment_failed: () => "پرداخت ناموفق",
-	payment_operation_was_unsuccessful: () => "عملیات پرداخت ناموفق بود",
+		'سفارش شما بعد از بررسی ارسال می‌شود.',
+	payment_failed: () => 'پرداخت ناموفق',
+	payment_operation_was_unsuccessful: () => 'عملیات پرداخت ناموفق بود',
 	order_payment_error_tip_message: () =>
-		"در صفحه پیگیری سفارش می توانید عملیات پرداخت را دوباره تکرار کنید",
-	bank_tracking_code: () => "کد پیگیری بانک",
+		'در صفحه پیگیری سفارش می توانید عملیات پرداخت را دوباره تکرار کنید',
+	bank_tracking_code: () => 'کد پیگیری بانک',
 	cancel_order_message: () => 'برای لغو سفارش اطلاعات زیر را پر کنید',
 	order_canceled_message: () => 'درخواست لغو سفارش شما برای بررسی ارسال شد.',
 	order_canceled: () => 'سفارش لغو شد',
 	recipient_phone_number: () => 'شماره شبای دریافت کننده',
 	full_name_of_account_holder: () => 'نام کامل صاحب حساب',
 	faq: () => 'سوالات متداول',
+	bank_name: () => 'نام بانک',
+	shaba: () => 'شبا',
+	card_number: () => 'شماره کارت',
+	account_number: () => 'شماره حساب',
+	payment_receipt: () => 'رسید پرداخت',
+	upload_n: (n: string) => `آپلود ${n}`,
+	download_n: (n: string) => `دانلود ${n}`,
 }

@@ -1,5 +1,8 @@
 <template>
-	<div class="relative flex flex-col" :class="{ 'pointer-events-none': disabled }">
+	<div
+		class="relative flex flex-col"
+		:class="{ 'pointer-events-none': disabled }"
+	>
 		<div
 			v-if="mode === 'underline'"
 			class="textinput-underline relative border-b-2 focus-within:border-primary duration-300"
@@ -19,13 +22,13 @@
 				class="block w-full appearance-none focus:outline-none text-base bg-transparent py-3 text-natural-dark font-bold"
 				:class="{
 					[inputDirectionClass]: !inputClass,
-					[inputClass]: inputClass
+					[inputClass]: inputClass,
 				}"
 				@focus="(e) => $emit('focus', e)"
 				@blur="(e) => $emit('blur', e)"
 			/>
 			<label
-				class="absolute top-0 pointer-events-none duration-300 origin-start py-3 text-gray-700 font-bold text-base"
+				class="absolute top-0 pointer-events-none duration-300 origin-start py-3 text-gray-700 font-bold text-base whitespace-nowrap truncate"
 			>
 				{{ label }}
 			</label>
@@ -49,7 +52,7 @@
 				class="block w-full rounded-lg appearance-none focus:outline-none text-base bg-transparent py-4 px-5 text-natural-dark font-bold"
 				:class="{
 					[inputDirectionClass]: !inputClass,
-					[inputClass]: inputClass
+					[inputClass]: inputClass,
 				}"
 				@focus="(e) => $emit('focus', e)"
 				@blur="(e) => $emit('blur', e)"
@@ -87,7 +90,7 @@
 				class="cg-textinput-arrow transform duration-300 transition-transform w-5 h-5 text-natural-dark absolute end-0 top-0 bottom-0 my-auto me-4 pointer-events-none"
 			/>
 			<label
-				class="absolute top-0 pointer-events-none text-gray-700 font-bold py-4 px-5 rounded duration-300 origin-start text-base bg-white bg-opacity-0"
+				class="absolute top-0 pointer-events-none text-gray-700 font-bold py-4 px-5 rounded duration-300 origin-start text-base bg-white bg-opacity-0 whitespace-nowrap truncate"
 			>
 				{{ label }}
 			</label>
@@ -111,7 +114,10 @@
 			/>
 		</client-only>
 		<TransitionExpand from="0" to="auto">
-			<span v-if="isErrorVisible" class="text-xs text-red-500 mt-1 ms-1 self-start">
+			<span
+				v-if="isErrorVisible"
+				class="text-xs text-red-500 mt-1 ms-1 self-start"
+			>
 				{{ targetErrors[0] || 'error' }}
 			</span>
 		</TransitionExpand>
@@ -119,10 +125,10 @@
 </template>
 
 <script lang="ts">
-import Vue, {PropType} from 'vue'
+import Vue, { PropType } from 'vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
-import {v4 as uuid} from "uuid";
-import TransitionExpand from "~/components/anim/TransitionExpand.vue";
+import { v4 as uuid } from 'uuid'
+import TransitionExpand from '~/components/anim/TransitionExpand.vue'
 
 export default Vue.extend({
 	data() {
@@ -139,12 +145,10 @@ export default Vue.extend({
 		VuePersianDatetimePicker: () =>
 			process.client
 				? import('vue-persian-datetime-picker')
-				: Promise.resolve({MyIcon}),
+				: Promise.resolve({ MyIcon }),
 	},
-	mounted() {
-	},
-	destroyed() {
-	},
+	mounted() {},
+	destroyed() {},
 	model: {
 		prop: 'value',
 		event: 'change',
@@ -166,7 +170,7 @@ export default Vue.extend({
 			default: '',
 		},
 		type: {
-			type: String,
+			type: String as PropType<any>,
 			default: 'text',
 		},
 		disabled: {
@@ -174,7 +178,7 @@ export default Vue.extend({
 			default: false,
 		},
 		options: {
-			type: Array,
+			type: Array as PropType<any[]>,
 			default: () => [],
 		},
 		optionValue: {
@@ -187,7 +191,7 @@ export default Vue.extend({
 		},
 		inputClass: {
 			default: '',
-			type: String
+			type: String,
 		},
 		errors: Object as PropType<any>,
 	},

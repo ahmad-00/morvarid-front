@@ -1,7 +1,7 @@
 <template>
-    <transition name="fade">
-        <slot></slot>
-    </transition>
+	<transition name="fade">
+		<slot></slot>
+	</transition>
 </template>
 
 <script>
@@ -12,10 +12,10 @@ export default Vue.extend({})
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s;
+	transition: opacity 0.3s;
 }
 .fade-enter,
 .fade-leave-to {
-    opacity: 0;
+	opacity: 0;
 }
 </style>

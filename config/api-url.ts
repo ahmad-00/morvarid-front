@@ -28,6 +28,7 @@ export default {
 	GetMediaUrl: (url: string) => `media/${url}`,
 	// order
 	SubmitOrderUrl: () => `order`,
+	SubmitPaymentReceiptUrl: (orderId: string) => `order/${orderId}/receipt`,
 	GetOrdersUrl: () => `order`,
 	GetOrderCountUrl: () => `order/count`,
 	CancelOrderUrl: (id: any) => `order/${id}/cancel`,

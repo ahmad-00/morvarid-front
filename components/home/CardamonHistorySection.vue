@@ -1,7 +1,11 @@
 <template>
 	<div class="px-6 flex flex-col items-center">
-		<div class="flex flex-col lg:flex-row lg:items-center w-full max-w-screen-xl">
-			<div class="flex max-w-sm w-full me-0 lg:me-16 self-center flex-shrink-0">
+		<div
+			class="flex flex-col lg:flex-row lg:items-center w-full max-w-screen-xl"
+		>
+			<div
+				class="flex max-w-sm w-full me-0 lg:me-16 self-center flex-shrink-0"
+			>
 				<img
 					src="/img/image_cardamon_history.png"
 					alt=""

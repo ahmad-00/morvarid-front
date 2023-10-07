@@ -56,7 +56,7 @@ export type Order = {
 	}[]
 	payable_fee: string
 	total_fee: string
-	status: 'submitted'
+	status: 'submitted' | 'cancelled' | 'payed' | 'processing' | 'delivered'
 	tracking_number: string
 	created_at: string
 }

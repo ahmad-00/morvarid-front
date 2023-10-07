@@ -4,7 +4,7 @@
 		:class="{}"
 		@click="$emit('click')"
 	>
-		<div class="flex flex-col p-5">
+		<div v-if="data" class="flex flex-col p-5">
 			<div class="flex items-center mb-5">
 				<div
 					class="flex items-center rounded-md bg-opacity-10 p-0.5"
@@ -76,7 +76,10 @@
 			</div>
 		</div>
 		<div v-if="detailed" class="h-px mx-5 bg-gray-100" />
-		<div v-if="detailed" class="grid grid-cols-1 sm:grid-cols-2 gap-5 p-5">
+		<div
+			v-if="detailed && data"
+			class="grid grid-cols-1 sm:grid-cols-2 gap-5 p-5"
+		>
 			<div class="flex items-center">
 				<span class="text-xs text-natural-mute me-1.5">
 					{{ $strings.province() }}
@@ -111,10 +114,15 @@
 			</div>
 		</div>
 		<div class="h-px bg-gray-100" />
-		<div v-if="!detailed" class="flex items-center p-1.5" v-dragscroll.x>
+		<div
+			v-if="!detailed && data"
+			class="flex items-center p-1.5"
+			v-dragscroll.x
+		>
 			<div v-for="(item, i) in data.items" :key="i" class="p-1.5">
 				<div class="relative w-16 h-16">
 					<img
+						v-if="item.product_detail.main_image"
 						:src="
 							$apiUrl.MediaBaseUrl($config) +
 							$apiUrl.GetMediaUrl(item.product_detail.main_image)
@@ -141,6 +149,7 @@
 		<div
 			v-if="
 				detailed &&
+				data &&
 				['submitted', 'payed', 'processing'].includes(
 					data && data.status
 				)

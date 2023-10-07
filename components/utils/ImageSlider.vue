@@ -99,8 +99,11 @@ export default Vue.extend({
 			this.$emit('update:index', t)
 		},
 		getImagePath(path: string): string {
-			return this.$apiUrl.MediaBaseUrl(this.$config) + this.$apiUrl.GetMediaUrl(path)
-		}
+			return (
+				this.$apiUrl.MediaBaseUrl(this.$config) +
+				this.$apiUrl.GetMediaUrl(path)
+			)
+		},
 	},
 	computed: {
 		sliderSelected(): Image {

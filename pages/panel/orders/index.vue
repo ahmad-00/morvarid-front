@@ -24,18 +24,18 @@
 		<template v-if="!targetOrder">
 			<div class="flex items-center mb-8">
 				<div
-					class="flex items-center bg-white rounded-md border border-gray-200 self-start px-3 py-1"
+					class="flex items-center bg-white rounded-md border border-gray-200 self-start ps-3 py-1 overflow-hidden"
 				>
 					<span
-						class="text-natural-dark pe-3 me-3 text-xs border-e border-gray-200"
+						class="text-natural-dark pe-3 text-xs border-e border-gray-200"
 					>
 						{{ $strings.status() }}
 					</span>
-					<div class="flex items-center -me-2">
+					<div class="flex items-center overflow-hidden px-3 -me-2" v-dragscroll.x>
 						<span
 							v-for="(s, i) in statuses"
 							:key="i"
-							class="text-xs px-2 py-1 rounded-md me-2 border cursor-pointer duration-300"
+							class="text-xs px-2 py-1 rounded-md me-2 border cursor-pointer duration-300 flex-shrink-0 whitespace-nowrap"
 							:class="{
 								'border-opacity-100 bg-opacity-10':
 									s.value === status.value,
@@ -210,7 +210,12 @@ export default class PanelOrdersPage extends Vue {
 	}
 
 	payOrder() {
-		this.$router.push(this.$routeUrl.PaymentSuccessfulUrl())
+		this.$router.push({
+			path: this.$routeUrl.ShopBasketUrl(),
+			query: {
+				tracking_number: this.targetOrder?.tracking_number,
+			},
+		})
 	}
 
 	openCancelOrderDialog() {
@@ -233,11 +238,7 @@ export default class PanelOrdersPage extends Vue {
 						this.cancelDialogData.account_owner_full_name,
 				}
 			)
-			this.$toast.success(
-				this.$strings.order_canceled(),
-				'',
-				{} as any
-			)
+			this.$toast.success(this.$strings.order_canceled(), '', {} as any)
 			this.modalLoading = false
 			this.isCancelDialogVisible = false
 			this.targetOrder = null

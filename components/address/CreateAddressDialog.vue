@@ -113,7 +113,7 @@ export default class CreateAddressDialog extends Vue {
 			),
 		]
 
-		if(errors.length) {
+		if (errors.length) {
 			this.$toast.error(errors[0], '', {} as any)
 			return
 		}

@@ -20,7 +20,7 @@
 				:key="'b-' + i"
 				class="h-1 flex-grow mx-6 bg-natural-dark rounded-full flex-shrink-0"
 				:style="{
-					minWidth: '20px'
+					minWidth: '20px',
 				}"
 				:class="{
 					'opacity-10': i + 1 >= step,

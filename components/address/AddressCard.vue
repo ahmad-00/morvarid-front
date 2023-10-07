@@ -7,7 +7,7 @@
 		}"
 		@click="$emit('click')"
 	>
-		<div class="flex items-start">
+		<div v-if="data" class="flex items-start">
 			<span
 				class="flex-grow line-clamp-2 text-natural-dark font-medium me-6 text-sm"
 			>
@@ -34,7 +34,7 @@
 				"
 			/>
 		</div>
-		<div class="grid gird-cols-1 sm:grid-cols-2 gap-5 mt-6">
+		<div v-if="data" class="grid gird-cols-1 sm:grid-cols-2 gap-5 mt-6">
 			<div class="flex items-center text-natural-mute text-sm">
 				<span class="text-natural-mute font-bold">
 					{{ $strings.province() }}

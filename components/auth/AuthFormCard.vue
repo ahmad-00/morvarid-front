@@ -119,15 +119,7 @@
 						v-for="(item, i) in countryDialInfo"
 						:key="i"
 						class="flex items-center px-3 py-2 text-natural-semidark ripple-bg-white cursor-pointer text-sm"
-						@click="
-							(e) => {
-								changeData({
-									mobile:
-										item.dial_code + mobileWithoutAreaCode,
-								})
-								$refs.areaCodeComp.$el.querySelector('input').blur()
-							}
-						"
+						@click="() => onCountryDialInfoClick(item)"
 						@mousedown.prevent
 					>
 						<span class="me-1">{{ item.flag }}</span>
@@ -289,14 +281,13 @@ export default class AuthFormCard extends Vue {
 	}
 
 	get countryDialInfo() {
-		return CountryDialInfo
-			.filter(
-				(v) =>
-					String(v.name)
-						.toLowerCase()
-						.includes(String(this.areaCodeSearchText).toLowerCase()) ||
-					String(v.dial_code).includes(this.areaCodeSearchText)
-			)
+		return CountryDialInfo.filter(
+			(v) =>
+				String(v.name)
+					.toLowerCase()
+					.includes(String(this.areaCodeSearchText).toLowerCase()) ||
+				String(v.dial_code).includes(this.areaCodeSearchText)
+		)
 	}
 
 	changeData(d: DataType) {
@@ -304,6 +295,14 @@ export default class AuthFormCard extends Vue {
 			...this.data,
 			...d,
 		})
+	}
+
+	onCountryDialInfoClick(item: any) {
+		this.changeData({
+			mobile: item.dial_code + this.mobileWithoutAreaCode,
+		})
+		const el: HTMLElement = (this.$refs.areaCodeComp as any)?.$el
+		el?.querySelector('input')?.blur()
 	}
 }
 </script>

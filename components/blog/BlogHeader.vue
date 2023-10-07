@@ -10,20 +10,22 @@
 			class=""
 			:style="{
 				backgroundImage: `url(${article.image})`,
-				backgroundSize: 'cover'
+				backgroundSize: 'cover',
 			}"
 		>
 			<div class="flex flex-col bg-black bg-opacity-50 p-12">
-					<MyIcon
-						name="arrow-left"
-						class="w-12 h-12 text-white -me-4 -mt-4 self-end cursor-pointer hover:text-primary duration-300"
-						@click="goBack"
-					/>
+				<MyIcon
+					name="arrow-left"
+					class="w-12 h-12 text-white -me-4 -mt-4 self-end cursor-pointer hover:text-primary duration-300"
+					@click="goBack"
+				/>
 
 				<div class="flex items-center mt-28">
 					<span
 						class="text-white py-0.5 px-4 me-5"
-						:style="{ backgroundColor: getCategoryColor(article.category) }"
+						:style="{
+							backgroundColor: getCategoryColor(article.category),
+						}"
 					>
 						{{ article.category || '~' }}
 					</span>
@@ -31,9 +33,7 @@
 						{{ article.date || '~' }}
 					</span>
 				</div>
-				<span
-					class="text-white font-medium mt-6 text-3xl"
-				>
+				<span class="text-white font-medium mt-6 text-3xl">
 					{{ article.title || '~' }}
 				</span>
 			</div>
@@ -43,7 +43,7 @@
 			class=""
 			:style="{
 				backgroundImage: 'url(/img/image_blog.jpg)',
-				backgroundSize: 'cover'
+				backgroundSize: 'cover',
 			}"
 		>
 			<div
@@ -90,7 +90,7 @@
 <script lang="ts">
 import { Component, Prop } from 'nuxt-property-decorator'
 import Vue from 'vue'
-import { Article, BlogCategory } from "~/config/types";
+import { Article, BlogCategory } from '~/config/types'
 import { getCategoryColor as _getCategoryColor } from '~/components/article/ArticleCard.vue'
 import MyIcon from '~/components/utils/MyIcon.vue'
 
@@ -117,14 +117,13 @@ export default class BlogHeader extends Vue {
 	}
 
 	goBack() {
-		if(this.article) {
-			if(window.history.length > 2) {
+		if (this.article) {
+			if (window.history.length > 2) {
 				this.$router.back()
-			}else {
+			} else {
 				this.$router.push(this.$routeUrl.BlogUrl())
 			}
 		}
 	}
-
 }
 </script>

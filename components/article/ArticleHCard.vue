@@ -1,10 +1,6 @@
 <template>
 	<div class="flex items-center">
-		<img
-			:src="article.image"
-			alt=""
-			class="w-20 h-20 flex-shrink-0 me-4"
-		/>
+		<img :src="article.image" alt="" class="w-20 h-20 flex-shrink-0 me-4" />
 		<nuxt-link
 			:to="$routeUrl.BlogArticleUrl(article.id)"
 			class="text-natural-dark text-base font-medium hover:text-primary duration-300 clam"
