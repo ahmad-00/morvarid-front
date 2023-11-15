@@ -27,7 +27,7 @@
 									{{ bankCard.name }}
 								</span>
 							</div>
-							<div class="flex flex-col">
+							<div class="flex flex-col mb-4">
 								<span
 									class="text-sm font-bold text-natural-dark"
 								>
@@ -37,6 +37,18 @@
 									class="text-sm text-natural-semidark mt-1.5"
 								>
 									{{ bankCard.card_number }}
+								</span>
+							</div>
+							<div class="flex flex-col">
+								<span
+									class="text-sm font-bold text-natural-dark"
+								>
+									{{ $strings.account_holder_name() }}
+								</span>
+								<span
+									class="text-sm text-natural-semidark mt-1.5"
+								>
+									{{ bankCard.card_holder }}
 								</span>
 							</div>
 						</div>
@@ -263,6 +275,7 @@ export default class BasketReceiptSection extends Vue {
 				shaba: 'IR670140040000014005211785',
 				card_number: '6280231382526035',
 				account_number: '14005211785',
+				card_holder: 'مروارید سپید فرشتگان'
 			},
 		]
 	}

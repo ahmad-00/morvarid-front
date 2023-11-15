@@ -201,6 +201,7 @@ export default {
 	card_number: () => 'شماره کارت',
 	account_number: () => 'شماره حساب',
 	payment_receipt: () => 'رسید پرداخت',
+	account_holder_name: () :string => 'صاحب حساب',
 	upload_n: (n: string) => `آپلود ${n}`,
 	download_n: (n: string) => `دانلود ${n}`,
 }
