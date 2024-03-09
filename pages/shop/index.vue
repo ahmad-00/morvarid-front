@@ -15,14 +15,14 @@
 			<ProductList
 				:products="saffrons"
 				:title="$strings.types_of_saffron_available_for_sale()"
-				:more-link="$routeUrl.ShopCategoryUrl(this.saffronCategoryId)"
+				:more-link="$routeUrl.ShopCategoryUrl(saffronCategoryId)"
 				class="mb-20"
 				:loading="loading"
 			/>
 			<ProductList
 				:products="cardamons"
 				:title="$strings.types_of_cardamon_available_for_sale()"
-				:more-link="$routeUrl.ShopCategoryUrl(this.cardamonCategoryId)"
+				:more-link="$routeUrl.ShopCategoryUrl(cardamonCategoryId)"
 				class="mb-32"
 				:loading="loading"
 			/>

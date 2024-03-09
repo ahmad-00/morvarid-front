@@ -150,15 +150,17 @@
 			v-if="
 				detailed &&
 				data &&
-				['submitted', 'payed', 'processing'].includes(
-					data && data.status
-				)
+				[
+					OrderStatus.SUBMITTED,
+					OrderStatus.PAYED,
+					OrderStatus.PROCESSING,
+				].includes(data && data.status)
 			"
 			class="flex items-center p-5 border-t border-gray-100 bg-gray-50"
 		>
 			<div class="flex-grow" />
 			<span
-				v-if="['submitted'].includes(data && data.status)"
+				v-if="[OrderStatus.SUBMITTED].includes(data && data.status)"
 				class="text-sm text-white font-bold ripple-bg-yellow-500 px-4 py-2 rounded-md ms-4 cursor-pointer"
 				@click="$emit('pay')"
 			>
@@ -166,9 +168,11 @@
 			</span>
 			<span
 				v-if="
-					['submitted', 'payed', 'processing'].includes(
-						data && data.status
-					)
+					[
+						OrderStatus.SUBMITTED,
+						OrderStatus.PAYED,
+						OrderStatus.PROCESSING,
+					].includes(data && data.status)
 				"
 				class="text-sm text-white font-bold ripple-bg-red-500 px-4 py-2 rounded-md ms-4 cursor-pointer"
 				@click="$emit('cancel')"
@@ -182,7 +186,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import MyIcon from '~/components/utils/MyIcon.vue'
-import { Order, Product } from '~/config/types'
+import { Order, Product, OrderStatus } from '~/config/types'
 import moment from 'moment-jalaali'
 import ProductCard from '~/components/product/ProductCard.vue'
 
@@ -195,6 +199,8 @@ moment.loadPersian()
 export default class OrderCard extends Vue {
 	@Prop({}) data?: Order
 	@Prop({}) detailed?: boolean
+
+	OrderStatus = OrderStatus
 
 	get orderStatuses(): any[] {
 		return this.$store.state.type.orderStatuses || []

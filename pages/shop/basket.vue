@@ -25,6 +25,7 @@
 					v-else-if="step === 3"
 					:products="orderProducts"
 					:receiptImage.sync="receiptImage"
+					:method="paymentMethod"
 					@uploading="(v) => (loading = v)"
 				/>
 				<BasketPaymentEndSection v-else-if="step === 4" />
@@ -38,7 +39,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import MyIcon from '~/components/utils/MyIcon.vue'
 import BasketContainer from '~/components/basket/BasketContainer.vue'
 import BasketItemCard from '~/components/basket/BasketProductCard.vue'
-import { Product, User, Order } from '~/config/types'
+import { Product, User, Order, OrderStatus } from '~/config/types'
 import BasketFirstSection from '~/components/basket/BasketBuySection.vue'
 import BasketBuySection from '~/components/basket/BasketBuySection.vue'
 import BasketInfoSection from '~/components/basket/BasketInfoSection.vue'
@@ -64,7 +65,7 @@ export default class BasketPage extends Vue {
 	step = 1
 	order = null as Order | null
 	receiptImage = null as any
-
+	paymentMethod: 'card-to-card' | 'gateway' = 'gateway'
 	get user(): User | null {
 		return this.$store.state.user.user || null
 	}
@@ -148,7 +149,7 @@ export default class BasketPage extends Vue {
 			}
 			await this.submitOrder()
 		} else if (this.step === 3) {
-			if (!this.receiptImage) {
+			if (this.paymentMethod == 'card-to-card' && !this.receiptImage) {
 				this.$toast.error(
 					this.$strings.error_empty_payment_receipt(),
 					'',
@@ -182,14 +183,20 @@ export default class BasketPage extends Vue {
 	async submitPaymentReceipt() {
 		this.loading = true
 		try {
-			const r = await this.$axios.post(
-				this.$apiUrl.SubmitPaymentReceiptUrl(this.order?.id!),
-				{
-					receipt_image: this.receiptImage,
-				}
-			)
-			console.log(r.data)
-			this.step = 4
+			if (this.paymentMethod == 'card-to-card') {
+				const r = await this.$axios.post(
+					this.$apiUrl.SubmitPaymentReceiptUrl(this.order?.id!),
+					{
+						receipt_image: this.receiptImage,
+					}
+				)
+				this.step = 4
+			} else if (this.paymentMethod == 'gateway') {
+				const r = await this.$axios.post(this.$apiUrl.PayOrderUrl(), {
+					order: this.order?.id!,
+				})
+				window.location.href = r.data.url
+			}
 			// await this.$router.push(this.$routeUrl.PaymentSuccessfulUrl())
 		} catch (e: any) {
 			this.$toastErrors(this, e)
@@ -224,12 +231,13 @@ export default class BasketPage extends Vue {
 						},
 					})
 				}
-				if (order.status == 'submitted') {
+				if (order.status == OrderStatus.SUBMITTED) {
 					this.step = 3
 				} else {
 					this.step = 4
 					// await this.$router.push(this.$routeUrl.PaymentSuccessfulUrl())
 				}
+				console.log(order)
 			}
 			this.fetched = true
 		} catch (e: any) {

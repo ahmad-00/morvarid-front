@@ -46,6 +46,14 @@ export type Address = {
 	user?: string
 }
 
+export enum OrderStatus {
+	SUBMITTED = 1,
+	PAYED = 2,
+	PROCESSING = 3,
+	DELIVERED = 4,
+	CANCELLED = 5,
+}
+
 export type Order = {
 	id: string
 	address: Address
@@ -56,7 +64,7 @@ export type Order = {
 	}[]
 	payable_fee: string
 	total_fee: string
-	status: 'submitted' | 'cancelled' | 'payed' | 'processing' | 'delivered'
+	status: OrderStatus
 	tracking_number: string
 	created_at: string
 }

@@ -1,7 +1,18 @@
 <template>
 	<div class="flex flex-col">
-		<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-8">
-			<div class="col-span-1 lg:col-span-7 flex flex-col">
+		<div
+			:class="[
+				'grid grid-cols-1 gap-8 py-8',
+				{
+					'lg:grid-cols-12': method == 'card-to-card',
+					'lg:grid-cols-5 max-w-lg self-center w-full': method == 'gateway',
+				},
+			]"
+		>
+			<div
+				v-if="method == 'card-to-card'"
+				class="col-span-1 lg:col-span-7 flex flex-col"
+			>
 				<span class="text-xl text-natural-dark font-bold mb-2">
 					{{ $strings.payment() }}
 				</span>
@@ -193,6 +204,7 @@ import ImageUploader from '~/components/utils/ImageUploader.vue'
 export default class BasketReceiptSection extends Vue {
 	@Prop({}) products!: Product[]
 	@Prop({}) receiptImage!: any
+	@Prop({}) method!: 'card-to-card' | 'gateway'
 
 	addressLoading = false
 	addresses = null as Address[] | null
@@ -275,7 +287,7 @@ export default class BasketReceiptSection extends Vue {
 				shaba: 'IR670140040000014005211785',
 				card_number: '6280231382526035',
 				account_number: '14005211785',
-				card_holder: 'مروارید سپید فرشتگان'
+				card_holder: 'مروارید سپید فرشتگان',
 			},
 		]
 	}

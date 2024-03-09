@@ -16,8 +16,10 @@
 			<div class="pt-1/1 rounded-13 overflow-hidden relative bg-white">
 				<img
 					:src="
-						$apiUrl.MediaBaseUrl($config) +
-						$apiUrl.GetMediaUrl(product.main_image)
+						product.main_image
+							? $apiUrl.MediaBaseUrl($config) +
+							  $apiUrl.GetMediaUrl(product.main_image)
+							: '/img/product_no_image.jpg'
 					"
 					alt=""
 					class="w-full h-full absolute left-0 top-0 object-cover"

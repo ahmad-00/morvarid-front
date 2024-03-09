@@ -19,11 +19,11 @@
 			<span class="text-natural-dark mt-1">
 				{{ info.subtitle || '~' }}
 			</span>
-			<div v-if="trackingCode" class="flex items-center mt-8">
-				<span class="text-xl text-natural-dark font-medium">
+			<div v-if="trackingCode" class="flex flex-col lg:flex-row items-start lg:items-center mt-8">
+				<span class="text-xl text-natural-dark font-medium me-3">
 					{{ $strings.bank_tracking_code() + ' :' }}
 				</span>
-				<span class="text-3xl font-bold text-natural-dark ms-3">
+				<span class="text-3xl font-bold text-natural-dark mt-2 lg:mt-0">
 					{{ trackingCode }}
 				</span>
 			</div>

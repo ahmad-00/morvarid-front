@@ -29,6 +29,8 @@ export default {
 	// order
 	SubmitOrderUrl: () => `order`,
 	SubmitPaymentReceiptUrl: (orderId: string) => `order/${orderId}/receipt`,
+	PayOrderUrl: () => `buy`,
+	ConfirmPaymentUrl: () => `buy/confirm`,
 	GetOrdersUrl: () => `order`,
 	GetOrderCountUrl: () => `order/count`,
 	CancelOrderUrl: (id: any) => `order/${id}/cancel`,

@@ -59,8 +59,8 @@ export default class BasketContainer extends Vue {
 
 	buttonTitles = [
 		this.$strings.order_registration(),
-		this.$strings.registration_of_information_and_payment(),
 		this.$strings.registration_of_information(),
+		this.$strings.pay(),
 		'',
 	]
 }
