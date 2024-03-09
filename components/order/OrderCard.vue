@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="flex flex-col rounded-xl border relative border-gray-100 bg-white shadow-sm overflow-hidden"
+		class="flex flex-col rounded-xl border relative border-slate-100 bg-white shadow-sm overflow-hidden"
 		:class="{}"
 		@click="$emit('click')"
 	>
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="detailed" class="h-px mx-5 bg-gray-100" />
+		<div v-if="detailed" class="h-px mx-5 bg-slate-100" />
 		<div
 			v-if="detailed && data"
 			class="grid grid-cols-1 sm:grid-cols-2 gap-5 p-5"
@@ -113,7 +113,7 @@
 				</span>
 			</div>
 		</div>
-		<div class="h-px bg-gray-100" />
+		<div class="h-px bg-slate-100" />
 		<div
 			v-if="!detailed && data"
 			class="flex items-center p-1.5"
@@ -156,7 +156,7 @@
 					OrderStatus.PROCESSING,
 				].includes(data && data.status)
 			"
-			class="flex items-center p-5 border-t border-gray-100 bg-gray-50"
+			class="flex items-center p-5 border-t border-slate-100 bg-slate-50"
 		>
 			<div class="flex-grow" />
 			<span

@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="min-h-screen flex flex-col bg-gray-100 px-6 pt-6 pb-16 items-center justify-center relative"
+		class="min-h-screen flex flex-col bg-slate-100 px-6 pt-6 pb-16 items-center justify-center relative"
 	>
 		<span class="w-full left-0 top-0 right-0 absolute z-0">
 			<LoginBackground class="text-primary-dark w-full opacity-70" />

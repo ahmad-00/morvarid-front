@@ -28,7 +28,7 @@
 				@blur="(e) => $emit('blur', e)"
 			/>
 			<label
-				class="absolute top-0 pointer-events-none duration-300 origin-start py-3 text-gray-700 font-bold text-base whitespace-nowrap truncate"
+				class="absolute top-0 pointer-events-none duration-300 origin-start py-3 text-slate-700 font-bold text-base whitespace-nowrap truncate"
 			>
 				{{ label }}
 			</label>
@@ -90,7 +90,7 @@
 				class="cg-textinput-arrow transform duration-300 transition-transform w-5 h-5 text-natural-dark absolute end-0 top-0 bottom-0 my-auto me-4 pointer-events-none"
 			/>
 			<label
-				class="absolute top-0 pointer-events-none text-gray-700 font-bold py-4 px-5 rounded duration-300 origin-start text-base bg-white bg-opacity-0 whitespace-nowrap truncate"
+				class="absolute top-0 pointer-events-none text-slate-700 font-bold py-4 px-5 rounded duration-300 origin-start text-base bg-white bg-opacity-0 whitespace-nowrap truncate"
 			>
 				{{ label }}
 			</label>

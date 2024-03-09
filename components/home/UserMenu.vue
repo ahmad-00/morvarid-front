@@ -3,7 +3,7 @@
 		<div class="flex items-center px-5 py-4">
 			<MyIcon
 				name="person-circle"
-				class="w-12 h-12 rounded-full bg-gray-400 text-white flex-shrink-0"
+				class="w-12 h-12 rounded-full bg-slate-400 text-white flex-shrink-0"
 			/>
 			<div class="flex flex-col flex-grow overflow-hidden ms-3 me-3">
 				<span
@@ -27,7 +27,7 @@
 				@click="logout"
 			/>
 		</div>
-		<div class="h-px bg-gray-200 mb-3" />
+		<div class="h-px bg-slate-200 mb-3" />
 		<nuxt-link
 			v-for="(item, i) in profileMenuItems"
 			:key="i"

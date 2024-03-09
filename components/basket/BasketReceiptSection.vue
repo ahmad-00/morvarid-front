@@ -13,7 +13,7 @@
 							'border rounded-lg text-sm duration-300 px-3 py-3 flex items-center',
 							paymentMethod.value == method
 								? 'border-primary bg-primary bg-opacity-5 text-primary pointer-events-none'
-								: 'border-gray-300 bg-white hover:bg-gray-50 text-natural-dark cursor-pointer',
+								: 'border-slate-300 bg-white hover:bg-slate-50 text-natural-dark cursor-pointer',
 						]"
 						@click="$emit('update:method', paymentMethod.value)"
 					>
@@ -34,7 +34,7 @@
 						<div
 							v-for="(bankCard, i) in bankCards"
 							:key="i"
-							class="flex border border-gray-300 rounded-lg bg-white p-4 relative overflow-hidden"
+							class="flex border border-slate-300 rounded-lg bg-white p-4 relative overflow-hidden"
 						>
 							<div class="flex flex-col z-1 flex-grow me-4">
 								<div class="flex flex-col mb-4">

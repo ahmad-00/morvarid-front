@@ -36,7 +36,7 @@
 			/>
 			<div class="flex flex-col px-6 items-center mb-32">
 				<div class="max-w-screen-xl w-full flex flex-col">
-					<div class="h-px bg-gray-300 mb-20" />
+					<div class="h-px bg-slate-300 mb-20" />
 					<div
 						v-if="loading || products.length"
 						class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 xl:gap-10"

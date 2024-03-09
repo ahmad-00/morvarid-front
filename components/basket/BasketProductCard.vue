@@ -34,7 +34,7 @@
 		</div>
 		<div class="flex-grow" />
 		<div
-			class="flex items-center border-t lg:border-t-0 border-gray-200 pt-4 lg:pt-0 justify-center"
+			class="flex items-center border-t lg:border-t-0 border-slate-200 pt-4 lg:pt-0 justify-center"
 		>
 			<div class="flex items-center me-4 select-none">
 				<MyIcon
@@ -63,7 +63,7 @@
 						@click="(e) => e.stopPropagation()"
 					>
 						<div
-							class="w-52 bg-white border border-gray-200 px-2 pt-4 pb-2 rounded-lg shadow-lg"
+							class="w-52 bg-white border border-slate-200 px-2 pt-4 pb-2 rounded-lg shadow-lg"
 						>
 							<TextInput
 								type="number"
@@ -89,7 +89,7 @@
 			</div>
 		</div>
 		<div
-			class="flex items-center border-t lg:border-t-0 border-gray-200 pt-4 lg:pt-0 mt-4 lg:mt-0"
+			class="flex items-center border-t lg:border-t-0 border-slate-200 pt-4 lg:pt-0 mt-4 lg:mt-0"
 		>
 			<div class="flex flex-col me-12 w-auto lg:w-64">
 				<div class="flex flex-col self-end items-center">

@@ -58,9 +58,9 @@
 		</nuxt-link>
 		<div v-else class="relative w-full mt-8">
 			<div
-				class="w-full h-1/2 bg-gray-200 bg-opacity-25 absolute left-0 top-0 -mt-8 rounded-13"
+				class="w-full h-1/2 bg-slate-200 bg-opacity-25 absolute left-0 top-0 -mt-8 rounded-13"
 			/>
-			<div class="pt-1/1 rounded-13 bg-gray-200 w-full"></div>
+			<div class="pt-1/1 rounded-13 bg-slate-200 w-full"></div>
 		</div>
 		<div class="flex items-start mt-4">
 			<nuxt-link
@@ -70,7 +70,7 @@
 			>
 				{{ product.title || '~' }}
 			</nuxt-link>
-			<span v-else class="bg-gray-200 rounded-md w-20 me-3">
+			<span v-else class="bg-slate-200 rounded-md w-20 me-3">
 				<span class="text-lg opacity-0 select-none"> . </span>
 			</span>
 			<span class="flex-grow" />
@@ -97,7 +97,7 @@
 					</span>
 				</div>
 			</div>
-			<span v-else class="bg-gray-200 rounded-md w-12">
+			<span v-else class="bg-slate-200 rounded-md w-12">
 				<span class="text-lg opacity-0 select-none"> . </span>
 			</span>
 		</div>
@@ -127,7 +127,7 @@
 				{{ (category && category.name) || '~' }}
 			</span>
 		</div>
-		<span v-else class="bg-gray-200 rounded-md w-32 mt-2">
+		<span v-else class="bg-slate-200 rounded-md w-32 mt-2">
 			<span class="text-sm opacity-0 select-none"> . </span>
 		</span>
 	</div>

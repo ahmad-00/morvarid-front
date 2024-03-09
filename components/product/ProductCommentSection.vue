@@ -25,18 +25,18 @@
 			<div
 				v-for="(comment, i) in comments"
 				:key="i"
-				class="flex flex-row items-start px-4 py-4 rounded-lg border border-gray-200"
+				class="flex flex-row items-start px-4 py-4 rounded-lg border border-slate-200"
 			>
 				<div class="flex-shrink-0 me-4 flex">
 					<span
-						class="w-14 h-14 bg-gray-300 overflow-hidden"
+						class="w-14 h-14 bg-slate-300 overflow-hidden"
 						:style="{
 							borderRadius: '70% 30% 30% 70% / 30% 30% 70% 70%',
 						}"
 					>
 						<MyIcon
 							name="person"
-							class="text-gray-400 w-full h-full transform scale-125 translate-y-2"
+							class="text-slate-400 w-full h-full transform scale-125 translate-y-2"
 						/>
 					</span>
 				</div>
@@ -64,7 +64,7 @@
 							</span>
 						</div>
 					</div>
-					<span class="border-b border-gray-200 mt-3 mb-3" />
+					<span class="border-b border-slate-200 mt-3 mb-3" />
 					<div class="">
 						<p class="text-natural-semidark m-0">
 							{{ comment.comment || '~' }}

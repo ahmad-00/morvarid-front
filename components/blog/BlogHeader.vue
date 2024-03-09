@@ -62,12 +62,12 @@
 			<div class="flex-grow" />
 			<div class="flex items-center">
 				<span class="w-8 flex-shrink-0" />
-				<div class="flex items-center border-s border-gray-200">
+				<div class="flex items-center border-s border-slate-200">
 					<nuxt-link
 						v-for="(c, i) in categories"
 						:key="i"
 						:to="$routeUrl.BlogCategoryUrl(c.id)"
-						class="flex flex-col border-e border-gray-200 ripple-bg-white"
+						class="flex flex-col border-e border-slate-200 ripple-bg-white"
 					>
 						<span
 							class="text-natural-semidark py-5 px-10 whitespace-nowrap font-medium"

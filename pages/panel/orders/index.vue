@@ -24,14 +24,17 @@
 		<template v-if="!targetOrder">
 			<div class="flex items-center mb-8">
 				<div
-					class="flex items-center bg-white rounded-md border border-gray-200 self-start ps-3 py-1 overflow-hidden"
+					class="flex items-center bg-white rounded-md border border-slate-200 self-start ps-3 py-1 overflow-hidden"
 				>
 					<span
-						class="text-natural-dark pe-3 text-xs border-e border-gray-200"
+						class="text-natural-dark pe-3 text-xs border-e border-slate-200"
 					>
 						{{ $strings.status() }}
 					</span>
-					<div class="flex items-center overflow-hidden px-3 -me-2" v-dragscroll.x>
+					<div
+						class="flex items-center overflow-hidden px-3 -me-2"
+						v-dragscroll.x
+					>
 						<span
 							v-for="(s, i) in statuses"
 							:key="i"
@@ -111,10 +114,10 @@
 			</div>
 			<div
 				slot="footer"
-				class="flex items-center justify-end border-t border-gray-200 p-4"
+				class="flex items-center justify-end border-t border-slate-200 p-4"
 			>
 				<button
-					class="me-4 ripple-bg-white border-2 border-gray-200 ripple-bg-white text-natural-semidark px-8 py-3 font-bold rounded-xl"
+					class="me-4 ripple-bg-white border-2 border-slate-200 text-natural-semidark px-8 py-3 font-bold rounded-xl"
 					@click="isCancelDialogVisible = false"
 				>
 					{{ $strings.cancel() }}

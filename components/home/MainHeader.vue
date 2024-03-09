@@ -63,7 +63,7 @@
 					</span>
 				</nuxt-link>
 			</template>
-			<span class="w-px h-8 bg-gray-200 mx-4 hidden lg:flex" />
+			<span class="w-px h-8 bg-slate-200 mx-4 hidden lg:flex" />
 			<nuxt-link
 				v-if="!user"
 				:to="$routeUrl.LoginUrl()"
@@ -164,7 +164,7 @@
 						@click="isMenuVisible = false"
 					/>
 				</div>
-				<div class="h-px bg-gray-200 flex-shrink-0" />
+				<div class="h-px bg-slate-200 flex-shrink-0" />
 				<div class="flex flex-col py-2 flex-shrink-0">
 					<nuxt-link
 						v-for="(item, i) in menuItems"
@@ -175,7 +175,7 @@
 						{{ item.name }}
 					</nuxt-link>
 				</div>
-				<div class="h-px bg-gray-200 mx-4 flex-shrink-0" />
+				<div class="h-px bg-slate-200 mx-4 flex-shrink-0" />
 				<div
 					class="flex items-center justify-center flex-shrink-0 mx-4 my-4"
 				>
@@ -219,7 +219,7 @@
 							</span>
 						</nuxt-link>
 					</template>
-					<span v-if="!user" class="flex w-px h-8 bg-gray-200 mx-4" />
+					<span v-if="!user" class="flex w-px h-8 bg-slate-200 mx-4" />
 					<nuxt-link
 						v-if="!user"
 						:to="$routeUrl.LoginUrl()"
@@ -230,10 +230,10 @@
 						</span>
 					</nuxt-link>
 				</div>
-				<div v-if="user" class="h-px bg-gray-200 mx-4 flex-shrink-0" />
+				<div v-if="user" class="h-px bg-slate-200 mx-4 flex-shrink-0" />
 				<UserMenu
 					v-if="user"
-					class="mx-4 my-4 border border-gray-200 rounded-lg"
+					class="mx-4 my-4 border border-slate-200 rounded-lg"
 					:loading="loading"
 					@update:loading="(v) => $emit('update:loading', v)"
 					:selected="userSelected"

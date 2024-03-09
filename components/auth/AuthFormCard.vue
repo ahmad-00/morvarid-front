@@ -111,7 +111,7 @@
 				/>
 				<div
 					v-if="isAreaCodeFocused && countryDialInfo.length"
-					class="flex flex-col bg-white rounded-lg shadow-lg border border-gray-300 absolute left-0 right-0 mt-1 z-1 overflow-x-hidden overflow-y-auto"
+					class="flex flex-col bg-white rounded-lg shadow-lg border border-slate-300 absolute left-0 right-0 mt-1 z-1 overflow-x-hidden overflow-y-auto"
 					dir="ltr"
 					:style="{ maxHeight: '250px' }"
 				>

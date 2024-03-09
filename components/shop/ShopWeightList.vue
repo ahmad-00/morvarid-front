@@ -117,7 +117,7 @@ export default class ShopWeightList extends Vue {
 
 <style>
 .shop-weight-list-swiper .swiper-pagination-bullet {
-	@apply w-1.5 h-1.5 rounded-full bg-gray-300 text-xs text-natural-semidark mx-1 duration-300 cursor-pointer;
+	@apply w-1.5 h-1.5 rounded-full bg-slate-300 text-xs text-natural-semidark mx-1 duration-300 cursor-pointer;
 }
 
 .shop-weight-list-swiper .swiper-pagination-bullet-active {

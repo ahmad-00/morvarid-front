@@ -61,7 +61,7 @@
 					</div>
 				</div>
 				<div class="flex items-center self-center lg:self-start">
-					<div class="w-32 h-32 rounded-xl bg-gray-100">
+					<div class="w-32 h-32 rounded-xl bg-slate-100">
 						<client-only>
 							<a
 								referrerpolicy="origin"

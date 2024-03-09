@@ -58,10 +58,10 @@
 			</div>
 			<div
 				slot="footer"
-				class="flex items-center justify-end border-t border-gray-200 p-4"
+				class="flex items-center justify-end border-t border-slate-200 p-4"
 			>
 				<button
-					class="me-4 ripple-bg-white border-2 border-gray-200 ripple-bg-white text-natural-semidark px-8 py-3 font-bold rounded-xl"
+					class="me-4 ripple-bg-white border-2 border-slate-200 ripple-bg-white text-natural-semidark px-8 py-3 font-bold rounded-xl"
 					@click="isDeleteDialogVisible = false"
 				>
 					{{ $strings.cancel() }}

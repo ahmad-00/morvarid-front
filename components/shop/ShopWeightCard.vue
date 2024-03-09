@@ -41,7 +41,7 @@
 				}"
 			/>
 		</div>
-		<div v-else class="pt-1/1 bg-gray-200 rounded-full"></div>
+		<div v-else class="pt-1/1 bg-slate-200 rounded-full"></div>
 	</div>
 </template>
 

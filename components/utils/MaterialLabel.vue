@@ -9,7 +9,7 @@
 	>
 		<slot></slot>
 		<div
-			class="material-label-ctr absolute left-0 right-0 duration-300 origin-start top-0 bottom-0 w-full h-full pointer-events-none flex items-center justify-start font-bold text-gray-700"
+			class="material-label-ctr absolute left-0 right-0 duration-300 origin-start top-0 bottom-0 w-full h-full pointer-events-none flex items-center justify-start font-bold text-slate-700"
 			:class="{
 				'material-label-ctr-focus': value || focus,
 			}"

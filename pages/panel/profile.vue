@@ -8,7 +8,7 @@
 			{{ $strings.account_information() }}
 		</span>
 		<div
-			class="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-2 bg-gray-100 gap-px border border-gray-100 overflow-hidden"
+			class="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-2 bg-slate-100 gap-px border border-slate-100 overflow-hidden"
 		>
 			<div class="flex items-center px-6 py-5 bg-white">
 				<div class="flex flex-col flex-grow">

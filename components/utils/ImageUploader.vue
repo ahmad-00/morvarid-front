@@ -4,7 +4,7 @@
 			<div
 				class="p-4 w-full border-2 border-primary border-dashed rounded-xl overflow-hidden duration-300"
 				:class="{
-					'hover:bg-gray-100': !src,
+					'hover:bg-slate-100': !src,
 				}"
 			>
 				<div

@@ -9,7 +9,7 @@
 			<span v-if="!loading" class="text-3xl font-bold text-natural-dark">
 				{{ product.title || '~' }}
 			</span>
-			<span v-else class="w-52 rounded-md bg-gray-200">
+			<span v-else class="w-52 rounded-md bg-slate-200">
 				<span class="opacity-0 select-none text-3xl">.</span>
 			</span>
 			<div class="flex-grow" />
@@ -30,7 +30,7 @@
 				{{ (category && category.name) || '~' }}
 			</span>
 		</div>
-		<div v-else class="bg-gray-200 rounded-md w-32 mb-5">
+		<div v-else class="bg-slate-200 rounded-md w-32 mb-5">
 			<span class="opacity-0 select-none">.</span>
 		</div>
 		<div v-if="!loading" class="flex flex-col">
@@ -66,14 +66,14 @@
 			</div>
 		</div>
 
-		<div v-else class="flex items-center w-40 bg-gray-200 rounded-md">
+		<div v-else class="flex items-center w-40 bg-slate-200 rounded-md">
 			<span class="text-5xl opacity-0 select-none">. </span>
 		</div>
 		<span v-if="!loading" class="text-natural-dark mt-8">
 			{{ product.description }}
 		</span>
 		<div v-else class="flex flex-col mt-8">
-			<span v-for="i in 4" class="bg-gray-200 rounded-md mb-3">
+			<span v-for="i in 4" class="bg-slate-200 rounded-md mb-3">
 				<span class="opacity-0 select-none">.</span>
 			</span>
 		</div>

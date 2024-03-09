@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"engines": {
-		"node": "14.17.5"
+		"node": "14"
 	},
 	"scripts": {
 		"dev": "nuxt",
@@ -50,12 +50,13 @@
 		"@nuxt/types": "^2.15.8",
 		"@nuxt/typescript-build": "^2.1.0",
 		"@nuxtjs/tailwindcss": "^4.2.1",
-		"@tailwindcss/typography": "0.4.1",
+		"@tailwindcss/typography": "^0.5.9",
 		"eslint-config-prettier": "^8.3.0",
-		"postcss": "^8.4.4",
+		"postcss": "^8.4.5",
 		"prettier": "^2.5.1",
 		"sass": "^1.49.9",
 		"sass-loader": "10",
+		"tailwindcss": "^3.3.2",
 		"vuex-module-decorators": "^2.0.0"
 	}
 }

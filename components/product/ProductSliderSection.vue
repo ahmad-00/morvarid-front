@@ -26,7 +26,7 @@
 				/>
 			</div>
 		</div>
-		<div v-else class="mb-8 pt-3/4 rounded-3xl bg-gray-200"></div>
+		<div v-else class="mb-8 pt-3/4 rounded-3xl bg-slate-200"></div>
 		<div
 			ref="swiper"
 			class="swiper w-full"
@@ -70,7 +70,7 @@
 					<div
 						v-for="i in 3"
 						:key="i"
-						class="swiper-slide rounded-3xl bg-gray-200"
+						class="swiper-slide rounded-3xl bg-slate-200"
 					>
 						<div class="pt-1/1" />
 					</div>

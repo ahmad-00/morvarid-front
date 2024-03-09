@@ -37,7 +37,7 @@
 					</h4>
 					<div class="flex">
 						<div
-							class="border-s border-gray-200 p-3 flex items-center justify-center ripple-bg-white rounded-te-2xl cursor-pointer"
+							class="border-s border-slate-200 p-3 flex items-center justify-center ripple-bg-white rounded-te-2xl cursor-pointer"
 							@click="close"
 							aria-label="Close modal"
 						>
@@ -45,7 +45,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="h-px w-full bg-gray-200 relative" />
+				<div class="h-px w-full bg-slate-200 relative" />
 				<client-only>
 					<rescrollbar
 						class="scroll-area"
@@ -62,7 +62,7 @@
 				<slot name="footer" v-if="!hideFooter">
 					<div class="flex relative">
 						<div
-							class="h-px w-full bg-gray-200 absolute left-0 right-0 top-0 -mt-px"
+							class="h-px w-full bg-slate-200 absolute left-0 right-0 top-0 -mt-px"
 						/>
 						<div class="flex-grow" />
 						<button

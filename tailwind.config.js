@@ -66,5 +66,202 @@ module.exports = {
 		require('tailwindcss-rtl'),
 		require('@tailwindcss/line-clamp'),
 		require('@tailwindcss/typography'),
+		({ matchUtilities, theme }) => {
+			matchUtilities(
+				{
+					ms: (value) => ({
+						'[dir="ltr"] &': {
+							'margin-left': value + ' !important',
+							'margin-right': 0,
+						},
+						'[dir="rtl"] &': {
+							'margin-right': value + ' !important',
+							'margin-left': 0,
+						},
+					}),
+					me: (value) => ({
+						'[dir="ltr"] &': {
+							'margin-right': value + ' !important',
+							'margin-left': 0,
+						},
+						'[dir="rtl"] &': {
+							'margin-left': value + ' !important',
+							'margin-right': 0,
+						},
+					}),
+				},
+				{
+					supportsNegativeValues: true,
+					values: theme('margin'),
+				}
+			)
+		},
+		({ matchUtilities, theme }) => {
+			matchUtilities(
+				{
+					ps: (value) => ({
+						'[dir="ltr"] &': {
+							'padding-left': value + ' !important',
+							'padding-right': 0,
+						},
+						'[dir="rtl"] &': {
+							'padding-right': value + ' !important',
+							'padding-left': 0,
+						},
+					}),
+					pe: (value) => ({
+						'[dir="ltr"] &': {
+							'padding-right': value + ' !important',
+							'padding-left': 0,
+						},
+						'[dir="rtl"] &': {
+							'padding-left': value + ' !important',
+							'padding-right': 0,
+						},
+					}),
+				},
+				{
+					supportsNegativeValues: true,
+					values: theme('padding'),
+				}
+			)
+		},
+		({ matchUtilities, theme }) => {
+			matchUtilities(
+				{
+					start: (value) => ({
+						'[dir="rtl"] &': {
+							right: value + ' !important',
+							left: 'auto',
+						},
+						'[dir="left"] &': {
+							left: value + ' !important',
+							right: 'auto',
+						},
+					}),
+					end: (value) => ({
+						'[dir="rtl"] &': {
+							left: value + ' !important',
+							right: 'auto',
+						},
+						'[dir="left"] &': {
+							right: value + ' !important',
+							left: 'auto',
+						},
+					}),
+				},
+				{
+					supportsNegativeValues: true,
+					values: theme('inset'),
+				}
+			)
+		},
+		({ matchUtilities, theme }) => {
+			matchUtilities(
+				{
+					'rounded-e': (value) => ({
+						'[dir="ltr"] &': {
+							borderTopRightRadius: value + ' !important',
+							borderTopLeftRadius: 0,
+							borderBottomRightRadius: value + ' !important',
+							borderBottomLeftRadius: 0,
+						},
+						'[dir="rtl"] &': {
+							borderTopLeftRadius: value + ' !important',
+							borderTopRightRadius: 0,
+							borderBottomLeftRadius: value + ' !important',
+							borderBottomRightRadius: 0,
+						},
+					}),
+					'rounded-s': (value) => ({
+						'[dir="ltr"] &': {
+							borderTopLeftRadius: value + ' !important',
+							borderTopRightRadius: 0,
+							borderBottomLeftRadius: value + ' !important',
+							borderBottomRightRadius: 0,
+						},
+						'[dir="rtl"] &': {
+							borderTopRightRadius: value + ' !important',
+							borderTopLeftRadius: 0,
+							borderBottomRightRadius: value + ' !important',
+							borderBottomLeftRadius: 0,
+						},
+					}),
+					'rounded-te': (value) => ({
+						'[dir="rtl"] &': {
+							borderTopLeftRadius: value + ' !important',
+							borderTopRightRadius: 0,
+						},
+						'[dir="ltr"] &': {
+							borderTopRightRadius: value + ' !important',
+							borderTopLeftRadius: 0,
+						},
+					}),
+					'rounded-ts': (value) => ({
+						'[dir="ltr"] &': {
+							borderTopLeftRadius: value + ' !important',
+							borderTopRightRadius: 0,
+						},
+						'[dir="rtl"] &': {
+							borderTopRightRadius: value + ' !important',
+							borderTopLeftRadius: 0,
+						},
+					}),
+					'rounded-be': (value) => ({
+						'[dir="ltr"] &': {
+							borderBottomRightRadius: value + ' !important',
+							borderBottomLeftRadius: 0,
+						},
+						'[dir="rtl"] &': {
+							borderBottomLeftRadius: value + ' !important',
+							borderBottomRightRadius: 0,
+						},
+					}),
+					'rounded-bs': (value) => ({
+						'[dir="rtl"] &': {
+							borderBottomRightRadius: value + ' !important',
+							borderBottomLeftRadius: 0,
+						},
+						'[dir="ltr"] &': {
+							borderBottomRightRadius: 0,
+						},
+					}),
+				},
+				{
+					supportsNegativeValues: false,
+					values: theme('borderRadius'),
+				}
+			)
+		},
+		({ matchUtilities, theme }) => {
+			matchUtilities(
+				{
+					'border-s': (value) => ({
+						'[dir="ltr"] &': {
+							'border-left': value + ' !important',
+							'border-right': 0,
+						},
+						'[dir="rtl"] &': {
+							'border-right': value + ' !important',
+							'border-left': 0,
+						},
+					}),
+					'border-e': (value) => ({
+						'[dir="ltr"] &': {
+							'border-right': value + ' !important',
+							'border-left': 0,
+						},
+						'[dir="rtl"] &': {
+							'border-left': value + ' !important',
+							'border-right': 0,
+						},
+					}),
+				},
+				{
+					supportsNegativeValues: false,
+					values: theme('borderWidth'),
+				}
+			)
+		},
 	],
 }

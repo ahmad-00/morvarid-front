@@ -2,7 +2,7 @@
 	<div
 		class="flex flex-col p-5 rounded-xl border relative"
 		:class="{
-			'border-gray-100 bg-white shadow-sm': !selected,
+			'border-slate-100 bg-white shadow-sm': !selected,
 			'border-primary bg-primary bg-opacity-5 shadow-md': selected,
 		}"
 		@click="$emit('click')"
