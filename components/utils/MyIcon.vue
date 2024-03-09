@@ -43,6 +43,7 @@ const icons = [
 	'credit-card',
 	'attach',
 	'cloud-download',
+	'bank',
 ] as const
 
 export type IconType = typeof icons[number]

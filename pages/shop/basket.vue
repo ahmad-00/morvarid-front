@@ -27,6 +27,7 @@
 					:receiptImage.sync="receiptImage"
 					:method="paymentMethod"
 					@uploading="(v) => (loading = v)"
+					@update:method="(v) => (paymentMethod = v)"
 				/>
 				<BasketPaymentEndSection v-else-if="step === 4" />
 			</div>

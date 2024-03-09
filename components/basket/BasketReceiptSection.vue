@@ -1,112 +1,124 @@
 <template>
 	<div class="flex flex-col">
-		<div
-			:class="[
-				'grid grid-cols-1 gap-8 py-8',
-				{
-					'lg:grid-cols-12': method == 'card-to-card',
-					'lg:grid-cols-5 max-w-lg self-center w-full': method == 'gateway',
-				},
-			]"
-		>
-			<div
-				v-if="method == 'card-to-card'"
-				class="col-span-1 lg:col-span-7 flex flex-col"
-			>
+		<div :class="['grid grid-cols-1 lg:grid-cols-12 gap-8 py-8']">
+			<div class="col-span-1 lg:col-span-7 flex flex-col">
 				<span class="text-xl text-natural-dark font-bold mb-2">
 					{{ $strings.payment() }}
 				</span>
-				<span class="text-sm text-natural-semidark mb-6">
-					{{ $strings.order_payment_message_1() }}
-				</span>
-				<div class="flex flex-col space-y-4 mb-8">
+				<div class="grid grid-cols-2 mt-4 mb-6 gap-4">
 					<div
-						v-for="(bankCard, i) in bankCards"
+						v-for="(paymentMethod, i) in paymentMethods"
 						:key="i"
-						class="flex border border-gray-300 rounded-lg bg-white p-4 relative overflow-hidden"
+						:class="[
+							'border rounded-lg text-sm duration-300 px-3 py-3 flex items-center',
+							paymentMethod.value == method
+								? 'border-primary bg-primary bg-opacity-5 text-primary pointer-events-none'
+								: 'border-gray-300 bg-white hover:bg-gray-50 text-natural-dark cursor-pointer',
+						]"
+						@click="$emit('update:method', paymentMethod.value)"
 					>
-						<div class="flex flex-col z-1 flex-grow me-4">
-							<div class="flex flex-col mb-4">
-								<span
-									class="text-sm font-bold text-natural-dark"
-								>
-									{{ $strings.bank_name() }}
-								</span>
-								<span
-									class="text-sm text-natural-semidark mt-1.5"
-								>
-									{{ bankCard.name }}
-								</span>
-							</div>
-							<div class="flex flex-col mb-4">
-								<span
-									class="text-sm font-bold text-natural-dark"
-								>
-									{{ $strings.card_number() }}
-								</span>
-								<span
-									class="text-sm text-natural-semidark mt-1.5"
-								>
-									{{ bankCard.card_number }}
-								</span>
-							</div>
-							<div class="flex flex-col">
-								<span
-									class="text-sm font-bold text-natural-dark"
-								>
-									{{ $strings.account_holder_name() }}
-								</span>
-								<span
-									class="text-sm text-natural-semidark mt-1.5"
-								>
-									{{ bankCard.card_holder }}
-								</span>
-							</div>
-						</div>
-						<div class="flex flex-col z-1 flex-grow">
-							<div class="flex flex-col mb-4">
-								<span
-									class="text-sm font-bold text-natural-dark"
-								>
-									{{ $strings.shaba() }}
-								</span>
-								<span
-									class="text-sm text-natural-semidark mt-1.5"
-								>
-									{{ bankCard.shaba }}
-								</span>
-							</div>
-							<div class="flex flex-col">
-								<span
-									class="text-sm font-bold text-natural-dark"
-								>
-									{{ $strings.account_number() }}
-								</span>
-								<span
-									class="text-sm text-natural-semidark mt-1.5"
-								>
-									{{ bankCard.account_number }}
-								</span>
-							</div>
-						</div>
 						<MyIcon
-							name="credit-card"
-							class="w-32 h-32 absolute bottom-0 end-0 transform scale-150 -mb-7 rotate-12 me-2 text-primary opacity-10 pointer-events-none"
+							:name="paymentMethod.icon"
+							class="w-8 h-8 me-3"
 						/>
+						<span class="">
+							{{ paymentMethod.label }}
+						</span>
 					</div>
 				</div>
-				<span class="text-xl text-natural-dark font-bold mb-2">
-					{{ $strings.payment_receipt() }}
-				</span>
-				<span class="text-sm text-natural-semidark mb-6">
-					{{ $strings.order_payment_message_2() }}
-				</span>
-				<ImageUploader
-					:name="$strings.payment_receipt()"
-					:src="receiptImage"
-					@change="onUploadImage"
-					@uploading="(v) => $emit('uploading', v)"
-				/>
+				<div v-if="method == 'card-to-card'" class="flex flex-col">
+					<span class="text-sm text-natural-semidark mb-6">
+						{{ $strings.order_payment_message_1() }}
+					</span>
+					<div class="flex flex-col space-y-4 mb-8">
+						<div
+							v-for="(bankCard, i) in bankCards"
+							:key="i"
+							class="flex border border-gray-300 rounded-lg bg-white p-4 relative overflow-hidden"
+						>
+							<div class="flex flex-col z-1 flex-grow me-4">
+								<div class="flex flex-col mb-4">
+									<span
+										class="text-sm font-bold text-natural-dark"
+									>
+										{{ $strings.bank_name() }}
+									</span>
+									<span
+										class="text-sm text-natural-semidark mt-1.5"
+									>
+										{{ bankCard.name }}
+									</span>
+								</div>
+								<div class="flex flex-col mb-4">
+									<span
+										class="text-sm font-bold text-natural-dark"
+									>
+										{{ $strings.card_number() }}
+									</span>
+									<span
+										class="text-sm text-natural-semidark mt-1.5"
+									>
+										{{ bankCard.card_number }}
+									</span>
+								</div>
+								<div class="flex flex-col">
+									<span
+										class="text-sm font-bold text-natural-dark"
+									>
+										{{ $strings.account_holder_name() }}
+									</span>
+									<span
+										class="text-sm text-natural-semidark mt-1.5"
+									>
+										{{ bankCard.card_holder }}
+									</span>
+								</div>
+							</div>
+							<div class="flex flex-col z-1 flex-grow">
+								<div class="flex flex-col mb-4">
+									<span
+										class="text-sm font-bold text-natural-dark"
+									>
+										{{ $strings.shaba() }}
+									</span>
+									<span
+										class="text-sm text-natural-semidark mt-1.5"
+									>
+										{{ bankCard.shaba }}
+									</span>
+								</div>
+								<div class="flex flex-col">
+									<span
+										class="text-sm font-bold text-natural-dark"
+									>
+										{{ $strings.account_number() }}
+									</span>
+									<span
+										class="text-sm text-natural-semidark mt-1.5"
+									>
+										{{ bankCard.account_number }}
+									</span>
+								</div>
+							</div>
+							<MyIcon
+								name="credit-card"
+								class="w-32 h-32 absolute bottom-0 end-0 transform scale-150 -mb-7 rotate-12 me-2 text-primary opacity-10 pointer-events-none"
+							/>
+						</div>
+					</div>
+					<span class="text-xl text-natural-dark font-bold mb-2">
+						{{ $strings.payment_receipt() }}
+					</span>
+					<span class="text-sm text-natural-semidark mb-6">
+						{{ $strings.order_payment_message_2() }}
+					</span>
+					<ImageUploader
+						:name="$strings.payment_receipt()"
+						:src="receiptImage"
+						@change="onUploadImage"
+						@uploading="(v) => $emit('uploading', v)"
+					/>
+				</div>
 			</div>
 			<div class="col-span-1 lg:col-span-5 flex flex-col">
 				<span class="text-natural-dark font-bold text-xl mb-4">
@@ -227,6 +239,21 @@ export default class BasketReceiptSection extends Vue {
 	isCreateAddressDialogVisible = false
 	isDeleteAddressDialogVisible = false
 	targetAddress = {} as Address
+
+	get paymentMethods() {
+		return [
+			{
+				value: 'gateway',
+				label: this.$strings.bank_gateway(),
+				icon: 'bank',
+			},
+			{
+				value: 'card-to-card',
+				label: this.$strings.card_to_card(),
+				icon: 'credit-card',
+			},
+		]
+	}
 
 	get user(): User | null {
 		return this.$store.state.user.user || null
